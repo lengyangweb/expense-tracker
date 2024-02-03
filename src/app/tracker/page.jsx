@@ -8,7 +8,6 @@ import ExpenseTransaction from "../components/ExpenseTransaction";
 const TrackerPage = () => {
   const [histories, setHistories] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [selected, setSelected] = useState();
 
   useEffect(() => {
     // wait a minute to load transaction histories
@@ -59,12 +58,7 @@ const TrackerPage = () => {
             </Row>
           </Col>
           <Col xs={6}>
-            <ExpenseHistory
-              histories={histories}
-              setHistories={setHistories}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <ExpenseHistory histories={histories} setHistories={setHistories} />
           </Col>
         </Row>
       </Col>

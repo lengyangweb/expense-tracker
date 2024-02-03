@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
 
-const ExpenseTransaction = ({ histories, setHistories }) => {
+const ExpenseTransaction = ({ histories, setHistories, selected }) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
 
@@ -43,8 +43,8 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
     setHistories([...updatedHistories]);
 
     // reset fields
-    setTotal("");
-    setTitle("");
+    setTotal();
+    setTitle();
   };
 
   // validate if a history with the same title already exist
@@ -66,6 +66,7 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
             type="text"
             id="transaction"
             name="transaction"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter text..."
           />
@@ -80,6 +81,7 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
             type="text"
             id="amount"
             name="amount"
+            value={total}
             onChange={(e) => setTotal(e.target.value)}
           />
         </Form.Group>

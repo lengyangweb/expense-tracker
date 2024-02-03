@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
 const ExpenseItem = ({ transaction, removeTransaction }) => {

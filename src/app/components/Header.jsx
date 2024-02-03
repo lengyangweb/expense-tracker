@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <Navbar className="d-flex flex-column bg-secondary">
       <h5>
-        <Link href="/" className="text-light text-decoration-none">
+        <Link href="/about" className="text-light text-decoration-none">
           Expense Tracker
         </Link>
       </h5>
