@@ -7,17 +7,36 @@ import ExpenseTransaction from "../components/ExpenseTransaction";
 
 const TrackerPage = () => {
   const [histories, setHistories] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [selected, setSelected] = useState();
 
   useEffect(() => {
-    const data = getHistories();
-    setHistories(data);
+    // wait a minute to load transaction histories
+    setTimeout(() => {
+      const data = getHistories();
+      setHistories(data);
+    }, 1000);
   }, []);
 
   function getHistories() {
     const histories = JSON.parse(localStorage.getItem("histories"));
+    // set loading status
+    setIsLoading(false);
     return histories;
   }
 
+  // if still loading histories
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center mt-4">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // if no histories
   if (!histories || !histories.length) {
     return <span>No transaction history.</span>;
   }
@@ -40,7 +59,12 @@ const TrackerPage = () => {
             </Row>
           </Col>
           <Col xs={6}>
-            <ExpenseHistory histories={histories} setHistories={setHistories} />
+            <ExpenseHistory
+              histories={histories}
+              setHistories={setHistories}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Col>
         </Row>
       </Col>

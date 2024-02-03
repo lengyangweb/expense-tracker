@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import ExpenseItem from "./ExpenseItem";
 
-const ExpenseHistory = ({ histories, setHistories }) => {
+const ExpenseHistory = ({ histories, setHistories, selected, setSelected }) => {
   // remove transaction history from histories
   const removeTransaction = (transaction) => {
     let updatedHistories = histories.filter(
@@ -26,6 +26,8 @@ const ExpenseHistory = ({ histories, setHistories }) => {
           key={transaction.title}
           transaction={transaction}
           removeTransaction={removeTransaction}
+          selected={selected}
+          setSelected={setSelected}
         />
       ))}
     </div>
