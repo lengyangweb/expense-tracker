@@ -61,14 +61,15 @@ const ExpenseTransaction = ({ histories, setHistories, selected }) => {
       <hr />
       <Form>
         <Form.Group>
-          <Form.Label htmlFor="transaction">Text</Form.Label>
+          <Form.Label htmlFor="transaction">Transaction Name</Form.Label>
           <Form.Control
             type="text"
             id="transaction"
             name="transaction"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter text..."
+            placeholder="Enter a transaction name..."
+            autoComplete="transaction"
           />
         </Form.Group>
         <Form.Group className="my-2">
@@ -83,6 +84,7 @@ const ExpenseTransaction = ({ histories, setHistories, selected }) => {
             name="amount"
             value={total}
             onChange={(e) => setTotal(e.target.value)}
+            autoComplete="amount"
           />
         </Form.Group>
         <Button className="w-100 my-2" variant="primary" onClick={onSave}>

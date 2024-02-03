@@ -14,7 +14,7 @@ const TrackerPage = () => {
     setTimeout(() => {
       const data = getHistories();
       setHistories(data);
-    }, 1000);
+    }, 500);
   }, []);
 
   /**
@@ -47,16 +47,11 @@ const TrackerPage = () => {
     );
   }
 
-  // if no histories
-  // if (!histories || !histories.length) {
-  //   return <span>No transaction history.</span>;
-  // }
-
   return (
     <div className="d-flex justify-content-center py-3">
       <Col xs={10}>
         <Row>
-          <Col xs={6}>
+          <Col xs={12} md={6}>
             <Row>
               <Col xs={12}>
                 <ExpenseHeader histories={histories} />
@@ -69,7 +64,7 @@ const TrackerPage = () => {
               </Col>
             </Row>
           </Col>
-          <Col xs={6}>
+          <Col xs={12} md={6}>
             <ExpenseHistory histories={histories} setHistories={setHistories} />
           </Col>
         </Row>

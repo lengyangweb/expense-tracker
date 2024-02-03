@@ -14,7 +14,7 @@ const ExpenseItem = ({ transaction, removeTransaction }) => {
         <span>{transaction.title}</span>
         <span>${transaction.total.toFixed(2)}</span>
       </div>
-      <div>
+      <div className="h-100">
         <span
           className={
             (transaction.income ? "bg-success" : "bg-danger") + " p-1 h-100"
