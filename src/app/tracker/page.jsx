@@ -9,28 +9,8 @@ const TrackerPage = () => {
   const [histories, setHistories] = useState();
 
   useEffect(() => {
-    // // fetch transaction histories
-    // async function getTransHistories() {
-    //   const response = await fetch(
-    //     "http://localhost:3000/api/transaction/histories"
-    //   );
-    //   const histories = await response.json();
-    //   return histories;
-    // }
-
-    // if (!localStorage.getItem("histories")) {
-    //   getTransHistories()
-    //     .then((data) => {
-    //       setHistories(data);
-    //       localStorage.setItem("histories", JSON.stringify(data));
-    //     })
-    //     .catch((error) => console.error(error));
-    // } else {
-    //   const data = getHistories();
-    //   setHistories([...data]);
     const data = getHistories();
     setHistories(data);
-    // }
   }, []);
 
   function getHistories() {

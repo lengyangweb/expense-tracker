@@ -4,12 +4,17 @@ import { toast } from "react-toastify";
 import ExpenseItem from "./ExpenseItem";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
+  // remove transaction history from histories
   const removeTransaction = (transaction) => {
     let updatedHistories = histories.filter(
       (tran) => tran.title !== transaction.title
     );
+    // update localStorage
+    localStorage.setItem("histories", JSON.stringify([...updatedHistories]));
+    // update current histories state
     setHistories([...updatedHistories]);
-    toast.success(`Transaction '${transaction.title}' removed.`);
+    // show toast
+    toast.success(`Transaction has been removed`);
   };
 
   return (

@@ -15,6 +15,12 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
     if (!title || !total)
       return toast.error("Please fill out both text and amount field");
 
+    // validate if transaction already exist
+    const exist = validate(title);
+    if (exist) {
+      return toast.error("Please enter a differnet transaction name");
+    }
+
     const kindOfExpense = total.substring(0, 1);
     if (!kindOfExpense.includes("+")) {
       if (!kindOfExpense.includes("-")) {
@@ -34,10 +40,19 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
     // set and update histories
     const updatedHistories = [...histories, newTransaction];
     localStorage.setItem("histories", JSON.stringify([...updatedHistories]));
+    setHistories([...updatedHistories]);
 
     // reset fields
     setTotal("");
     setTitle("");
+  };
+
+  // validate if a history with the same title already exist
+  const validate = (newTitle) => {
+    if (!localStorage.getItem("histories")) return false;
+    const histories = JSON.parse(localStorage.getItem("histories"));
+    const exist = histories.some(({ title }) => title === newTitle);
+    return exist;
   };
 
   return (
