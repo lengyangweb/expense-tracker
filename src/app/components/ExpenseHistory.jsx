@@ -1,7 +1,7 @@
 "use client";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
-import ExpenseItem from "./ExpenseItem";
+import ExpenseItem from "./ExpenseItems/ExpenseItem";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   // remove transaction history from histories
@@ -18,17 +18,19 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   };
 
   return (
-    <div>
+    <>
       <span className="fw-400">History</span>
       <hr />
-      {histories.map((transaction) => (
-        <ExpenseItem
-          key={transaction.title}
-          transaction={transaction}
-          removeTransaction={removeTransaction}
-        />
-      ))}
-    </div>
+      <div className="px-3" style={{ maxHeight: "420px", overflowY: "scroll" }}>
+        {histories.map((transaction) => (
+          <ExpenseItem
+            key={transaction.title}
+            transaction={transaction}
+            removeTransaction={removeTransaction}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
