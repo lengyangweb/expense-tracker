@@ -2,6 +2,7 @@
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import ExpenseItem from "./ExpenseItems/ExpenseItem";
+import { Card } from "react-bootstrap";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   // remove transaction history from histories
@@ -21,7 +22,7 @@ const ExpenseHistory = ({ histories, setHistories }) => {
     <>
       <span className="fw-400">History</span>
       <hr />
-      <div className="px-3" style={{ maxHeight: "420px", overflowY: "scroll" }}>
+      <div>
         {histories.map((transaction) => (
           <ExpenseItem
             key={transaction.title}
