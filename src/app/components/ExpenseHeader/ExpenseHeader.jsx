@@ -36,7 +36,9 @@ const ExpenseHeader = ({ histories }) => {
       .forEach(({ total }) => incomes.push(total));
 
     // calculate the sun of all incomes
+    if (!incomes.length) return 0.0;
     const totalIncome = incomes.reduce((sum = 0, total) => (sum += total));
+    if (!totalIncome) return 0.0;
     return totalIncome;
   };
 
@@ -47,8 +49,10 @@ const ExpenseHeader = ({ histories }) => {
       .filter((tran) => tran.income === false)
       .forEach(({ total }) => expenses.push(total));
 
+    if (!expenses.length) return 0.0;
     // calculate the sum of all expenses
     const totalExpense = expenses.reduce((sum = 0, total) => (sum += total));
+    if (!totalExpense) return 0.0;
     return totalExpense;
   };
 

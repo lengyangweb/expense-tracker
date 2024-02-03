@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 
 const ExpenseTab = ({ expenses }) => {
-  if (!expenses) return;
   return (
     <div className="py-2 px-4">
       <div className="d-flex flex-column align-items-center">

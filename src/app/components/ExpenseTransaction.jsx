@@ -43,8 +43,8 @@ const ExpenseTransaction = ({ histories, setHistories, selected }) => {
     setHistories([...updatedHistories]);
 
     // reset fields
-    setTotal();
-    setTitle();
+    setTotal((prev) => (prev = ""));
+    setTitle((prev) => (prev = ""));
   };
 
   // validate if a history with the same title already exist

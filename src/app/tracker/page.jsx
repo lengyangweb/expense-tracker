@@ -1,6 +1,6 @@
 "use client";
 import { Col, Row } from "react-bootstrap";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
 import ExpenseHistory from "../components/ExpenseHistory";
 import ExpenseTransaction from "../components/ExpenseTransaction";
@@ -17,12 +17,24 @@ const TrackerPage = () => {
     }, 1000);
   }, []);
 
-  function getHistories() {
+  /**
+   * Get transaction histories
+   * @returns {Array}
+   */
+  const getHistories = () => {
+    // if there's no transaction histories
+    if (!localStorage.getItem("histories")) {
+      localStorage.setItem("histories", JSON.stringify([]));
+      setIsLoading(false);
+      return [];
+    }
+    // get transaction histories from localStorage
     const histories = JSON.parse(localStorage.getItem("histories"));
     // set loading status
     setIsLoading(false);
+    // if there's histories then return histories, otherwise an empty array
     return histories;
-  }
+  };
 
   // if still loading histories
   if (isLoading) {
@@ -36,9 +48,9 @@ const TrackerPage = () => {
   }
 
   // if no histories
-  if (!histories || !histories.length) {
-    return <span>No transaction history.</span>;
-  }
+  // if (!histories || !histories.length) {
+  //   return <span>No transaction history.</span>;
+  // }
 
   return (
     <div className="d-flex justify-content-center py-3">
