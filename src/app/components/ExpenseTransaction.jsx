@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
 
 const ExpenseTransaction = ({ histories, setHistories }) => {
-  const [title, setTitle] = useState();
-  const [total, setTotal] = useState();
+  const [title, setTitle] = useState("");
+  const [total, setTotal] = useState("");
 
   /**
    * Create a new transaction and save to hisotries
@@ -24,7 +24,6 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
 
     // check to see what kind of expense is it
     const newTotal = total.split(kindOfExpense)[1];
-
     // create new transaction
     const newTransaction = {
       title,
@@ -32,14 +31,13 @@ const ExpenseTransaction = ({ histories, setHistories }) => {
       income: kindOfExpense.includes("+"),
       createdAt: Date.now(),
     };
-
     // set and update histories
     const updatedHistories = [...histories, newTransaction];
     localStorage.setItem("histories", JSON.stringify([...updatedHistories]));
 
     // reset fields
-    setTotal();
-    setTitle();
+    setTotal("");
+    setTitle("");
   };
 
   return (
