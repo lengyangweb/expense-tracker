@@ -19,11 +19,9 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   };
 
   return (
-    <>
-      <span className="fw-400">History</span>
-      <hr />
-      <Card
-        className="p-3 shadow"
+    <Card className="shadow">
+      <Card.Header className="p-3">History</Card.Header>
+      <Card.Body
         style={{
           maxHeight: "420px",
           overflowY: "scroll",
@@ -37,8 +35,8 @@ const ExpenseHistory = ({ histories, setHistories }) => {
             removeTransaction={removeTransaction}
           />
         ))}
-      </Card>
-    </>
+      </Card.Body>
+    </Card>
   );
 };
 

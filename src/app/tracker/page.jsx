@@ -49,7 +49,7 @@ const TrackerPage = () => {
 
   return (
     <div className="d-flex justify-content-center py-3">
-      <Col xs={10}>
+      <Col xs={11}>
         <Row>
           <Col xs={12} md={6}>
             <Row>
