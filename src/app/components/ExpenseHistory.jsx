@@ -22,7 +22,14 @@ const ExpenseHistory = ({ histories, setHistories }) => {
     <>
       <span className="fw-400">History</span>
       <hr />
-      <div>
+      <Card
+        className="p-3 shadow"
+        style={{
+          maxHeight: "420px",
+          overflowY: "scroll",
+          background: "#eeeeee",
+        }}
+      >
         {histories.map((transaction) => (
           <ExpenseItem
             key={transaction.title}
@@ -30,7 +37,7 @@ const ExpenseHistory = ({ histories, setHistories }) => {
             removeTransaction={removeTransaction}
           />
         ))}
-      </div>
+      </Card>
     </>
   );
 };
