@@ -3,9 +3,22 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
 
-const ExpenseTransaction = ({ histories, setHistories, selected }) => {
+const ExpenseTransaction = ({
+  histories,
+  setHistories,
+  suggestionSelected,
+  setSuggestionSelected,
+}) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
+
+  useEffect(() => {
+    if (suggestionSelected) {
+      const indicator = suggestionSelected.income ? "+" : "-";
+      setTitle(suggestionSelected.title);
+      setTotal(`${indicator}${suggestionSelected.amount}`);
+    }
+  }, [suggestionSelected]);
 
   /**
    * Create a new transaction and save to hisotries

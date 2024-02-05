@@ -9,6 +9,7 @@ import ExpenseSuggestion from "../components/ExpenseSuggestion/ExpenseSuggestion
 const TrackerPage = () => {
   const [histories, setHistories] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [suggestionSelected, setSuggestionSelected] = useState();
 
   useEffect(() => {
     // wait a minute to load transaction histories
@@ -61,10 +62,15 @@ const TrackerPage = () => {
                 <ExpenseTransaction
                   histories={histories}
                   setHistories={setHistories}
+                  suggestionSelected={suggestionSelected}
+                  setSuggestionSelected={setSuggestionSelected}
                 />
               </Col>
               <Col xs={12}>
-                <ExpenseSuggestion />
+                <ExpenseSuggestion
+                  selected={suggestionSelected}
+                  setSelected={setSuggestionSelected}
+                />
               </Col>
             </Row>
           </Col>

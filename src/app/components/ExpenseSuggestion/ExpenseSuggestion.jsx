@@ -3,7 +3,7 @@ import React from "react";
 import { Row } from "react-bootstrap";
 import ExpenseSuggestionItem from "./ExpenseSuggestionItem";
 
-const ExpenseSuggestion = () => {
+const ExpenseSuggestion = ({ selected, setSelected }) => {
   const suggestions = [
     {
       title: "Weekly Paid 1",
@@ -26,12 +26,12 @@ const ExpenseSuggestion = () => {
     <div className="d-flex flex-column">
       <span>Click to choose from one of the suggestion below?</span>
       <Row className="my-3 my-md-0">
-        {suggestions.map(({ title, amount, income }) => (
+        {suggestions.map((suggestion) => (
           <ExpenseSuggestionItem
-            key={title}
-            title={title}
-            amount={amount}
-            income={income}
+            key={suggestion.title}
+            suggestion={suggestion}
+            selected={selected}
+            setSelected={setSelected}
           />
         ))}
       </Row>
