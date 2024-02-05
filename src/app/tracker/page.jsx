@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
 import ExpenseHistory from "../components/ExpenseHistory";
 import ExpenseTransaction from "../components/ExpenseTransaction";
+import ExpenseSuggestion from "../components/ExpenseSuggestion/ExpenseSuggestion";
 
 const TrackerPage = () => {
   const [histories, setHistories] = useState();
@@ -61,6 +62,9 @@ const TrackerPage = () => {
                   histories={histories}
                   setHistories={setHistories}
                 />
+              </Col>
+              <Col xs={12}>
+                <ExpenseSuggestion />
               </Col>
             </Row>
           </Col>

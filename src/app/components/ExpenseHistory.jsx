@@ -19,22 +19,24 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   };
 
   return (
-    <Card className="shadow">
+    <Card className="shadow border rounded">
       <Card.Header className="p-3">History</Card.Header>
       <Card.Body
         style={{
-          maxHeight: "420px",
+          maxHeight: "540px",
           overflowY: "scroll",
           background: "#eeeeee",
         }}
       >
-        {histories.map((transaction) => (
-          <ExpenseItem
-            key={transaction.title}
-            transaction={transaction}
-            removeTransaction={removeTransaction}
-          />
-        ))}
+        {histories.length === 0 && <span>No transaction histories.</span>}
+        {histories.length > 0 &&
+          histories.map((transaction) => (
+            <ExpenseItem
+              key={transaction.title}
+              transaction={transaction}
+              removeTransaction={removeTransaction}
+            />
+          ))}
       </Card.Body>
     </Card>
   );

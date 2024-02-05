@@ -56,7 +56,7 @@ const ExpenseTransaction = ({ histories, setHistories, selected }) => {
   };
 
   return (
-    <div className="py-3">
+    <div className="py-2">
       <span>Add new transaction</span>
       <hr />
       <Form>

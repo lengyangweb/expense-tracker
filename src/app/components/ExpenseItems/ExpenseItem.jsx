@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { FaTrash } from "react-icons/fa";
-import ExpenseItemDetails from "./ExpenseItemDetails";
 import { useEffect, useState } from "react";
+import ExpenseItemDetails from "./ExpenseItemDetails";
 
 const ExpenseItem = ({ transaction, removeTransaction }) => {
   const [indicator, setIndicator] = useState("");
@@ -64,6 +64,7 @@ const ExpenseItem = ({ transaction, removeTransaction }) => {
       <span className="align-self-end" style={{ fontSize: "10px" }}>
         {createdStamp}
       </span>
+      <hr />
     </div>
   );
 };
