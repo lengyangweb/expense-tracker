@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import ExpenseItem from "./ExpenseItems/ExpenseItem";
 import { Card } from "react-bootstrap";
+import HeaderBadge from "./ExpenseHeader/HeaderBadge";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
+  const incomeQuantity = histories.filter(
+    ({ income }) => income === true
+  ).length;
+  const expenseQuantity = histories.filter(
+    ({ income }) => income === false
+  ).length;
+
   // remove transaction history from histories
   const removeTransaction = (transaction) => {
     let updatedHistories = histories.filter(
@@ -20,7 +28,15 @@ const ExpenseHistory = ({ histories, setHistories }) => {
 
   return (
     <Card className="shadow border rounded">
-      <Card.Header className="p-3">History</Card.Header>
+      <Card.Header className="p-3">
+        <div className="d-flex justify-content-between">
+          <span>History</span>
+          <HeaderBadge
+            incomeQuantity={incomeQuantity}
+            expenseQuantity={expenseQuantity}
+          />
+        </div>
+      </Card.Header>
       <Card.Body
         style={{
           maxHeight: "540px",

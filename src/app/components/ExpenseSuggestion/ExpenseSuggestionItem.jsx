@@ -20,9 +20,12 @@ const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
   return (
     <Col xs={12} md={4} className="my-1 my-md-0" onClick={handleSelected}>
       <button
-        className="btn w-100"
+        className={`btn btn-sm p-0 w-100${
+          selected?.title === suggestion.title
+            ? " border border-2 border-primary"
+            : ""
+        }`}
         disabled={selected?.title === suggestion.title}
-        style={{ outline: "none", border: "none" }}
       >
         <Card style={{ cursor: "pointer" }}>
           <Card.Header>{suggestion.title}</Card.Header>

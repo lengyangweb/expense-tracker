@@ -25,7 +25,7 @@ const ExpenseSuggestion = ({ selected, setSelected }) => {
   return (
     <div className="d-flex flex-column">
       <span>Click to choose from one of the suggestion below?</span>
-      <Row className="my-3 my-md-0">
+      <Row className="my-3 my-md-1">
         {suggestions.map((suggestion) => (
           <ExpenseSuggestionItem
             key={suggestion.title}
