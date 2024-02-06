@@ -3,11 +3,13 @@ import { Card, Col } from "react-bootstrap";
 
 const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
   const handleSelected = () => {
+    // if no suggestion item selected
     if (!selected) {
       setSelected(suggestion);
       return;
     }
 
+    // if there's an item selected and is equal to the current item
     if (suggestion.title === selected.title) {
       setSelected(undefined);
     } else {
@@ -17,14 +19,20 @@ const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
 
   return (
     <Col xs={12} md={4} className="my-1 my-md-0" onClick={handleSelected}>
-      <Card style={{ cursor: "pointer" }}>
-        <Card.Header>{suggestion.title}</Card.Header>
-        <Card.Body
-          className={suggestion.income ? "text-success" : "text-danger"}
-        >
-          ${suggestion.amount}
-        </Card.Body>
-      </Card>
+      <button
+        className="btn w-100"
+        disabled={selected?.title === suggestion.title}
+        style={{ outline: "none", border: "none" }}
+      >
+        <Card style={{ cursor: "pointer" }}>
+          <Card.Header>{suggestion.title}</Card.Header>
+          <Card.Body
+            className={suggestion.income ? "text-success" : "text-danger"}
+          >
+            ${suggestion.amount}
+          </Card.Body>
+        </Card>
+      </button>
     </Col>
   );
 };

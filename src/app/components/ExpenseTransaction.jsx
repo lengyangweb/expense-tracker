@@ -13,6 +13,10 @@ const ExpenseTransaction = ({
   const [total, setTotal] = useState("");
 
   useEffect(() => {
+    if (!suggestionSelected) {
+      setTitle("");
+      setTotal("");
+    }
     if (suggestionSelected) {
       const indicator = suggestionSelected.income ? "+" : "-";
       setTitle(suggestionSelected.title);
@@ -58,6 +62,9 @@ const ExpenseTransaction = ({
     // reset fields
     setTotal((prev) => (prev = ""));
     setTitle((prev) => (prev = ""));
+
+    // reset suggestion selected if it is being selected
+    if (suggestionSelected) setSuggestionSelected(undefined);
   };
 
   // validate if a history with the same title already exist
