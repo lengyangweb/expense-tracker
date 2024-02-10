@@ -18,7 +18,7 @@ const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
   };
 
   return (
-    <Col xs={12} md={4} className="my-1 my-md-0" onClick={handleSelected}>
+    <Col xs={6} md={4} className="my-1 my-md-0" onClick={handleSelected}>
       <button
         className={`btn btn-sm p-0 w-100${
           selected?.title === suggestion.title
