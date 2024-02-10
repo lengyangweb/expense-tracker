@@ -14,7 +14,6 @@ const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
       setSelected(undefined);
     } else {
       setSelected(suggestion);
-      console.log(selected?.title);
     }
   };
 
