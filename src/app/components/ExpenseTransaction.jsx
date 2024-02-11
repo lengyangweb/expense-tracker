@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form } from "react-bootstrap";
+import { createHistory, getHistory } from "../lib/apis/histories";
 
 const ExpenseTransaction = ({
   histories,
@@ -28,15 +29,14 @@ const ExpenseTransaction = ({
    * Create a new transaction and save to hisotries
    * @returns error if error
    */
-  const onSave = () => {
+  const onSave = async () => {
     if (!title || !total)
       return toast.error("Please fill out both text and amount field");
 
     // validate if transaction already exist
-    const exist = validate(title);
-    if (exist) {
+    let history = await validate(title);
+    if (history)
       return toast.error("Please enter a differnet transaction name");
-    }
 
     const kindOfExpense = total.substring(0, 1);
     if (!kindOfExpense.includes("+")) {
@@ -54,9 +54,18 @@ const ExpenseTransaction = ({
       income: kindOfExpense.includes("+"),
       createdAt: Date.now(),
     };
+
+    try {
+      // create a new transaction id
+      history = await createHistory(newTransaction);
+    } catch (error) {
+      console.error(`Fail trying to create a new transaction`, error);
+      return;
+    }
+
     // set and update histories
-    const updatedHistories = [...histories, newTransaction];
-    localStorage.setItem("histories", JSON.stringify([...updatedHistories]));
+    const updatedHistories = [...histories, history];
+    // update histories state
     setHistories([...updatedHistories]);
 
     // reset fields
@@ -68,11 +77,15 @@ const ExpenseTransaction = ({
   };
 
   // validate if a history with the same title already exist
-  const validate = (newTitle) => {
-    if (!localStorage.getItem("histories")) return false;
-    const histories = JSON.parse(localStorage.getItem("histories"));
-    const exist = histories.some(({ title }) => title === newTitle);
-    return exist;
+  const validate = async (title) => {
+    try {
+      // send new history to be created
+      const history = await getHistory(title);
+      return history ? true : false;
+    } catch (error) {
+      console.error(`Fail trying to get history`, error);
+      return;
+    }
   };
 
   return (

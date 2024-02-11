@@ -1,39 +1,25 @@
+import { connectDB } from "@/app/lib/db";
 import { NextResponse } from "next/server";
-
-const transactionHistories = [
-  {
-    title: "Groceries",
-    total: 200.0,
-    createdAt: Date.now(),
-    income: true,
-  },
-  {
-    title: "Gas",
-    total: 60.35,
-    createdAt: Date.now(),
-    income: false,
-  },
-  {
-    title: "Snacks",
-    total: 15.3,
-    createdAt: Date.now(),
-    income: false,
-  },
-  {
-    title: "Netflix",
-    total: 20.5,
-    createdAt: Date.now(),
-    income: true,
-  },
-];
-
+import History from "@/app/models/History";
 /**
  * Get all transaction histories
  * @param {*} request
  * @returns {Array}
  */
 export async function GET(request) {
-  return NextResponse.json(transactionHistories);
+  try {
+    // connect to database
+    await connectDB();
+    // get all histories in database
+    const histories = await History.find();
+    // return all histories
+    return NextResponse.json(histories);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
 
 /**
@@ -42,7 +28,25 @@ export async function GET(request) {
  * @returns
  */
 export async function POST(request) {
-  return NextResponse.json({
-    message: `You have reached transaction histories POST.`,
-  });
+  // get json body from request
+  const json = await request.json();
+  if (!json) {
+    return NextResponse.json(
+      { error: `Missing required resource` },
+      { status: 400 }
+    );
+  }
+
+  try {
+    await connectDB(); // connect to database
+    // create a new transaction history
+    const history = await History.create(json);
+    return NextResponse.json(history);
+  } catch (error) {
+    console.error(`${new Date().toISOString()} - ${error}`);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

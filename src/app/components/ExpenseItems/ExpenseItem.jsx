@@ -32,10 +32,8 @@ const ExpenseItem = ({ transaction, removeTransaction }) => {
    */
   const getCreatedStamp = () => {
     // init new date
-    const date = new Date();
+    const date = new Date(transaction.createdAt);
     // set time of date to the creation of this transaction
-    date.setTime(transaction.createdAt);
-    // convert date to a readable date stamp
     const createdDateStamp = date.toDateString();
     // convert time to a readable time stamp
     const createdTimeStamp = date.toLocaleTimeString();

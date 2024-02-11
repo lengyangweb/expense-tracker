@@ -1,10 +1,11 @@
 "use client";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
 import ExpenseHistory from "../components/ExpenseHistory";
 import ExpenseTransaction from "../components/ExpenseTransaction";
+import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
 import ExpenseSuggestion from "../components/ExpenseSuggestion/ExpenseSuggestion";
+import { getHistories } from "../lib/apis/histories";
 
 const TrackerPage = () => {
   const [histories, setHistories] = useState();
@@ -13,8 +14,8 @@ const TrackerPage = () => {
 
   useEffect(() => {
     // wait a minute to load transaction histories
-    setTimeout(() => {
-      const data = getHistories();
+    setTimeout(async () => {
+      const data = await fetchHistories();
       setHistories(data);
     }, 500);
   }, []);
@@ -23,19 +24,17 @@ const TrackerPage = () => {
    * Get transaction histories
    * @returns {Array}
    */
-  const getHistories = () => {
-    // if there's no transaction histories
-    if (!localStorage.getItem("histories")) {
-      localStorage.setItem("histories", JSON.stringify([]));
+  const fetchHistories = async () => {
+    try {
+      const histories = await getHistories();
+      // set loading status
       setIsLoading(false);
+      // return all histories
+      return histories;
+    } catch (error) {
+      console.error(error);
       return [];
     }
-    // get transaction histories from localStorage
-    const histories = JSON.parse(localStorage.getItem("histories"));
-    // set loading status
-    setIsLoading(false);
-    // if there's histories then return histories, otherwise an empty array
-    return histories;
   };
 
   // if still loading histories
