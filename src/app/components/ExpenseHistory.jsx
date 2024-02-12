@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import ExpenseItem from "./ExpenseItems/ExpenseItem";
 import { Card } from "react-bootstrap";
 import HeaderBadge from "./ExpenseHeader/HeaderBadge";
+import { removeHistory } from "../lib/apis/histories";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   const incomeQuantity = histories.filter(
@@ -14,16 +15,24 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   ).length;
 
   // remove transaction history from histories
-  const removeTransaction = (transaction) => {
-    let updatedHistories = histories.filter(
-      (tran) => tran.title !== transaction.title
-    );
-    // update localStorage
-    localStorage.setItem("histories", JSON.stringify([...updatedHistories]));
-    // update current histories state
-    setHistories([...updatedHistories]);
-    // show toast
-    toast.success(`Transaction has been removed`);
+  const removeTransaction = async (transaction) => {
+    try {
+      // send history to be remove in database
+      const result = await removeHistory(transaction._id);
+      if (!result) return;
+      // remove history from state
+      const updatedHistories = histories.filter(
+        (history) => history._id !== transaction._id
+      );
+      // update current histories state
+      setHistories([...updatedHistories]);
+      // show toast
+      toast.success(`Transaction has been removed`);
+    } catch (error) {
+      console.error(`Error trying to remove History`, error);
+      toast.error(`There's an issue removing history`);
+      return;
+    }
   };
 
   return (

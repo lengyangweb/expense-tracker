@@ -8,7 +8,7 @@ import History from "@/app/models/History";
  */
 export async function GET(request, { params }) {
   // destructure title from url params
-  const { title } = params;
+  const { field: title } = params;
   if (!title) {
     // return error
     return NextResponse(
@@ -20,6 +20,27 @@ export async function GET(request, { params }) {
     await connectDB(); // connect to database
     // get the history with the same title
     const history = await History.findOne({ title });
+    return NextResponse.json(history);
+  } catch (error) {
+    console.error(`${new Date().toISOString()} - ${error}`);
+    return NextResponse({ error: `Internal Server Error` }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  // destructure title from url params
+  const { field: id } = params;
+  if (!id) {
+    // return error
+    return NextResponse(
+      { error: `Missing required resources` },
+      { status: 400 }
+    );
+  }
+  try {
+    await connectDB(); // connect to database
+    // get the history with the same title
+    const history = await History.findByIdAndDelete(id);
     return NextResponse.json(history);
   } catch (error) {
     console.error(`${new Date().toISOString()} - ${error}`);

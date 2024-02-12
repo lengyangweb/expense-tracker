@@ -44,4 +44,30 @@ function createHistory(history) {
   });
 }
 
-export { getHistories, createHistory, getHistory };
+/**
+ * Remove a transaction history
+ * @param {string} id
+ * @returns
+ */
+function removeHistory(id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      debugger;
+      // send history to be delete
+      const response = await fetch(`${url}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+      const data = await response.json();
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+export { getHistories, createHistory, getHistory, removeHistory };
