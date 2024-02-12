@@ -16,10 +16,9 @@ const ExpenseHeader = ({ histories }) => {
     setIncomes(totalIncome);
     setExpenses(totalExpense);
 
-    // if (incomes) {
+    // get total balance
     const totalBalance = getBalance(totalIncome, totalExpense);
     setBalance(totalBalance);
-    // }
   }, [histories]);
 
   /**
@@ -77,9 +76,9 @@ const ExpenseHeader = ({ histories }) => {
     <>
       <Balance balance={balance} />
       {expenses > incomes && (
-        <span className="fw-bold text-danger">
+        <small className="fw-bold text-danger">
           Your expenses is greater than your incomes
-        </span>
+        </small>
       )}
       <div className="d-flex justify-content-center border border-1 py-3 bg-white shadow">
         <IncomeTab incomes={incomes} />

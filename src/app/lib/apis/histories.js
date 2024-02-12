@@ -52,7 +52,6 @@ function createHistory(history) {
 function removeHistory(id) {
   return new Promise(async (resolve, reject) => {
     try {
-      debugger;
       // send history to be delete
       const response = await fetch(`${url}/${id}`, {
         method: "DELETE",
