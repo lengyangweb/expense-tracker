@@ -1,84 +1,17 @@
-"use client";
-import { Col, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import ExpenseHistory from "../components/ExpenseHistory";
-import ExpenseTransaction from "../components/ExpenseTransaction";
-import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
-import ExpenseSuggestion from "../components/ExpenseSuggestion/ExpenseSuggestion";
-import { getHistories } from "../lib/apis/histories";
+import Histories from "../components/Histories";
+import { connectDB } from "../lib/db";
+import History from "../models/History";
 
-const TrackerPage = () => {
-  const [histories, setHistories] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [suggestionSelected, setSuggestionSelected] = useState();
+const TrackerPage = async () => {
+  let data = [];
 
-  useEffect(() => {
-    // wait a minute to load transaction histories
-    setTimeout(async () => {
-      const data = await fetchHistories();
-      setHistories(data);
-    }, 500);
-  }, []);
-
-  /**
-   * Get transaction histories
-   * @returns {Array}
-   */
-  const fetchHistories = async () => {
-    try {
-      const histories = await getHistories();
-      // set loading status
-      setIsLoading(false);
-      // return all histories
-      return histories;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
-
-  // if still loading histories
-  if (isLoading) {
-    return (
-      <div className="d-flex justify-content-center mt-4">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  await connectDB();
+  data = await History.find();
+  // data = data.map((item) => ({ ...item, _id: item._id.toString() }));
+  // console.log(JSON.stringify(data));
 
   return (
-    <div className="d-flex justify-content-center py-3">
-      <Col xs={11}>
-        <Row>
-          <Col xs={12} md={6}>
-            <Row>
-              <Col xs={12}>
-                <ExpenseHeader histories={histories} />
-              </Col>
-              <Col xs={12}>
-                <ExpenseTransaction
-                  histories={histories}
-                  setHistories={setHistories}
-                  suggestionSelected={suggestionSelected}
-                  setSuggestionSelected={setSuggestionSelected}
-                />
-              </Col>
-              <Col xs={12}>
-                <ExpenseSuggestion
-                  selected={suggestionSelected}
-                  setSelected={setSuggestionSelected}
-                />
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={12} md={6}>
-            <ExpenseHistory histories={histories} setHistories={setHistories} />
-          </Col>
-        </Row>
-      </Col>
-    </div>
+    <Histories data={data} />
   );
 };
 
