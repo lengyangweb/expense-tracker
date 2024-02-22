@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { createHistory, getHistory } from "../lib/apis/histories";
 
 const ExpenseTransaction = ({
@@ -12,6 +12,7 @@ const ExpenseTransaction = ({
 }) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
+  const [isSubmitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!suggestionSelected) {
@@ -30,17 +31,22 @@ const ExpenseTransaction = ({
    * @returns error if error
    */
   const onSave = async () => {
-    if (!title || !total)
+    setSubmitted(true); // turn on submitted flag
+    if (!title || !total) {
+      setSubmitted(false);
       return toast.error("Please fill out both text and amount field");
-
+    }
     // validate if transaction already exist
     let history = await validate(title);
-    if (history)
+    if (history) {
+      setSubmitted(false);
       return toast.error("Please enter a differnet transaction name");
+    }
 
     const kindOfExpense = total.substring(0, 1);
     if (!kindOfExpense.includes("+")) {
       if (!kindOfExpense.includes("-")) {
+        setSubmitted(false);
         return toast.error("Please specify what kind of expense (+, -)");
       }
     }
@@ -59,6 +65,7 @@ const ExpenseTransaction = ({
       // create a new transaction id
       history = await createHistory(newTransaction);
     } catch (error) {
+      setSubmitted(false);
       console.error(`Fail trying to create a new transaction`, error);
       return;
     }
@@ -74,6 +81,8 @@ const ExpenseTransaction = ({
 
     // reset suggestion selected if it is being selected
     if (suggestionSelected) setSuggestionSelected(undefined);
+    // reset submit flag
+    setSubmitted(false);
   };
 
   // validate if a history with the same title already exist
@@ -120,8 +129,13 @@ const ExpenseTransaction = ({
             autoComplete="amount"
           />
         </Form.Group>
-        <Button className="w-100 my-2" variant="primary" onClick={onSave}>
-          Add Transaction
+        <Button
+          className="w-100 my-2"
+          variant="primary"
+          onClick={onSave}
+          disabled={isSubmitted}
+        >
+          {!isSubmitted ? `Add Transaction` : `Saving Transaction`}
         </Button>
       </Form>
     </div>
