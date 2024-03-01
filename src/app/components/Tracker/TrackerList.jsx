@@ -1,27 +1,72 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import { Col, Row } from "react-bootstrap";
 import Grid from "../Grid/Grid";
+import { toast } from 'react-toastify';
+import { Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import TrackerAction from "./TrackerAction";
 
-const TrackerList = ({ trackers }) => {
+const TrackerList = ({ data }) => {
+  const [trackers, setTrackers] = useState([]);
   const [selected, setSelected] = useState(undefined);
-  const [actionEnable, setActionEnable] = useState(true);
 
-  useMemo(() => setActionEnable(!selected ? true : false), [selected]);
+  useEffect(() => (data && data.length) && setTrackers(data), [data]);
 
   const columns = [
     { heading: "Title", field: "title" },
-    { heading: "CreatedStamp", field: "createdStamp" },
+    { heading: "CreatedStamp", field: "createdAt" },
   ];
 
   const columnsLayout = [6, 6];
 
-  if (!trackers.length) return;
+  const saveTracker = async (newTracker) => {
+    try {
+      // send new tracker to backend to save to db
+      const response = await fetch(
+        `http://localhost:3000/api/transaction/tracker`, 
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newTracker)
+        }
+      );
+      // parse result
+      const result = await response.json();
+      // if no result
+      if (!result) return;
+      // update trackers state with the new added tracker
+      setTrackers([...trackers, result.tracker]);
+      toast.success(`New Tracker Added`);
+    } catch (error) {
+      console.error(`Fail saving new tracker`, error);
+      toast.error(`Something went wrong`);
+      return;
+    }
+  }
+
+  // remove tracker
+  const handleRemoveTracker = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/transaction/tracker/${selected?._id}`, 
+        { method: 'DELETE' }
+      );
+      const result = await response.json();
+      if (!result) return;
+      // update tracker state
+      const updatedTrackers = trackers.filter((tracker) => tracker._id !== selected._id)
+      setTrackers(updatedTrackers);
+      toast.success(`Tracker Deleted`);
+      setSelected(undefined); // reset selected
+    } catch (error) {
+      toast.error(`Something went wrong`);
+      console.error(`Fail removing tracker`, error);
+    }
+  };
 
   return (
     <Col xs={12} className="py-3">
       <Row>
-        <Col xs={8}>
+        <Col xs={12} md={8}>
           <div className="lead">Select a tracker:</div>
           <Grid 
             rows={trackers} 
@@ -31,14 +76,12 @@ const TrackerList = ({ trackers }) => {
             setRowSelected={setSelected} 
           />
         </Col>
-        <Col xs={4} className="pb-2">
-          <div className="lead">Tracker Actions:</div>
-          <hr />
-          <div className="d-flex flex-column gap-2 align-items-center justify-content-end">
-            <button className="btn btn-success w-100">Create New Tracker</button>
-            <button className="btn btn-primary w-100" disabled={actionEnable}>View Tracker</button>
-            <button className="btn btn-danger w-100" disabled={actionEnable}>Remove Tracker</button>
-          </div>
+        <Col xs={12} md={4} className="pb-2 mt-sm-3">
+          <TrackerAction 
+            removeTracker={handleRemoveTracker} 
+            selectedTracker={selected}
+            onSave={saveTracker}
+          />
         </Col>
       </Row>
     </Col>

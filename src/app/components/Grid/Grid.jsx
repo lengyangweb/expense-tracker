@@ -4,6 +4,9 @@ import styled from "styled-components";
 import GridRow from "./GridRow";
 
 const GridContainer = styled.div`
+  .card-header .row {
+    background: #172A3A;
+  }
   .card-body {
     .list-group {
       max-height: 350px;
@@ -14,8 +17,8 @@ const GridContainer = styled.div`
         margin: 0;
 
         .selected {
-          background: #aaaaaa;
-          color: #ffffff;
+          background: #40434E;
+          color: #eeeeee;
         }
 
         .col-12 {
@@ -23,8 +26,8 @@ const GridContainer = styled.div`
           cursor: pointer;
 
           &:hover {
-            background: #aaaaaa;
-            color: #ffffff;
+            background: #40434E;
+            color: #eeeeee;
           }
 
           .px-0 {
@@ -36,6 +39,9 @@ const GridContainer = styled.div`
         }
       }
     }
+  }
+  .card-footer {
+    background: #eeeeee;
   }
 `;
 
