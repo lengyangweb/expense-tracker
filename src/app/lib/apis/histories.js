@@ -13,8 +13,8 @@ async function getHistories() {
   return histories;
 }
 
-async function getHistory(title) {
-  const response = await fetch(`${url}/${title}`);
+async function getHistory(title, trackerId) {
+  const response = await fetch(`${url}/trackerId=${trackerId}title=${title}`);
   const data = await response.json();
   return data;
 }

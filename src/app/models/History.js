@@ -1,6 +1,11 @@
 import { Schema, model, models } from "mongoose";
 
 const historySchema = new Schema({
+  trackerId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Tracker',
+    required: [true, "trackerId is required"]
+  },
   title: {
     type: String,
     required: [true, "title is required"],

@@ -5,11 +5,30 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import TrackerAction from "./TrackerAction";
 
-const TrackerList = ({ data }) => {
+const TrackerList = () => {
   const [trackers, setTrackers] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const [selected, setSelected] = useState(undefined);
 
-  useEffect(() => (data && data.length) && setTrackers(data), [data]);
+  useEffect(() => {
+    fetchTrackers()
+      .then((data) => {
+        setTrackers(data)
+        setLoading(false);
+      })
+      .catch((error) => console.error(`Fetching trackers error`, error));
+  }, []);
+
+  async function fetchTrackers() {
+    try {
+      const response = await fetch('http://localhost:3000/api/transaction/tracker');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Fail fetching trackers`, error);
+      toast.error(`Something went wrong`);
+    }
+  }
 
   const columns = [
     { heading: "Title", field: "title" },
@@ -66,17 +85,18 @@ const TrackerList = ({ data }) => {
   return (
     <Col xs={12} className="py-3">
       <Row>
-        <Col xs={12} md={8}>
-          <div className="lead">Select a tracker:</div>
+        <Col xs={12}>
+          {/* <div className="lead">Select a tracker:</div> */}
           <Grid 
             rows={trackers} 
             columns={columns} 
             layouts={columnsLayout} 
             selectedRow={selected} 
             setRowSelected={setSelected} 
+            isLoading={isLoading}
           />
         </Col>
-        <Col xs={12} md={4} className="pb-2 mt-sm-3">
+        <Col xs={12} className="pb-2 mt-sm-3">
           <TrackerAction 
             removeTracker={handleRemoveTracker} 
             selectedTracker={selected}

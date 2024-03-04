@@ -1,5 +1,17 @@
 import { NextResponse } from "next/server";
 import Tracker from '@/app/models/Tracker';
+import { connectDB } from "@/app/lib/db";
+
+export async function GET(request) {
+  try {
+    await connectDB();
+    const trackers = await Tracker.find();
+    return NextResponse.json(trackers);
+  } catch (error) {
+    console.error(`Fail fetching trackers`, error);
+    return NextResponse({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
 
 export async function POST(request) {
     // get json body from request

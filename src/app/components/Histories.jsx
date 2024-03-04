@@ -6,26 +6,11 @@ import ExpenseTransaction from "../components/ExpenseTransaction";
 import ExpenseHeader from "../components/ExpenseHeader/ExpenseHeader";
 import ExpenseSuggestion from "../components/ExpenseSuggestion/ExpenseSuggestion";
 
-const Histories = ({ data }) => {
+const Histories = ({ data, trackerId }) => {
   const [histories, setHistories] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const [suggestionSelected, setSuggestionSelected] = useState();
 
-  useEffect(() => {
-      setHistories(data);
-      setLoading(false);
-  }, [data]);
-
-  // if still loading histories
-  if (isLoading) {
-    return (
-      <div className="d-flex justify-content-center mt-4">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => setHistories(data), [data]);
 
   return (
     <div className="d-flex justify-content-center py-3">
@@ -38,6 +23,7 @@ const Histories = ({ data }) => {
               </Col>
               <Col xs={12}>
                 <ExpenseTransaction
+                  trackerId={trackerId}
                   histories={histories}
                   setHistories={setHistories}
                   suggestionSelected={suggestionSelected}

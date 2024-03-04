@@ -9,6 +9,7 @@ const ExpenseTransaction = ({
   setHistories,
   suggestionSelected,
   setSuggestionSelected,
+  trackerId
 }) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
@@ -40,7 +41,7 @@ const ExpenseTransaction = ({
     let history = await validate(title);
     if (history) {
       setSubmitted(false);
-      return toast.error("Please enter a differnet transaction name");
+      return toast.error("Please enter a different transaction name");
     }
 
     const kindOfExpense = total.substring(0, 1);
@@ -55,6 +56,7 @@ const ExpenseTransaction = ({
     const newTotal = total.split(kindOfExpense)[1];
     // create new transaction
     const newTransaction = {
+      trackerId,
       title,
       total: parseFloat(newTotal),
       income: kindOfExpense.includes("+"),
@@ -89,7 +91,7 @@ const ExpenseTransaction = ({
   const validate = async (title) => {
     try {
       // send new history to be created
-      const history = await getHistory(title);
+      const history = await getHistory(title, trackerId);
       return history ? true : false;
     } catch (error) {
       console.error(`Fail trying to get history`, error);

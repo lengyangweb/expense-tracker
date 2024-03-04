@@ -1,28 +1,35 @@
-import { connectDB } from "../lib/db";
-import { Container, Row } from "react-bootstrap";
-import { getTrackers } from "../services/tracker";
+import { connectDB } from '../lib/db';
+import Tracker from '@/app/models/Tracker';
+import { Container, Row, Col } from "react-bootstrap";
 import TrackerList from "../components/Tracker/TrackerList";
+import AddTrackerForm from '../components/add-tracker-form';
+
 
 const TrackerPage = async () => {
-  let trackers = [];
+  let data = [];
 
   try {
     await connectDB();
-    trackers = await getTrackers();
-    trackers = JSON.parse(JSON.stringify(trackers));
+    data = await Tracker.find();
+    data = JSON.parse(JSON.stringify(data));
   } catch (error) {
-    console.error(`Fail getting trackers`, error);
+    console.error(first)
   }
 
   return (
     <Container>
+      {/* <div className="d-flex justify-content-center"> */}
       <Row>
-        {/* {!trackers.length && (
-          <span>No trackers to display. Please create new tracker by clicking the "New" button.</span>
-        )}
-        {trackers.length > 0 && <TrackerList data={trackers} />} */}
-        <TrackerList data={trackers} />
+        <Col sm={12} lg={6}>
+          <AddTrackerForm />
+        </Col>
+        <Col sm={12} lg={6}>
+          <Row>
+            <TrackerList data={data}/>
+          </Row>
+        </Col>
       </Row>
+      {/* </div> */}
     </Container>
   );
 };

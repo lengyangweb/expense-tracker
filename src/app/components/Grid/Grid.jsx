@@ -9,7 +9,7 @@ const GridContainer = styled.div`
   }
   .card-body {
     .list-group {
-      max-height: 350px;
+      max-height: 250px;
       overflow-y: scroll;
 
       .row {
@@ -45,11 +45,11 @@ const GridContainer = styled.div`
   }
 `;
 
-const Grid = ({ rows, columns, layouts, selectedRow, setRowSelected }) => {
+const Grid = ({ rows, columns, layouts, selectedRow, setRowSelected, isLoading }) => {
 
   return (
     <GridContainer className="card shadow">
-      <Card.Header className="bg-dark text-light">
+      <Card.Header className="text-light" style={{ background: '#172A3A' }}>
         <Row>
           {columns.map((column, index) => (
             <Col key={index} xs={layouts[index]}>
@@ -78,7 +78,8 @@ const Grid = ({ rows, columns, layouts, selectedRow, setRowSelected }) => {
         <Row>
           <Col xs={12}>
             <div className="d-flex justify-content-center">
-            {rows.length} (Items)
+            { isLoading && <span>Loading Items...</span>}
+            { !isLoading && <span>{rows.length} (Items)</span>}
             </div>
           </Col>
         </Row>
