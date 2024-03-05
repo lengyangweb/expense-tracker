@@ -1,9 +1,8 @@
-import { connectDB } from '../lib/db';
-import Tracker from '@/app/models/Tracker';
+import { connectDB } from "../lib/db";
+import Tracker from "@/app/models/Tracker";
 import { Container, Row, Col } from "react-bootstrap";
 import TrackerList from "../components/Tracker/TrackerList";
-import AddTrackerForm from '../components/add-tracker-form';
-
+import TrackerForm from "../components/TrackerForm";
 
 const TrackerPage = async () => {
   let data = [];
@@ -13,23 +12,21 @@ const TrackerPage = async () => {
     data = await Tracker.find();
     data = JSON.parse(JSON.stringify(data));
   } catch (error) {
-    console.error(first)
+    console.error(first);
   }
 
   return (
     <Container>
-      {/* <div className="d-flex justify-content-center"> */}
-      <Row>
-        <Col sm={12} lg={6}>
-          <AddTrackerForm />
-        </Col>
-        <Col sm={12} lg={6}>
+      <div className="d-flex justify-content-center">
           <Row>
-            <TrackerList data={data}/>
+            <Col sm={12} lg={6}>
+              <TrackerForm />
+            </Col>
+            <Col xs={12} lg={6} className="py-3">
+              <TrackerList data={data} />
+            </Col>
           </Row>
-        </Col>
-      </Row>
-      {/* </div> */}
+      </div>
     </Container>
   );
 };
