@@ -1,8 +1,8 @@
 import { connectDB } from "../lib/db";
 import Tracker from "@/app/models/Tracker";
+import TrackerForm from "../components/TrackerForm";
 import { Container, Row, Col } from "react-bootstrap";
 import TrackerList from "../components/Tracker/TrackerList";
-import TrackerForm from "../components/TrackerForm";
 
 const TrackerPage = async () => {
   let data = [];

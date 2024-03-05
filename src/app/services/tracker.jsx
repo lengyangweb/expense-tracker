@@ -16,7 +16,7 @@ const createTracker = async (prevState, formData) => {
     // check to see if tracker exist
     let tracker = await Tracker.findOne({ title });
     // if tracker already exist
-    if (tracker) return { success: false, message: 'Tracker already exist' };
+    if (tracker) return { success: false, message: 'Tracker already exist, please use a different name.' };
     // create tracker
     tracker = await Tracker.create({ title });
     // reload path

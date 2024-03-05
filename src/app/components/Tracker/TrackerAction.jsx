@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Confirm from "../Confirm";
 import { useState, useMemo } from "react";
-import { FaListAlt, FaPlus, FaTrashAlt } from "react-icons/fa";
+import { FaListAlt, FaTrashAlt } from "react-icons/fa";
 
 const TrackerAction = ({ removeTracker, selectedTracker, onSave }) => {
   const [actionEnable, setActionEnable] = useState(true);
