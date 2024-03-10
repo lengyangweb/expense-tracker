@@ -1,18 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Button, Form, Spinner } from "react-bootstrap";
-import { createHistory, getHistory } from "../lib/apis/histories";
+import { useFormStatus } from 'react-dom';
+import { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { createHistory, getHistory } from "../services/history";
 
-const ExpenseTransaction = ({
-  histories,
-  setHistories,
-  suggestionSelected,
-  setSuggestionSelected,
-  trackerId
-}) => {
+const ExpenseTransaction = ({ suggestionSelected, setSuggestionSelected, trackerId }) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
+  const { pending } = useFormStatus();
   const [isSubmitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -20,7 +16,7 @@ const ExpenseTransaction = ({
       setTitle("");
       setTotal("");
     }
-    if (suggestionSelected) {
+    if (suggestionSelected) { // if user choose a suggestion transaction
       const indicator = suggestionSelected.income ? "+" : "-";
       setTitle(suggestionSelected.title);
       setTotal(`${indicator}${suggestionSelected.amount}`);
@@ -37,13 +33,13 @@ const ExpenseTransaction = ({
       setSubmitted(false);
       return toast.error("Please fill out both text and amount field");
     }
-    // validate if transaction already exist
-    let history = await validate(title);
-    if (history) {
+    // check to see if a history already exist with the title
+    let history = await getHistory(trackerId, title);
+    if (history.length) { // if there's already a history exist
       setSubmitted(false);
       return toast.error("Please enter a different transaction name");
     }
-
+    // check to see if it's an expense or income
     const kindOfExpense = total.substring(0, 1);
     if (!kindOfExpense.includes("+")) {
       if (!kindOfExpense.includes("-")) {
@@ -65,36 +61,16 @@ const ExpenseTransaction = ({
 
     try {
       // create a new transaction id
-      history = await createHistory(newTransaction);
+      const response = await createHistory(newTransaction);
+      if (!response.success) return toast.error(response.message);
+      toast.success(response.message);
+      // reset suggestion selected if it is being selected
+      if (suggestionSelected) setSuggestionSelected(undefined);
+      // reset submit flag
+      setSubmitted(false);
     } catch (error) {
       setSubmitted(false);
       console.error(`Fail trying to create a new transaction`, error);
-      return;
-    }
-
-    // set and update histories
-    const updatedHistories = [...histories, history];
-    // update histories state
-    setHistories([...updatedHistories]);
-
-    // reset fields
-    setTotal((prev) => (prev = ""));
-    setTitle((prev) => (prev = ""));
-
-    // reset suggestion selected if it is being selected
-    if (suggestionSelected) setSuggestionSelected(undefined);
-    // reset submit flag
-    setSubmitted(false);
-  };
-
-  // validate if a history with the same title already exist
-  const validate = async (title) => {
-    try {
-      // send new history to be created
-      const history = await getHistory(title, trackerId);
-      return history ? true : false;
-    } catch (error) {
-      console.error(`Fail trying to get history`, error);
       return;
     }
   };
@@ -105,15 +81,15 @@ const ExpenseTransaction = ({
       <hr />
       <Form>
         <Form.Group>
-          <Form.Label htmlFor="transaction">Transaction Name</Form.Label>
+          <Form.Label htmlFor="title">Transaction Name</Form.Label>
           <Form.Control
             type="text"
-            id="transaction"
-            name="transaction"
+            id="title"
+            name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter a transaction name..."
-            autoComplete="transaction"
+            placeholder="Enter an income or expense title"
+            autoComplete="title"
           />
         </Form.Group>
         <Form.Group className="my-2">
@@ -131,13 +107,8 @@ const ExpenseTransaction = ({
             autoComplete="amount"
           />
         </Form.Group>
-        <Button
-          className="w-100 my-2"
-          variant="primary"
-          onClick={onSave}
-          disabled={isSubmitted}
-        >
-          {!isSubmitted ? `Add Transaction` : `Saving Transaction`}
+        <Button className="w-100 my-2" variant="primary" onClick={onSave} disabled={pending}>
+          <span>{!pending ? `Add Transaction` : `Saving Transaction`}</span>
         </Button>
       </Form>
     </div>

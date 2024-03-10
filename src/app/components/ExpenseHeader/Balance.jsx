@@ -1,7 +1,5 @@
 "use client";
-import propTypes from "prop-types";
 import { Col } from "react-bootstrap";
-import React, { useEffect, useState } from "react";
 
 const Balance = ({ balance }) => {
   return (

@@ -4,12 +4,13 @@ import { toast } from "react-toastify";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import TrackerAction from "./TrackerAction";
+import { removeTracker } from "@/app/services/tracker";
 
 const TrackerList = ({ data }) => {
   const [trackers, setTrackers] = useState([]);
   const [selected, setSelected] = useState(undefined);
 
-  useEffect(() => setTrackers(data), []);
+  useEffect(() => setTrackers(data), [data]);
 
   const columns = [
     { heading: "Title", field: "title" },
@@ -18,57 +19,17 @@ const TrackerList = ({ data }) => {
 
   const columnsLayout = [6, 6];
 
-  const saveTracker = async (newTracker) => {
-    try {
-      // send new tracker to backend to save to db
-      const response = await fetch(
-        `http://localhost:3000/api/transaction/tracker`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newTracker),
-        }
-      );
-      // parse result
-      const result = await response.json();
-      // if no result
-      if (!result) return;
-      // update trackers state with the new added tracker
-      setTrackers([...trackers, result.tracker]);
-      toast.success(`New Tracker Added`);
-    } catch (error) {
-      console.error(`Fail saving new tracker`, error);
-      toast.error(`Something went wrong`);
-      return;
-    }
-  };
-
   // remove tracker
   const handleRemoveTracker = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/transaction/tracker/${selected?._id}`,
-        { method: "DELETE" }
-      );
-      const result = await response.json();
-      if (!result) return;
-      // update tracker state
-      const updatedTrackers = trackers.filter(
-        (tracker) => tracker._id !== selected._id
-      );
-      setTrackers(updatedTrackers);
-      toast.success(`Tracker Deleted`);
-      setSelected(undefined); // reset selected
-    } catch (error) {
-      toast.error(`Something went wrong`);
-      console.error(`Fail removing tracker`, error);
-    }
+    const response = await removeTracker(selected?._id);
+    if (!response.success) return toast.error(response.message);
+    toast.success(response.message);
+    setSelected(undefined);
   };
 
   return (
     <Row>
       <Col xs={12}>
-        {/* <div className="lead">Select a tracker:</div> */}
         <Grid
           rows={trackers}
           columns={columns}
@@ -81,7 +42,6 @@ const TrackerList = ({ data }) => {
         <TrackerAction
           removeTracker={handleRemoveTracker}
           selectedTracker={selected}
-          onSave={saveTracker}
         />
       </Col>
     </Row>

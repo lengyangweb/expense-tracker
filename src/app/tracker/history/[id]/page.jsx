@@ -1,14 +1,12 @@
-import { connectDB } from '@/app/lib/db';
-import History from '@/app/models/History';
 import Histories from '@/app/components/Histories';
+import { getHistories } from '@/app/services/history';
 
 const page = async ({ params }) => {
   const { id: trackerId } = params;
-
-  let data = [];
-
-  await connectDB();
-  data = await History.find({ trackerId });
+  let data;
+  
+  // get all histories with associated with the trackerId
+  data = await getHistories(trackerId);
 
   return <Histories data={data} trackerId={trackerId} />;
 }

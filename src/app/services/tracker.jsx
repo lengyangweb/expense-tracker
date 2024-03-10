@@ -1,6 +1,7 @@
 'use server';
 import { connectDB } from '../lib/db';
 import Tracker from '@/app/models/Tracker';
+import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 const getTrackers = async () => {
@@ -28,9 +29,21 @@ const createTracker = async (prevState, formData) => {
   }
 }
 
+/**
+ * Remove tracker
+ * @param {mongoose.Schema.Types.ObjectId} _id 
+ * @returns
+ */
 const removeTracker = async (_id) => {
-  const updated = await Tracker.findByIdAndDelete(_id);
-  return updated;
+  try {
+    const updated = await Tracker.findByIdAndDelete(_id);
+    if (!updated) return { success: false, message: 'Unable to remove tracker' };
+    revalidatePath('/tracker');
+    return { success: true, message: `Tracker removed` };
+  } catch (error) {
+    console.error(`Fail trying to remove tracker`, error);
+    return { success: false, message: 'Something went wrong' };
+  }
 }
 
 export { 

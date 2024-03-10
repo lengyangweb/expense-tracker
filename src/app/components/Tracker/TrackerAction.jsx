@@ -3,7 +3,7 @@ import Confirm from "../Confirm";
 import { useState, useMemo } from "react";
 import { FaListAlt, FaTrashAlt } from "react-icons/fa";
 
-const TrackerAction = ({ removeTracker, selectedTracker, onSave }) => {
+const TrackerAction = ({ removeTracker, selectedTracker }) => {
   const [actionEnable, setActionEnable] = useState(true);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 

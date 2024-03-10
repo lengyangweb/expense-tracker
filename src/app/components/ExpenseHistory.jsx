@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { Card } from "react-bootstrap";
 import ExpenseItem from "./ExpenseItems/ExpenseItem";
 import HeaderBadge from "./ExpenseHeader/HeaderBadge";
-import { removeHistory } from "../lib/apis/histories";
 import HistoryHeader from "./HistoryHeader";
+import { removeHistory } from "../services/history";
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   const [sortStatus, setSortStatus] = useState();
@@ -17,16 +17,9 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   const removeTransaction = async (transaction) => {
     try {
       // send history to be remove in database
-      const result = await removeHistory(transaction._id);
-      if (!result) return;
-      // remove history from state
-      const updatedHistories = histories.filter(
-        (history) => history._id !== transaction._id
-      );
-      // update current histories state
-      setHistories([...updatedHistories]);
-      // show toast
-      toast.success(`Transaction has been removed`);
+      const response = await removeHistory(transaction._id);
+      if (!response.success) return toast.error(response.message);
+      toast.success(response.success);
     } catch (error) {
       console.error(`Error trying to remove History`, error);
       toast.error(`There's an issue removing history`);

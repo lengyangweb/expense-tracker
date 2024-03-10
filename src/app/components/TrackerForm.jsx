@@ -26,6 +26,7 @@ const SubmitButton = () => {
 };
 
 const TrackerForm = () => {
+  const [title, setTitle] = useState();
   const [state, formAction] = useFormState(createTracker, initialState);
   const [error, setError] = useState();
 
@@ -36,6 +37,7 @@ const TrackerForm = () => {
         setTimeout(() => setError(undefined), 8000);
       } else {
         toast.success(state.message);
+        setTitle(undefined);
       }
     }
   }, [state]);
@@ -58,6 +60,8 @@ const TrackerForm = () => {
                   name="title"
                   placeholder="January Tracker"
                   className="form-control"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   autoFocus={true}
                   autoComplete="title"
                 />
