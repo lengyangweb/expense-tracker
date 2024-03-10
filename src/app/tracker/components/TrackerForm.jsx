@@ -62,7 +62,6 @@ const TrackerForm = () => {
                   className="form-control"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  autoFocus={true}
                   autoComplete="title"
                 />
               </div>

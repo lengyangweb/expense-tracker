@@ -12,8 +12,6 @@ const Histories = ({ data, trackerId }) => {
 
   useEffect(() => setHistories(data), [data]);
 
-  if (!histories.length) return;
-
   return (
     <div className="d-flex justify-content-center py-3">
       <Col xs={11}>
