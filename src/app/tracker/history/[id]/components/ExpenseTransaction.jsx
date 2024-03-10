@@ -3,13 +3,12 @@ import { toast } from "react-toastify";
 import { useFormStatus } from 'react-dom';
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { createHistory, getHistory } from "../services/history";
+import { createHistory, getHistory } from "../../../../services/history";
 
 const ExpenseTransaction = ({ suggestionSelected, setSuggestionSelected, trackerId }) => {
   const [title, setTitle] = useState("");
   const [total, setTotal] = useState("");
   const { pending } = useFormStatus();
-  const [isSubmitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!suggestionSelected) {
@@ -28,24 +27,15 @@ const ExpenseTransaction = ({ suggestionSelected, setSuggestionSelected, tracker
    * @returns error if error
    */
   const onSave = async () => {
-    setSubmitted(true); // turn on submitted flag
-    if (!title || !total) {
-      setSubmitted(false);
-      return toast.error("Please fill out both text and amount field");
-    }
+    if (!title || !total) return toast.error("Please fill out both text and amount field");
     // check to see if a history already exist with the title
     let history = await getHistory(trackerId, title);
-    if (history.length) { // if there's already a history exist
-      setSubmitted(false);
-      return toast.error("Please enter a different transaction name");
-    }
+    // if there's already a history exist
+    if (history.length) return toast.error("Please enter a different transaction name");
     // check to see if it's an expense or income
     const kindOfExpense = total.substring(0, 1);
     if (!kindOfExpense.includes("+")) {
-      if (!kindOfExpense.includes("-")) {
-        setSubmitted(false);
-        return toast.error("Please specify what kind of expense (+, -)");
-      }
+      if (!kindOfExpense.includes("-")) return toast.error("Please specify what kind of expense (+, -)");
     }
 
     // check to see what kind of expense is it
@@ -66,8 +56,6 @@ const ExpenseTransaction = ({ suggestionSelected, setSuggestionSelected, tracker
       toast.success(response.message);
       // reset suggestion selected if it is being selected
       if (suggestionSelected) setSuggestionSelected(undefined);
-      // reset submit flag
-      setSubmitted(false);
     } catch (error) {
       setSubmitted(false);
       console.error(`Fail trying to create a new transaction`, error);

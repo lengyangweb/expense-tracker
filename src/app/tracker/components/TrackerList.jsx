@@ -1,5 +1,5 @@
 "use client";
-import Grid from "../Grid/Grid";
+import Grid from "../../components/Grid/Grid";
 import { toast } from "react-toastify";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -26,6 +26,8 @@ const TrackerList = ({ data }) => {
     toast.success(response.message);
     setSelected(undefined);
   };
+
+  if (!trackers.length) return;
 
   return (
     <Row>

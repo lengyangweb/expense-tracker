@@ -3,10 +3,16 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { Card } from "react-bootstrap";
-import ExpenseItem from "./ExpenseItems/ExpenseItem";
-import HeaderBadge from "./ExpenseHeader/HeaderBadge";
 import HistoryHeader from "./HistoryHeader";
-import { removeHistory } from "../services/history";
+import ExpenseItem from "./ExpenseItem";
+import HeaderBadge from "./HeaderBadge";
+import { removeHistory } from "../../../../services/history";
+
+const historyBodyStyle = {
+  maxHeight: "540px",
+  overflowY: "scroll",
+  background: "#eeeeee",
+}
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   const [sortStatus, setSortStatus] = useState();
@@ -53,13 +59,7 @@ const ExpenseHistory = ({ histories, setHistories }) => {
           />
         </div>
       </Card.Header>
-      <Card.Body
-        style={{
-          maxHeight: "540px",
-          overflowY: "scroll",
-          background: "#eeeeee",
-        }}
-      >
+      <Card.Body style={historyBodyStyle}>
         {histories.length === 0 && <span>No transaction histories.</span>}
         {histories.length > 0 &&
           histories.map((transaction) => (

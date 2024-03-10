@@ -1,4 +1,4 @@
-import Histories from '@/app/components/Histories';
+import Histories from '@/app/tracker/history/[id]/components/Histories';
 import { getHistories } from '@/app/services/history';
 
 const page = async ({ params }) => {

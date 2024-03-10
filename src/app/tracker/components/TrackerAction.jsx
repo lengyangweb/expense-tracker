@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Confirm from "../Confirm";
+import Confirm from "../../components/Confirm";
 import { useState, useMemo } from "react";
 import { FaListAlt, FaTrashAlt } from "react-icons/fa";
 
