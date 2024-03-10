@@ -57,6 +57,7 @@ const TrackerForm = () => {
                 </label>
                 <input
                   type="text"
+                  id="title"
                   name="title"
                   placeholder="January Tracker"
                   className="form-control"

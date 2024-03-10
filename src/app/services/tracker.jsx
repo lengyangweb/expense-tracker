@@ -1,7 +1,8 @@
 'use server';
+import mongoose from 'mongoose';
 import { connectDB } from '../lib/db';
 import Tracker from '@/app/models/Tracker';
-import mongoose from 'mongoose';
+import History from '@/app/models/History';
 import { revalidatePath } from 'next/cache';
 
 const getTrackers = async () => {
@@ -36,8 +37,13 @@ const createTracker = async (prevState, formData) => {
  */
 const removeTracker = async (_id) => {
   try {
-    const updated = await Tracker.findByIdAndDelete(_id);
-    if (!updated) return { success: false, message: 'Unable to remove tracker' };
+    const [trackerStatus, historyStatus] = await Promise.all([
+      Tracker.findByIdAndDelete(_id),
+      History.deleteMany({ trackerId: [_id] })
+    ]);
+    // if one of the deletion fail
+    if (!trackerStatus || !historyStatus) return { success: false, message: 'Unable to remove tracker' };
+    // remove all transaction history associated with this id;
     revalidatePath('/tracker');
     return { success: true, message: `Tracker removed` };
   } catch (error) {

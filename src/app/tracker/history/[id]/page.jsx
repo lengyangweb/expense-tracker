@@ -7,6 +7,7 @@ const page = async ({ params }) => {
   
   // get all histories with associated with the trackerId
   data = await getHistories(trackerId);
+  if (data) data = JSON.parse(JSON.stringify(data));
 
   return <Histories data={data} trackerId={trackerId} />;
 }

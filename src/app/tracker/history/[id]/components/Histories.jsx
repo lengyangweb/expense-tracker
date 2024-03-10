@@ -1,9 +1,9 @@
 "use client";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import ExpenseHeader from "./ExpenseHeader";
 import ExpenseHistory from "./ExpenseHistory";
 import ExpenseTransaction from "./ExpenseTransaction";
-import ExpenseHeader from "./ExpenseHeader";
 import ExpenseSuggestion from "./ExpenseSuggestion";
 
 const Histories = ({ data, trackerId }) => {
