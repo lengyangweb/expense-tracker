@@ -4,7 +4,7 @@ import { Nav, Navbar } from "react-bootstrap";
 const navStyle = {
   width: "12rem",
   background: '#0449ab',
-  height: '100vh'
+  height: '100vh',
 }
 
 const Header = () => {
@@ -25,7 +25,7 @@ const Header = () => {
           </Link>
         </div>
       </Nav>
-      <span className="text-light">&copy;{new Date().getFullYear()}</span>
+      <span className="text-light text-center py-2 fixed-bottom" style={{ width: '10.5rem' }}>&copy;{new Date().getFullYear()}</span>
     </Navbar>
   );
 };
