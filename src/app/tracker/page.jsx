@@ -19,10 +19,10 @@ const TrackerPage = async () => {
     <Container>
       <div className="d-flex justify-content-center">
           <Row>
-            <Col sm={12} lg={6}>
+            <Col sm={12} lg={5}>
               <TrackerForm />
             </Col>
-            <Col xs={12} lg={6} className="py-3">
+            <Col xs={12} lg={7} className="py-3">
               <TrackerList data={data} />
             </Col>
           </Row>

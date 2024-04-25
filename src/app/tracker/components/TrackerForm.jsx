@@ -1,16 +1,12 @@
 "use client";
+
 import { toast } from "react-toastify";
 import { FaPlus } from "react-icons/fa";
-import ErrorMessage from "../../components/ErrorMessage";
-import { useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Card, Col, Row } from "react-bootstrap";
 import { createTracker } from "../../services/tracker";
-import { useFormStatus, useFormState } from "react-dom";
-
-const initialState = {
-  message: undefined,
-  success: null,
-};
+import ErrorMessage from "../../components/ErrorMessage";
+import { useEffect, useOptimistic, useRef, useState } from "react";
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -26,21 +22,20 @@ const SubmitButton = () => {
 };
 
 const TrackerForm = () => {
-  const [title, setTitle] = useState();
-  const [state, formAction] = useFormState(createTracker, initialState);
+  const formRef = useRef();
   const [error, setError] = useState();
+  const [optimisticTracker, addOptimisticTracker] = useOptimistic((state, newTracker) => {
+    return [...state, ...newTracker];
+  });
 
-  useEffect(() => {
-    if (state && state.hasOwnProperty("success")) {
-      if (!state.success) {
-        setError(state.message);
-        setTimeout(() => setError(undefined), 8000);
-      } else {
-        toast.success(state.message);
-        setTitle(undefined);
-      }
-    }
-  }, [state]);
+  async function submitForm(formData) {
+    addOptimisticTracker({
+      title: formData.get('title')
+    });
+    await createTracker(formData);
+    // reset form values after
+    formRef.current.reset();
+  }
 
   return (
     <Row>
@@ -50,7 +45,7 @@ const TrackerForm = () => {
             Create Tracker Form
           </div>
           <div className="card-body">
-            <form className="p-1" action={formAction}>
+            <form className="p-1" action={submitForm} ref={formRef}>
               <div className="form-group">
                 <label htmlFor="title" className="form-label">
                   Title:
@@ -61,8 +56,6 @@ const TrackerForm = () => {
                   name="title"
                   placeholder="January Tracker"
                   className="form-control"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
                   autoComplete="title"
                 />
               </div>

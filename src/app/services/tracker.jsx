@@ -10,10 +10,11 @@ const getTrackers = async () => {
   return trackers;
 }
 
-const createTracker = async (prevState, formData) => {
+const createTracker = async (formData) => {
   const title = formData.get('title');
   if (!title) return { success: false, message: 'Title is required'};
   try {
+    console.log(title2);
     await connectDB();
     // check to see if tracker exist
     let tracker = await Tracker.findOne({ title });
@@ -26,7 +27,8 @@ const createTracker = async (prevState, formData) => {
     // return result
     return { success: true,  message: `tracker ${title} has been added` };
   } catch (error) {
-    return { success: false, message: `Fail to create tracker` };
+    console.error(error);
+    // return { success: false, message: `Fail to create tracker` };
   }
 }
 
