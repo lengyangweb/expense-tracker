@@ -5,11 +5,11 @@ import { revalidatePath } from 'next/cache';
 /**
  * Get all of the transaction history associated with the trackerId
  * @param {import('mongoose').ObjectId} trackerId 
- * @returns 
+ * @returns {[]}
  */
 const getHistories = async (trackerId) => {
   try {
-    const histories = await History.find({ trackerId });
+    const histories = await History.find({ trackerId }); // get all histories with the associated trackerId
     return histories;
   } catch (error) {
     console.error(`Error fetching histories`, error);
@@ -21,7 +21,7 @@ const getHistories = async (trackerId) => {
  * Get a transaction history
  * @param {import('mongoose').ObjectId} trackerId 
  * @param {String} title 
- * @returns 
+ * @returns {Object}
  */
 const getHistory = async (trackerId, title) => {
   try {

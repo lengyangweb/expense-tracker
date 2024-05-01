@@ -1,40 +1,44 @@
 "use client";
 
+import { z } from 'zod';
+import { useRef } from "react";
 import { toast } from "react-toastify";
-import { FaPlus } from "react-icons/fa";
-import { useFormStatus } from "react-dom";
 import { Card, Col, Row } from "react-bootstrap";
+import AddTrackerButton from './AddTrackerButton';
 import { createTracker } from "../../services/tracker";
-import ErrorMessage from "../../components/ErrorMessage";
-import { useEffect, useOptimistic, useRef, useState } from "react";
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <button className="btn btn-success w-50" type="submit" disabled={pending}>
-      <div className="d-flex justify-content-center align-items-center gap-2">
-        <FaPlus />
-        <span>{pending ? `Saving...` : `Save`}</span>
-      </div>
-    </button>
-  );
-};
+const Tracker = z.object({
+  title: z.string().min(3).max(100),
+})
 
 const TrackerForm = () => {
   const formRef = useRef();
-  const [error, setError] = useState();
-  const [optimisticTracker, addOptimisticTracker] = useOptimistic((state, newTracker) => {
-    return [...state, ...newTracker];
-  });
 
-  async function submitForm(formData) {
-    addOptimisticTracker({
-      title: formData.get('title')
-    });
-    await createTracker(formData);
-    // reset form values after
-    formRef.current.reset();
+  /**
+   * Create a new tracker
+   * @param {*} formData 
+   * @returns 
+   */
+  async function addTracker(formData) {
+    // create new tracker object
+    const tracker = { title: formData.get('title') };
+    const validate = Tracker.safeParse(tracker);
+    if (!validate.success) { // if validate fail
+      const { message } = validate.error.issues[0];
+      return toast.error(message);
+    }
+
+    try {
+      const result = await createTracker(tracker);
+      // if success is false
+      if (!result.success) return toast.error(result.message);
+      toast.success(result.message); // add success message
+      // reset form values after
+      formRef.current.reset();
+    } catch (error) {
+      toast.error(`Something went wrong`);
+      console.error(error);
+    }
   }
 
   return (
@@ -45,7 +49,7 @@ const TrackerForm = () => {
             Create Tracker Form
           </div>
           <div className="card-body">
-            <form className="p-1" action={submitForm} ref={formRef}>
+            <form className="p-1" action={addTracker} ref={formRef}>
               <div className="form-group">
                 <label htmlFor="title" className="form-label">
                   Title:
@@ -61,14 +65,13 @@ const TrackerForm = () => {
               </div>
               <div className="form-group mt-3 mb-1">
                 <div className="d-flex justify-content-center">
-                  <SubmitButton />
+                  <AddTrackerButton />
                 </div>
               </div>
             </form>
           </div>
         </Card>
       </Col>
-      <Col xs={12} className="mt-2">{error && <ErrorMessage errorMessage={error} />}</Col>
     </Row>
   );
 };

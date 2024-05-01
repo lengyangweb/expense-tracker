@@ -1,9 +1,10 @@
 "use client";
+
+import HistoryForm from "./HistoryForm";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ExpenseHeader from "./ExpenseHeader";
 import ExpenseHistory from "./ExpenseHistory";
-import ExpenseTransaction from "./ExpenseTransaction";
 import ExpenseSuggestion from "./ExpenseSuggestion";
 
 const Histories = ({ data, trackerId }) => {
@@ -22,7 +23,7 @@ const Histories = ({ data, trackerId }) => {
                 <ExpenseHeader histories={histories} />
               </Col>
               <Col xs={12}>
-                <ExpenseTransaction
+                <HistoryForm
                   trackerId={trackerId}
                   histories={histories}
                   setHistories={setHistories}
