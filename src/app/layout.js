@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Poppins } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { PrimeReactProvider } from "primereact/api";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const poppins = Poppins({
   weight: ["400", "700"],
@@ -19,11 +21,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <div className="d-flex">
-          <Header />
-          <ToastContainer style={{ marginTop: "60px" }} />
-          <div className="container-fluid">{children}</div>
-        </div>
+        <PrimeReactProvider>
+          <div className="d-flex">
+            <Header />
+            <ToastContainer style={{ marginTop: "60px" }} />
+            <div className="container-fluid">{children}</div>
+          </div>
+        </PrimeReactProvider>
       </body>
     </html>
   );

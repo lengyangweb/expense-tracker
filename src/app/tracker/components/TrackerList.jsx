@@ -27,8 +27,6 @@ const TrackerList = ({ data }) => {
     setSelected(undefined);
   };
 
-  if (!trackers.length) return;
-
   return (
     <Row>
       <Col xs={12}>
