@@ -5,7 +5,7 @@ import { Poppins } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primereact/resources/themes/lara-light-blue/theme.css";
 
 const poppins = Poppins({
   weight: ["400", "700"],

@@ -1,29 +1,32 @@
 "use client";
 
-import { z } from 'zod';
+import { z } from "zod";
 import { useRef } from "react";
+import { Card } from "primereact/card";
 import { toast } from "react-toastify";
-import { Card, Col, Row } from "react-bootstrap";
-import AddTrackerButton from './AddTrackerButton';
+import { Col, Row } from "react-bootstrap";
+import { InputText } from "primereact/inputtext";
+import AddTrackerButton from "./AddTrackerButton";
 import { createTracker } from "../../services/tracker";
 
 const Tracker = z.object({
   title: z.string().min(3).max(100),
-})
+});
 
 const TrackerForm = () => {
   const formRef = useRef();
 
   /**
    * Create a new tracker
-   * @param {*} formData 
-   * @returns 
+   * @param {*} formData
+   * @returns
    */
   async function addTracker(formData) {
     // create new tracker object
-    const tracker = { title: formData.get('title') };
+    const tracker = { title: formData.get("title") };
     const validate = Tracker.safeParse(tracker);
-    if (!validate.success) { // if validate fail
+    if (!validate.success) {
+      // if validate fail
       const { message } = validate.error.issues[0];
       return toast.error(message);
     }
@@ -44,26 +47,23 @@ const TrackerForm = () => {
   return (
     <Row>
       <Col>
-        <Card className="shadow mt-3">
-          <div className="card-header bg-dark text-light">
-            Create Tracker Form
-          </div>
+        <Card className="shadow mt-3" title="Create Tracker Form">
           <div className="card-body">
             <form className="p-1" action={addTracker} ref={formRef}>
-              <div className="form-group">
+              <div className="form-group d-flex flex-column">
                 <label htmlFor="title" className="form-label">
                   Title:
                 </label>
-                <input
+                <InputText
                   type="text"
                   id="title"
                   name="title"
                   placeholder="January Tracker"
-                  className="form-control"
+                  className=""
                   autoComplete="title"
                 />
               </div>
-              <div className="form-group mt-3 mb-1">
+              <div className="form-group mt-4 mb-1">
                 <div className="d-flex justify-content-center">
                   <AddTrackerButton />
                 </div>

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Card, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import styled from "styled-components";
 import GridRow from "./GridRow";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 
 const GridContainer = styled.div`
   .card-header .row {
-    background: #172A3A;
+    background: #172a3a;
   }
   .card-body {
     .list-group {
@@ -17,7 +19,7 @@ const GridContainer = styled.div`
         margin: 0;
 
         .selected {
-          background: #40434E;
+          background: #40434e;
           color: #eeeeee;
         }
 
@@ -26,7 +28,7 @@ const GridContainer = styled.div`
           cursor: pointer;
 
           &:hover {
-            background: #40434E;
+            background: #40434e;
             color: #eeeeee;
           }
 
@@ -45,46 +47,71 @@ const GridContainer = styled.div`
   }
 `;
 
-const Grid = ({ rows, columns, layouts, selectedRow, setRowSelected, isLoading }) => {
-
+const Grid = ({
+  rows,
+  columns,
+  layouts,
+  selectedRow,
+  setRowSelected,
+  isLoading,
+  scrollHeight,
+  minWidth = "100%",
+}) => {
   return (
-    <GridContainer className="card shadow">
-      <Card.Header className="text-light" style={{ background: '#172A3A' }}>
-        <Row>
-          {columns.map((column, index) => (
-            <Col key={index} xs={layouts[index]}>
-              {column["heading"]}
-            </Col>
-          ))}
-        </Row>
-      </Card.Header>
-      <Card.Body className="p-0 w-100">
-        <ListGroup className="w-100">
-          <Row>
-            {rows.map((row) => (
-              <GridRow
-                key={row[columns[0]['field']]}
-                row={row}
-                columns={columns}
-                layouts={layouts}
-                selected={selectedRow}
-                setSelected={setRowSelected}
-              />
-            ))}
-          </Row>
-        </ListGroup>
-      </Card.Body>
-      <Card.Footer>
-        <Row>
-          <Col xs={12}>
-            <div className="d-flex justify-content-center">
-            { isLoading && <span>Loading Items...</span>}
-            { !isLoading && <span>{rows.length} (Items)</span>}
-            </div>
-          </Col>
-        </Row>
-      </Card.Footer>
-    </GridContainer>
+    <DataTable
+      value={rows}
+      className="shadow"
+      selectionMode="single"
+      selection={selectedRow}
+      stripedRows
+      onSelectionChange={(e) => setRowSelected(e.value)}
+      scrollable
+      showGridlines
+      scrollHeight={scrollHeight}
+      tableStyle={{ minWidth, background: "#000000", color: "#eeeeee" }}
+    >
+      {columns.map(({ field, header }, index) => (
+        <Column key={index} field={field} header={header} />
+      ))}
+    </DataTable>
+
+    // <GridContainer className="card shadow">
+    //   <Card.Header className="text-light" style={{ background: '#172A3A' }}>
+    //     <Row>
+    //       {columns.map((column, index) => (
+    //         <Col key={index} xs={layouts[index]}>
+    //           {column["heading"]}
+    //         </Col>
+    //       ))}
+    //     </Row>
+    //   </Card.Header>
+    //   <Card.Body className="p-0 w-100">
+    //     <ListGroup className="w-100">
+    //       <Row>
+    //         {rows.map((row) => (
+    //           <GridRow
+    //             key={row[columns[0]['field']]}
+    //             row={row}
+    //             columns={columns}
+    //             layouts={layouts}
+    //             selected={selectedRow}
+    //             setSelected={setRowSelected}
+    //           />
+    //         ))}
+    //       </Row>
+    //     </ListGroup>
+    //   </Card.Body>
+    //   <Card.Footer>
+    //     <Row>
+    //       <Col xs={12}>
+    //         <div className="d-flex justify-content-center">
+    //         { isLoading && <span>Loading Items...</span>}
+    //         { !isLoading && <span>{rows.length} (Items)</span>}
+    //         </div>
+    //       </Col>
+    //     </Row>
+    //   </Card.Footer>
+    // </GridContainer>
   );
 };
 

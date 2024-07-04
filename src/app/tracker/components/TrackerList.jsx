@@ -13,8 +13,8 @@ const TrackerList = ({ data }) => {
   useEffect(() => setTrackers(data), [data]);
 
   const columns = [
-    { heading: "Title", field: "title" },
-    { heading: "CreatedStamp", field: "createdAt" },
+    { header: "Title", field: "title" },
+    { header: "CreatedStamp", field: "createdAt" },
   ];
 
   const columnsLayout = [6, 6];
@@ -36,6 +36,7 @@ const TrackerList = ({ data }) => {
           layouts={columnsLayout}
           selectedRow={selected}
           setRowSelected={setSelected}
+          scrollHeight="500px"
         />
       </Col>
       <Col xs={12} className="pb-2 mt-sm-3">
