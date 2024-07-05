@@ -9,8 +9,12 @@ import { removeTracker } from "@/app/services/tracker";
 const TrackerList = ({ data }) => {
   const [trackers, setTrackers] = useState([]);
   const [selected, setSelected] = useState(undefined);
+  const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => setTrackers(data), [data]);
+  useEffect(() => {
+    if (data && data.length > 0) setTrackers(data);
+    setLoading(false);
+  }, [data]);
 
   const columns = [
     { header: "Title", field: "title" },
@@ -37,6 +41,7 @@ const TrackerList = ({ data }) => {
           selectedRow={selected}
           setRowSelected={setSelected}
           scrollHeight="400px"
+          isLoading={isLoading}
         />
       </Col>
       <Col xs={12} className="pb-2 mt-sm-3">

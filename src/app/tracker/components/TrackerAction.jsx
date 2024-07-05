@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { Button } from "primereact/button";
 import { redirect } from "next/navigation";
 import Confirm from "../../components/Confirm";
+import { redirecToHistory } from "@/app/services/history";
 
 const TrackerAction = ({ removeTracker, selectedTracker }) => {
   const [actionEnable, setActionEnable] = useState(true);
@@ -21,15 +22,13 @@ const TrackerAction = ({ removeTracker, selectedTracker }) => {
     setDeleteConfirm(false); // close modal
   }
 
-  function viewTracker() {
-    redirect(`/tracker/history/${selectedTracker?._id}`);
-  }
+function viewTracker() {
+  redirecToHistory(selectedTracker?._id);
+}
 
   return (
     <>
-      {/* <div className="lead">Actions:</div> */}
-      {/* <hr /> */}
-      <div className="d-flex gap-2">
+      <div className="d-flex gap-3">
         <Button
           severity="info"
           label="View"

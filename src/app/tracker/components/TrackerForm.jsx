@@ -63,7 +63,7 @@ const TrackerForm = () => {
                   autoComplete="title"
                 />
               </div>
-              <div className="form-group mt-4 mb-1">
+              <div className="form-group mt-4">
                 <div className="d-flex justify-content-center">
                   <AddTrackerButton />
                 </div>

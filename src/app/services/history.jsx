@@ -1,6 +1,11 @@
 'use server';
 import History from '@/app/models/History';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
+const redirecToHistory = (_id) => {
+  redirect(`/tracker/history/${_id}`);
+}
 
 /**
  * Get all of the transaction history associated with the trackerId
@@ -71,4 +76,10 @@ const removeHistory = async (_id) => {
   }
 }
 
-export { getHistories, getHistory, createHistory, removeHistory };
+export { 
+  getHistories, 
+  getHistory, 
+  createHistory, 
+  removeHistory,
+  redirecToHistory
+};

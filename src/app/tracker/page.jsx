@@ -22,13 +22,8 @@ const TrackerPage = async () => {
           <TrackerForm />
         </Col>
         <Col xs={12} lg={7} className="py-3">
-          {!data.length && (
-            <span>
-              No tracker at the moments. Please Use the "Create Tracker Form" to
-              add trackers.
-            </span>
-          )}
-          {data.length > 0 && <TrackerList data={data} />}
+          { !data.length && <span>No tracker at the moments. Please Use the "Create Tracker Form" to add trackers.</span> }
+          { data.length > 0 && <TrackerList data={data} /> }
         </Col>
       </Row>
     </Container>
