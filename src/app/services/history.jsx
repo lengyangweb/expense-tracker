@@ -2,7 +2,12 @@
 import History from '@/app/models/History';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { SchemaType } from 'mongoose';
 
+/**
+ * Redirect to designated _id page
+ * @param {string} _id 
+ */
 const redirecToHistory = (_id) => {
   redirect(`/tracker/history/${_id}`);
 }

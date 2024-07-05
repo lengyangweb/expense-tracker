@@ -5,12 +5,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import TrackerList from "./components/TrackerList";
 
 const TrackerPage = async () => {
-  let data = [];
+  let trackers = [];
 
   try {
     await connectDB();
-    data = await Tracker.find();
-    data = JSON.parse(JSON.stringify(data));
+    trackers = await Tracker.find();
+    trackers = JSON.parse(JSON.stringify(trackers));
   } catch (error) {
     console.error(first);
   }
@@ -22,8 +22,8 @@ const TrackerPage = async () => {
           <TrackerForm />
         </Col>
         <Col xs={12} lg={7} className="py-3">
-          { !data.length && <span>No tracker at the moments. Please Use the "Create Tracker Form" to add trackers.</span> }
-          { data.length > 0 && <TrackerList data={data} /> }
+          { !trackers.length && <span>No tracker at the moments. Please Use the "Create Tracker Form" to add trackers.</span> }
+          { trackers.length > 0 && <TrackerList data={trackers} /> }
         </Col>
       </Row>
     </Container>

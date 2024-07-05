@@ -34,6 +34,7 @@ function viewTracker() {
           label="View"
           className="rounded"
           icon="pi pi-external-link"
+          iconPos="right"
           disabled={actionEnable}
           raised
           onClick={viewTracker}
@@ -43,6 +44,7 @@ function viewTracker() {
           label="Remove"
           className="rounded"
           icon="pi pi-trash"
+          iconPos="right"
           disabled={actionEnable}
           raised
           onClick={handleDeleteShow}

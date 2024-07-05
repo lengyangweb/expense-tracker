@@ -34,7 +34,8 @@ const createTracker = async (newTracker) => {
         message: "Tracker already exist, please use a different name.",
       };
     tracker = await Tracker.create(newTracker); // create tracker
-    return { success: true, message: `tracker ${title} has been added` }; // return result
+    revalidatePath('/tracker');
+    return { success: true, message: `tracker ${tracker.title} has been added` }; // return result
   } catch (error) {
     console.error(error);
   }

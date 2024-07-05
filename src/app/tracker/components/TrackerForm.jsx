@@ -33,11 +33,9 @@ const TrackerForm = () => {
 
     try {
       const result = await createTracker(tracker);
-      // if success is false
-      if (!result.success) return toast.error(result.message);
+      if (!result.success) return toast.error(result.message); // if success is false
       toast.success(result.message); // add success message
-      // reset form values after
-      formRef.current.reset();
+      formRef.current?.reset(); // reset form values after
     } catch (error) {
       toast.error(`Something went wrong`);
       console.error(error);
@@ -58,7 +56,6 @@ const TrackerForm = () => {
                   type="text"
                   id="title"
                   name="title"
-                  placeholder="January Tracker"
                   className=""
                   autoComplete="title"
                 />
