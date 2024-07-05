@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { Button } from "primereact/button";
-import Confirm from "../../components/Confirm";
-import { FaListAlt, FaTrashAlt } from "react-icons/fa";
 import { redirect } from "next/navigation";
+import Confirm from "../../components/Confirm";
 
 const TrackerAction = ({ removeTracker, selectedTracker }) => {
   const [actionEnable, setActionEnable] = useState(true);
@@ -28,22 +27,25 @@ const TrackerAction = ({ removeTracker, selectedTracker }) => {
 
   return (
     <>
-      <div className="lead">Actions:</div>
-      <hr />
-      <div className="d-flex flex-column gap-2 align-items-center justify-content-end">
+      {/* <div className="lead">Actions:</div> */}
+      {/* <hr /> */}
+      <div className="d-flex gap-2">
         <Button
           severity="info"
-          label="View Tracker"
-          className="w-100 rounded"
+          label="View"
+          className="rounded"
+          icon="pi pi-external-link"
           disabled={actionEnable}
+          raised
           onClick={viewTracker}
         />
         <Button
           severity="danger"
-          label="Remove Tracker"
-          className="w-100 rounded"
+          label="Remove"
+          className="rounded"
           icon="pi pi-trash"
           disabled={actionEnable}
+          raised
           onClick={handleDeleteShow}
         />
       </div>

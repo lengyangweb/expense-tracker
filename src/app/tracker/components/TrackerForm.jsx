@@ -52,7 +52,7 @@ const TrackerForm = () => {
             <form className="p-1" action={addTracker} ref={formRef}>
               <div className="form-group d-flex flex-column">
                 <label htmlFor="title" className="form-label">
-                  Title:
+                  Tracker Title:
                 </label>
                 <InputText
                   type="text"

@@ -36,7 +36,7 @@ const TrackerList = ({ data }) => {
           layouts={columnsLayout}
           selectedRow={selected}
           setRowSelected={setSelected}
-          scrollHeight="500px"
+          scrollHeight="400px"
         />
       </Col>
       <Col xs={12} className="pb-2 mt-sm-3">

@@ -1,4 +1,5 @@
 import "./globals.css";
+import "primeicons/primeicons.css";
 import Header from "./components/Header";
 import "bootstrap/dist/css/bootstrap.css";
 import { Poppins } from "next/font/google";

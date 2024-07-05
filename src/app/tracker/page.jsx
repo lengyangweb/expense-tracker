@@ -17,16 +17,20 @@ const TrackerPage = async () => {
 
   return (
     <Container>
-      {/* <div className="d-flex justify-content-center"> */}
       <Row>
         <Col sm={12} lg={5}>
           <TrackerForm />
         </Col>
         <Col xs={12} lg={7} className="py-3">
-          <TrackerList data={data} />
+          {!data.length && (
+            <span>
+              No tracker at the moments. Please Use the "Create Tracker Form" to
+              add trackers.
+            </span>
+          )}
+          {data.length > 0 && <TrackerList data={data} />}
         </Col>
       </Row>
-      {/* </div> */}
     </Container>
   );
 };
