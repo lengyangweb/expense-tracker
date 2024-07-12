@@ -22,9 +22,12 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
 
   useEffect(() => {
     if (suggestionSelected) { // if user choose a suggestion transaction
-      const indicator = suggestionSelected.income ? "+" : "-";
-      setTitle(suggestionSelected.title);
-      setTotal(`${indicator}${suggestionSelected.amount}`);
+      // const indicator = suggestionSelected.income ? "+" : "-";
+      // setTitle(suggestionSelected.title);
+      // setTotal(`${indicator}${suggestionSelected.amount}`);
+      formRef.current.title.value = suggestionSelected.title;
+      formRef.current.amount.value = suggestionSelected.amount;
+      formRef.current.type.value = suggestionSelected.type;
     }
   }, [suggestionSelected]);
 

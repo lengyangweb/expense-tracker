@@ -30,7 +30,7 @@ const ExpenseSuggestionItem = ({ suggestion, selected, setSelected }) => {
         <Card style={{ cursor: "pointer" }}>
           <Card.Header>{suggestion.title}</Card.Header>
           <Card.Body
-            className={suggestion.income ? "text-success" : "text-danger"}
+            className={suggestion.type === "income" ? "text-success" : "text-danger"}
           >
             ${suggestion.amount}
           </Card.Body>

@@ -7,18 +7,18 @@ const ExpenseSuggestion = ({ selected, setSelected }) => {
   const suggestions = [
     {
       title: "Weekly Paid 1",
-      amount: "750.00",
-      income: true,
+      amount: 750.00,
+      type: "income",
     },
     {
       title: "Rent",
-      amount: "150.00",
-      income: false,
+      amount: 150.00,
+      type: "expense",
     },
     {
       title: "Student Loan",
-      amount: "250.00",
-      income: false,
+      amount: 250.00,
+      type: "expense",
     },
   ];
 
