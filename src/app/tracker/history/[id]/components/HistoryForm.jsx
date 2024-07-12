@@ -79,7 +79,7 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
   function handleValidationError(error) {
     const { issues } = error.error;
     const errorMsg = issues.reduce((errMsg, error) => {
-      const { path, message } = error;
+      const { message } = error;
       errMsg += `${message}. `;
       return errMsg;
     }, '');

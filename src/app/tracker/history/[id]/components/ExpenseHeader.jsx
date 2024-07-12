@@ -45,8 +45,8 @@ const ExpenseHeader = ({ histories }) => {
 
     // get all of the income items
     histories
-      .filter(({ income }) => income === true)
-      .forEach(({ total }) => incomes.push(total));
+      .filter(({ type }) => type === "income")
+      .forEach(({ amount }) => incomes.push(amount));
     // if no income items
     if (!incomes.length) return 0.0;
     // calculate the sun of all incomes
@@ -62,8 +62,8 @@ const ExpenseHeader = ({ histories }) => {
     const expenses = [];
     // get all of the expense items
     histories
-      .filter((tran) => tran.income === false)
-      .forEach(({ total }) => expenses.push(total));
+      .filter(({ type }) => type === "expense")
+      .forEach(({ amount }) => expenses.push(amount));
     // if there's no expense items
     if (!expenses.length) return 0.0;
     // calculate the sum of all expenses
