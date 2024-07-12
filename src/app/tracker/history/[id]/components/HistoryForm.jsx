@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { toast } from "react-toastify";
 import { useFormStatus } from 'react-dom';
+import { InputText } from 'primereact/inputtext';
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { createHistory, getHistory } from "../../../../services/history";
@@ -10,23 +11,16 @@ import { createHistory, getHistory } from "../../../../services/history";
 const History = z.object({
   trackerId: z.string().min(10),
   title: z.string().min(3),
-  total: z.number(),
-  income: z.boolean(),
+  amount: z.number(),
+  type: z.string(),
   createdAt: z.date()
 })
 
 const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) => {
   const formRef = useRef();
-
-  const [title, setTitle] = useState("");
-  const [total, setTotal] = useState("");
   const { pending } = useFormStatus();
 
   useEffect(() => {
-    if (!suggestionSelected) {
-      setTitle("");
-      setTotal("");
-    }
     if (suggestionSelected) { // if user choose a suggestion transaction
       const indicator = suggestionSelected.income ? "+" : "-";
       setTitle(suggestionSelected.title);
@@ -38,47 +32,32 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
    * Create a new transaction and save to hisotries
    * @returns error if error
    */
-  const saveHistory = async (formData) => {
-    const title = formData.get('title');
-    const total = formData.get('total');
+  const saveHistory = async () => {
+    const title = formRef.current.title.value;
+    const amount = formRef.current.amount.value
+    const type = formRef.current.type.value
 
-    if (!title || !total) return toast.error("Please fill out both text and amount field");
-    // check to see if it's an expense or income
-    const kindOfExpense = total.substring(0, 1);
-    if (!kindOfExpense.includes("+")) {
-      if (!kindOfExpense.includes("-")) return toast.error("Please specify what kind of expense (+, -)");
-    }
-    // check to see what kind of expense is it
-    // const newTotal = total.split(kindOfExpense)[1];
+    if (!title || !amount || !type) return toast.error("Please make sure all require fields are fill in.");
+
     // create new transaction
     const newHistory = {
       trackerId,
       title,
-      total: parseFloat(total),
-      income: kindOfExpense.includes("+"),
-      createdAt: Date.now(),
+      amount: parseFloat(amount),
+      type,
+      createdAt: new Date(),
     };
-    // validate new history
-    const validate = History.safeParse(newHistory);
-    // if validation fail
-    if (!validate.success) {
-      debugger;
-      const { issues } = validate.error;
-      const errorMsg = issues.reduce((errMsg, error) => {
-        const { path, message } = error;
-        errMsg += `${message}. `;
-        return errMsg;
-      }, '');
-      toast.error(errorMsg);
-    }
+
+    const validate = History.safeParse(newHistory); // validate new history
+    if (!validate.success) return toast.error(handleValidationError(validate)); // if validation fail
     // check to see if a history already exist with the title
-    let history = await getHistory(trackerId, title);
+    const history = await getHistory(trackerId, title);
     // if there's already a history exist
     if (history.length) return toast.error("Please enter a different transaction name");
     try {
-      // create a new transaction id
-      const response = await createHistory(newHistory);
+      const response = await createHistory(newHistory); // create a new transaction id
       if (!response.success) return toast.error(response.message);
+      formRef.current.reset(); // reset form after new history is created
       toast.success(response.message);
       // reset suggestion selected if it is being selected
       if (suggestionSelected) setSuggestionSelected(undefined);
@@ -89,6 +68,22 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
     }
   };
 
+  /**
+   * Handle error return from Zod validation
+   * @param {z.SafeParseReturnType} error 
+   * @returns { string }
+   */
+  function handleValidationError(error) {
+    const { issues } = error.error;
+    const errorMsg = issues.reduce((errMsg, error) => {
+      const { path, message } = error;
+      errMsg += `${message}. `;
+      return errMsg;
+    }, '');
+
+    return errorMsg;
+  }
+
   return (
     <div className="py-2">
       <span>Add new transaction</span>
@@ -96,24 +91,24 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
       <Form action={saveHistory} ref={formRef}>
         <Form.Group>
           <Form.Label htmlFor="title">Transaction Name</Form.Label>
-          <Form.Control
-            type="text"
-            id="title"
+          <InputText
+            className='w-100 py-2'
+            id='title'
             name="title"
-            placeholder="Enter an income or expense title"
-            autoComplete="title"
+            placeholder='Enter an income or expense title'
+            autoComplete='title'
           />
         </Form.Group>
         <Form.Group className='my-2'>
-          <Form.Label htmlFor="type">
-            <span>Transaction Type (negative - expense, positive - income)</span>
-          </Form.Label><br/>
+          <Form.Label htmlFor="type">Transaction Type (negative - expense, positive - income)</Form.Label>
+          <br/>
           <Form.Check
             inline
             label="Income"
             name="type"
             id="income"
             type='radio'
+            value="income"
           />
           <Form.Check
             inline
@@ -121,14 +116,16 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
             name="type"
             type='radio'
             id="expense"
+            value="expense"
           />
         </Form.Group>
         <Form.Group className="my-2">
           <Form.Label>Amount</Form.Label><br/>
           <InputGroup>
-            <InputGroup.Text id="amount">@</InputGroup.Text>
+            <InputGroup.Text id="amount">$</InputGroup.Text>
             <Form.Control
-              type="text"
+              type="number"
+              step="0.01"
               id="amount"
               name="amount"
               autoComplete="amount"
@@ -137,7 +134,7 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
             />
           </InputGroup>
         </Form.Group>
-        <Button className="w-100 my-2" variant="primary" disabled={pending}>
+        <Button type="submit" className="w-100 my-2" variant="primary" disabled={pending}>
           <span>{!pending ? `Add Transaction` : `Saving Transaction`}</span>
         </Button>
       </Form>

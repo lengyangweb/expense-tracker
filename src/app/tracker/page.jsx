@@ -12,7 +12,7 @@ const TrackerPage = async () => {
     trackers = await Tracker.find();
     trackers = JSON.parse(JSON.stringify(trackers));
   } catch (error) {
-    console.error(first);
+    console.error(error);
   }
 
   return (

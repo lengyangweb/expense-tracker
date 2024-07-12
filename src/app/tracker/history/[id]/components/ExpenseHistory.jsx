@@ -16,8 +16,8 @@ const historyBodyStyle = {
 
 const ExpenseHistory = ({ histories, setHistories }) => {
   const [sortStatus, setSortStatus] = useState();
-  const incomeQuantity = histories.filter(({ income }) => income === true).length;
-  const expenseQuantity = histories.filter(({ income }) => income === false).length;
+  const incomeQuantity = histories.filter(({ type }) => type === "income").length;
+  const expenseQuantity = histories.filter(({ type }) => type === "expense").length;
 
   // remove transaction history from histories
   const removeTransaction = async (transaction) => {

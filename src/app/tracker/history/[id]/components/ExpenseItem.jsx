@@ -21,7 +21,7 @@ const ExpenseItem = ({ transaction, removeTransaction }) => {
    */
   const getIndicatorClass = () => {
     // indicate whether its an income or expense class
-    const indicatorClass = transaction.income ? "bg-success" : "bg-danger";
+    const indicatorClass = transaction.type === "income" ? "bg-success" : "bg-danger";
     // return indicator class
     return indicatorClass;
   };
@@ -53,7 +53,7 @@ const ExpenseItem = ({ transaction, removeTransaction }) => {
         </button>
         <ExpenseItemDetails
           title={transaction.title}
-          total={transaction.total}
+          amount={transaction.amount}
         />
         <div>
           <span className={`${indicator} py-2 px-1 h-100`}></span>

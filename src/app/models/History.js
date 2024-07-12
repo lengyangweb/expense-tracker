@@ -10,7 +10,7 @@ const historySchema = new Schema({
     type: String,
     required: [true, "title is required"],
   },
-  total: {
+  amount: {
     type: Number,
     required: [true, "amount is required"],
   },
@@ -18,9 +18,9 @@ const historySchema = new Schema({
     type: Date,
     required: [true, "created stamp is required"],
   },
-  income: {
-    type: Boolean,
-    required: [true, "income is required"],
+  type: {
+    type: String,
+    required: [true, "type is required"],
   },
 });
 
