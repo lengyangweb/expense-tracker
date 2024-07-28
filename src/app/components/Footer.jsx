@@ -7,7 +7,7 @@ const footerStyle = {
 
 const Footer = () => {
   return (
-    <div className="border border-top-2 py-2" style={ footerStyle }>
+    <div className="border border-2 border-left-0 py-2" style={ footerStyle }>
         <div className="d-flex justify-content-between px-4">
             <i>expTracker</i>
             <span>Copyright &copy; 2024</span>

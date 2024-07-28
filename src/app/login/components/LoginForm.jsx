@@ -3,10 +3,11 @@ import { InputText } from "primereact/inputtext"
 
 const LoginForm = () => {
   return (
-    <form className="px-4">
+    <form className="col-12 px-4 col-lg-10">
         <div className="form-group d-flex flex-column">
             <label htmlFor="username" className="form-label">Username:</label>
             <InputText
+                className="py-2"
                 name="username"
                 id="username"
             />
@@ -14,6 +15,7 @@ const LoginForm = () => {
         <div className="form-group d-flex flex-column my-2">
             <label htmlFor="password" className="form-label">Password:</label>
             <InputText
+                className="py-2"
                 type="password"
                 name="password"
                 id="password"
@@ -21,7 +23,7 @@ const LoginForm = () => {
         </div>
         <div className="form-group d-flex justify-content-center mt-4">
             <Button
-                className="rounded"
+                className="py-2 rounded"
                 severity="primary"
                 label="LOGIN"
                 icon="pi pi-sign-in"
