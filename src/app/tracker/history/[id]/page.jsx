@@ -1,5 +1,6 @@
 import Histories from '@/app/tracker/history/[id]/components/Histories';
 import { getHistories } from '@/app/services/history';
+import Header from '@/app/components/Header';
 
 const page = async ({ params }) => {
   const { id: trackerId } = params;
@@ -9,7 +10,12 @@ const page = async ({ params }) => {
   data = await getHistories(trackerId);
   if (data) data = JSON.parse(JSON.stringify(data));
 
-  return <Histories data={data} trackerId={trackerId} />;
+  return (
+    <div className="d-flex">
+      <Header />
+      <Histories data={data} trackerId={trackerId} />
+    </div>
+  );
 }
 
 export default page

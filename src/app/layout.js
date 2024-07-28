@@ -23,11 +23,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <PrimeReactProvider>
-          <div className="d-flex">
-            <Header />
             <ToastContainer style={{ marginTop: "60px" }} />
-            <div className="container-fluid">{children}</div>
-          </div>
+            <div>{children}</div>
         </PrimeReactProvider>
       </body>
     </html>
