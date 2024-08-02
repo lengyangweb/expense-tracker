@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext"
 
 const LoginForm = () => {
   return (
-    <form className="col-12 px-4 col-lg-10">
+    <form className="col-12 px-4 col-lg-12">
         <div className="form-group d-flex flex-column">
             <label htmlFor="username" className="form-label">Username:</label>
             <InputText

@@ -1,12 +1,12 @@
 import "./globals.css";
 import "primeicons/primeicons.css";
-import Header from "./components/Header";
 import "bootstrap/dist/css/bootstrap.css";
-import { Poppins } from "next/font/google";
 import "react-toastify/dist/ReactToastify.css";
+import "primereact/resources/themes/lara-light-blue/theme.css";
+
+import { Poppins } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/lara-light-blue/theme.css";
 
 const poppins = Poppins({
   weight: ["400", "700"],
