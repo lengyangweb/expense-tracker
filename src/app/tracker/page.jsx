@@ -9,7 +9,6 @@ const TrackerPage = async () => {
   let trackers = [];
 
   try {
-    await connectDB();
     trackers = await Tracker.find();
     trackers = JSON.parse(JSON.stringify(trackers));
   } catch (error) {

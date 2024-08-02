@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Nav, Navbar } from "react-bootstrap";
+import LogoutButton from "./LogoutButton";
 
 const navStyle = {
   width: "12rem",
@@ -25,7 +26,10 @@ const Header = () => {
           </Link>
         </div>
       </Nav>
-      <span className="text-light text-center py-2 fixed-bottom" style={{ width: '10.5rem' }}>&copy;{new Date().getFullYear()}</span>
+      <div className="d-flex justify-content-center fixed-bottom mb-3" style={{ width: '10rem' }}>
+        <LogoutButton />
+      </div>
+      {/* <span className="text-light text-center py-2 fixed-bottom" style={{ width: '10.5rem' }}>&copy;{new Date().getFullYear()}</span> */}
     </Navbar>
   );
 };

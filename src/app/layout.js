@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 
+import { connectDB } from "./lib/db";
 import { Poppins } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import { PrimeReactProvider } from "primereact/api";
@@ -18,7 +19,8 @@ export const metadata = {
   description: "An expense tracker web application",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  await connectDB();
   return (
     <html lang="en">
       <body className={poppins.className}>

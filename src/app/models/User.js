@@ -16,11 +16,19 @@ const userSchema = new Schema({
 }
 );
 
-userSchema.pre('save', function() {
+userSchema.pre('save', function(next) {
+    if (!this.isModified('password')) {
+        next();
+    }
+
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(this.password, salt);
     this.password = hashPassword;
 });
+
+userSchema.methods.verifyPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+}
 
 // if model is already exist then use model otherwise create a new model
 const userModel = (models && models.hasOwnProperty('users')) ? models.users : model("users", userSchema);
