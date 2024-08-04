@@ -1,21 +1,32 @@
-import Histories from '@/app/tracker/history/[id]/components/Histories';
-import { getHistories } from '@/app/services/history';
-import Header from '@/app/components/Header';
+import { connectDB } from '@/app/lib/db';
 import { Container } from 'react-bootstrap';
+import Header from '@/app/components/Header';
+import Loading from '@/app/components/Loading';
+import { getHistories } from '@/app/services/history';
+import Histories from '@/app/tracker/history/[id]/components/Histories';
 
 const page = async ({ params }) => {
-  const { id: trackerId } = params;
   let data;
-  
-  // get all histories with associated with the trackerId
-  data = await getHistories(trackerId);
-  if (data) data = JSON.parse(JSON.stringify(data));
+  let isLoading = true;
+  const { id: trackerId } = params;
+
+  try {
+    await connectDB(); // will connect to the database if haven't
+    data = await getHistories(trackerId); // get all histories with associated with the trackerId
+    if (data) {
+      isLoading = false;
+      data = JSON.parse(JSON.stringify(data));
+    }
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <div className="d-flex">
       <Header />
       <Container>
-        <Histories data={data} trackerId={trackerId} />
+        { isLoading && <Loading /> }
+        { !isLoading && <Histories data={data} trackerId={trackerId} />}
       </Container>
     </div>
   );

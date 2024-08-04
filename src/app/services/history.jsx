@@ -15,7 +15,7 @@ const redirecToHistory = (_id) => {
 /**
  * Get all of the transaction history associated with the trackerId
  * @param {import('mongoose').ObjectId} trackerId 
- * @returns {[]}
+ * @returns {Promise<[]>}
  */
 const getHistories = async (trackerId) => {
   try {

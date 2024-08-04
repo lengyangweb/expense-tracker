@@ -1,14 +1,13 @@
 'use client'
 
+import { useState } from "react"
 import { Card } from "primereact/card"
 import Footer from "../components/Footer"
 import { Col, Row } from "react-bootstrap"
-import { TabMenu } from "primereact/tabmenu"
 import LoginForm from "./components/LoginForm"
-import LoginWithTokenButton from "./components/LoginWithTokenButton"
 import LoginTabMenu from "./components/LoginTabMenu"
-import { useState } from "react"
 import RegisterForm from "./components/RegisterForm"
+import LoginWithTokenButton from "./components/LoginWithTokenButton"
 
 const style = {
     width: '100vw',

@@ -22,6 +22,7 @@ export const config = {
     '/login',
     '/about',
     '/tracker',
-    '/tracker/:path*'
+    '/tracker/:path*',
+    '/user-profile'
   ],
 }
