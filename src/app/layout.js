@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Expense Tracker",
+  title: "expTracker",
   description: "An expense tracker web application",
 };
 

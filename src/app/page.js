@@ -1,11 +1,14 @@
 import React from "react";
 import Header from "./components/Header";
+import { Container } from "react-bootstrap";
 
 const HomePage = () => {
   return (
     <div className="d-flex">
       <Header />
-      <div>HomePage</div>
+      <Container>
+        <div>HomePage</div>
+      </Container>
     </div>
   )
 };
