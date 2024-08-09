@@ -25,6 +25,6 @@ const historySchema = new Schema({
 });
 
 // if model is already exist then use model otherwise create a new model
-const historyModel = models.histories || model("histories", historySchema);
+const History = models.histories || model("histories", historySchema);
 // get model
-export default historyModel;
+export default History;

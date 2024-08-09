@@ -12,6 +12,6 @@ const trackerSchema = new Schema({
 )
 
 // if model is already exist then use model otherwise create a new model
-const trackerModel = (models && models.hasOwnProperty('trackers')) ? models.trackers : model("trackers", trackerSchema);
+const Tracker = models.histories || model("trackers", trackerSchema);
 
-export default trackerModel;
+export default Tracker;

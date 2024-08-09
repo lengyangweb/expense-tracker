@@ -31,6 +31,6 @@ userSchema.methods.verifyPassword = function(password) {
 }
 
 // if model is already exist then use model otherwise create a new model
-const userModel = (models && models.hasOwnProperty('users')) ? models.users : model("users", userSchema);
+const User = models.users || model("users", userSchema);
 
-export default userModel;
+export default User;

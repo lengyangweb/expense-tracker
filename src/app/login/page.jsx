@@ -34,7 +34,7 @@ const page = () => {
                     />
                 </Col>
                 <Col xs={12}>
-                    <Card className="border border-3" title={ activeIndex === 0 ? "Login Form" : "Register Form" }>
+                    <Card title={ activeIndex === 0 ? "Login Form" : "Register Form" }>
                         <Row>
                             <Col xs={12} className="mb-2">
                                 <div className="d-flex justify-content-center">

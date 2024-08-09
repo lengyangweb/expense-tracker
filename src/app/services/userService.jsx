@@ -1,7 +1,8 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import User from '../models/User';
+import { connectDB } from '../lib/db';
+import { cookies } from 'next/headers';
 import { generateToken } from '../utilities/generateToken';
 import { redirect } from 'next/navigation';
 
@@ -12,9 +13,9 @@ import { redirect } from 'next/navigation';
  * @returns 
  */
 export const registerUser = async(newUser, accessCode) => {
-    const codeIsValid = validateAccessCode(accessCode);
-    if (!codeIsValid) return { success: false, message: `Invalid Access Code` };
+    if (!isValidAccessCode(accessCode)) return { success: false, message: `Invalid Access Code` };
     try {
+        await connectDB();
         const user = await User.create(newUser);
         if (user) return { success: true, message: `Use login form to sign in`}
     } catch (error) {
@@ -31,6 +32,7 @@ export const registerUser = async(newUser, accessCode) => {
  */
 export const authenticate = async(credential) => {
     try {
+        await connectDB();
         const user = await User.findOne({ username: credential.username });
         if (!user) return { success: false, message: `Invalid user` };
         const validPassword = user.verifyPassword(credential.password);
@@ -61,6 +63,12 @@ export const logout = async() => {
     redirect('/login');
 }
 
-const validateAccessCode = (accessCode) => {
+
+/**
+ * Validate access code
+ * @param {string} accessCode 
+ * @returns {boolean}
+ */
+const isValidAccessCode = (accessCode) => {
     return accessCode === process.env.ACCESS_CODE;
 }
