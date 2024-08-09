@@ -22,7 +22,7 @@ const TrackerPage = async () => {
       <Container>
         <Row>
           <Col sm={12} className="pt-2">
-            <h2 className="text-secondary">Tracker</h2>
+            <h2>Tracker</h2>
             <hr />
           </Col>
           <Col sm={12} lg={5}>

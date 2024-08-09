@@ -8,7 +8,7 @@ const page = () => {
         <Header />
         <Container>
             <Row>
-                <Col xs={12} className='h2 py-2 text-secondary'>
+                <Col xs={12} className='h2 py-2'>
                     <div className="d-flex align-items-center gap-2">
                         <i className="pi pi-user h3"></i>
                         <span>User Profile</span>

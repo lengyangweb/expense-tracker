@@ -25,29 +25,33 @@ const page = () => {
   return (
     <div className="container-fluid d-flex justify-content-center align-items-center" style={style}>
         <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-            <div className="d-flex flex-column">
-                <LoginTabMenu
-                    items={ items }
-                    activeIndex={activeIndex} 
-                    setActiveIndex={setActiveIndex}
-                />
-                <Card title={ activeIndex === 0 ? "Login Form" : "Register Form" }>
-                    <Row>
-                        <Col xs={12} className="mb-2">
-                            <div className="d-flex justify-content-center">
-                                { activeIndex === 0 && <LoginForm /> }
-                                { activeIndex === 1 && <RegisterForm /> }
-                            </div>
-                        </Col>
-                        {/* <hr />
-                        <Col className="mt-2">
-                            <div className="d-flex justify-content-center">
-                                <LoginWithTokenButton />
-                            </div>
-                        </Col> */}
-                    </Row>
-                </Card>
-            </div>
+            <Row>
+                <Col xs={12}>
+                    <LoginTabMenu
+                        items={ items }
+                        activeIndex={activeIndex} 
+                        setActiveIndex={setActiveIndex}
+                    />
+                </Col>
+                <Col xs={12}>
+                    <Card className="border border-3" title={ activeIndex === 0 ? "Login Form" : "Register Form" }>
+                        <Row>
+                            <Col xs={12} className="mb-2">
+                                <div className="d-flex justify-content-center">
+                                    { activeIndex === 0 && <LoginForm /> }
+                                    { activeIndex === 1 && <RegisterForm /> }
+                                </div>
+                            </Col>
+                            {/* <hr />
+                            <Col className="mt-2">
+                                <div className="d-flex justify-content-center">
+                                    <LoginWithTokenButton />
+                                </div>
+                            </Col> */}
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
         </Col>
         <Footer />
     </div>

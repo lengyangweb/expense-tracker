@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { toast } from "react-toastify"
 import { Button } from "primereact/button"
 import { InputText } from "primereact/inputtext"
 import { authenticate, navigate } from "@/app/services/userService"
@@ -9,10 +10,13 @@ const LoginForm = () => {
     const formRef = useRef();
 
     async function signIn() {
-        const credential = {
-            username: formRef.current.username.value,
-            password: formRef.current.password.value
-        }
+        const username = formRef.current.username.value;
+        const password = formRef.current.password.value;
+
+        // if username or password is not provided
+        if (!username || !password) return toast.error(`Username and password require`);
+
+        const credential = { username, password }
 
         try {
             const response = await authenticate(credential);
@@ -20,7 +24,7 @@ const LoginForm = () => {
             navigate('/');
         } catch (error) {
             console.error(error);
-            alert('Something went wrong');
+            toast.error(`Something went wrong`);
         }
     }
 
