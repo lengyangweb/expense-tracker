@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { Card } from "react-bootstrap";
-import HistoryHeader from "./HistoryHeader";
 import ExpenseItem from "./ExpenseItem";
 import HeaderBadge from "./HeaderBadge";
+import HistoryHeader from "./HistoryHeader";
 import { removeHistory } from "../../../../services/history";
 
 const historyBodyStyle = {
@@ -34,14 +35,10 @@ const ExpenseHistory = ({ histories, setHistories }) => {
   };
 
   function sortHistories(sortType) {
-    if (sortType === "asc") {
-      const updatedHistories = histories.sort((a, b) => String(a.title).localeCompare(b.title));
-      setHistories(updatedHistories);
-    }
-    if (sortType === 'desc') {
-      const updatedHistories = histories.sort((a, b) => String(b.title).localeCompare(a.title));
-      setHistories(updatedHistories);
-    }
+    let updatedHistories;
+    if (sortType === "asc") updatedHistories = histories.sort((a, b) => String(a.title).localeCompare(b.title));
+    if (sortType === 'desc') updatedHistories = histories.sort((a, b) => String(b.title).localeCompare(a.title));
+    setHistories(updatedHistories);
   }
 
   return (
