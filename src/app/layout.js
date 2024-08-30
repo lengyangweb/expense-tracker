@@ -1,8 +1,8 @@
 import "./globals.css";
 import "primeicons/primeicons.css";
-import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 import { Poppins } from "next/font/google";
 import { ToastContainer } from "react-toastify";

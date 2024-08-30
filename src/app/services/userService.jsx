@@ -3,26 +3,25 @@
 import User from '../models/User';
 import { connectDB } from '../lib/db';
 import { cookies } from 'next/headers';
-import { generateToken } from '../utilities/generateToken';
 import { redirect } from 'next/navigation';
+import { generateToken } from '../utilities/generateToken';
 
 /**
  * Create a new user
  * @param {*} newUser 
- * @param {*} accessCode 
- * @returns 
+ * @param {string} accessCode 
+ * @returns {Promise<any>}
  */
 export const registerUser = async(newUser, accessCode) => {
     if (!isValidAccessCode(accessCode)) return { success: false, message: `Invalid Access Code` };
     try {
         await connectDB();
-        const user = await User.create(newUser);
+        const user = await User.create({ ...newUser });
         if (user) return { success: true, message: `Use login form to sign in`}
     } catch (error) {
         console.error(error);
         return { success: false, message: 'Internal Server Error' };
     }
-    return { success: true, message: `Code is valid` };
 }
 
 /**

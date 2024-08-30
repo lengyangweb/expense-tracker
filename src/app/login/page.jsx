@@ -14,7 +14,7 @@ const style = {
     height: '100vh'
 }
 
-const page = () => {
+const Login = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const items = [
@@ -58,4 +58,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Login

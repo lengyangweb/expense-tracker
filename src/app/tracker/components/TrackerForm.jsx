@@ -56,7 +56,7 @@ const TrackerForm = () => {
                   type="text"
                   id="title"
                   name="title"
-                  className=""
+                  className="py-2"
                   autoComplete="title"
                 />
               </div>

@@ -3,11 +3,13 @@
 import { useRef } from "react"
 import { toast } from "react-toastify"
 import { Button } from "primereact/button"
+import { useRouter } from "next/navigation"
 import { InputText } from "primereact/inputtext"
-import { authenticate, navigate } from "@/app/services/userService"
+import { authenticate } from "@/app/services/userService"
 
 const LoginForm = () => {
     const formRef = useRef();
+    const router = useRouter();
 
     async function signIn() {
         const username = formRef.current.username.value;
@@ -20,8 +22,8 @@ const LoginForm = () => {
 
         try {
             const response = await authenticate(credential);
-            if (!response.success) return alert(response.message);
-            navigate('/');
+            if (!response.success) return toast.error(response.message);
+            router.push('/');
         } catch (error) {
             console.error(error);
             toast.error(`Something went wrong`);
