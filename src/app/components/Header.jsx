@@ -17,14 +17,10 @@ const Header = () => {
             <i>Exp</i>Tracker
           </Link>
         </span>
-        <Nav className="gap-2 mt-4">
-          <div className="d-flex flex-column gap-2">
-            <Link href="/about" className="text-light text-decoration-none">
-              About
-            </Link>
-            <Link href="/tracker" className="text-light text-decoration-none">
-              Tracker
-            </Link>
+        <Nav className="mt-4">
+          <div className="d-flex flex-column align-items-center gap-1">
+            <Link href="/about" className="text-light text-decoration-none">About</Link>
+            <Link href="/tracker" className="text-light text-decoration-none">Tracker</Link>
           </div>
         </Nav>
       </div>
