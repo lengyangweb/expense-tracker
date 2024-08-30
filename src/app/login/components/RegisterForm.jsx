@@ -52,14 +52,14 @@ const RegisterForm = () => {
                 name='accessCode'
             />
         </div>
-        <d className="d-flex justify-content-center mt-4">
+        <div className="d-flex justify-content-center mt-4">
             <Button
                 className='py-2 px-3 rounded'
                 label='Register'
                 icon="pi pi-user-plus"
                 iconPos='right'
             />
-        </d>
+        </div>
     </Form>
   )
 }
