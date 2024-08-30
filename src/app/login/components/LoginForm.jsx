@@ -53,10 +53,10 @@ const LoginForm = () => {
             <Button
                 type="submit"
                 className="py-2 rounded"
-                severity="primary"
                 label="LOGIN"
                 icon="pi pi-sign-in"
                 iconPos="right"
+                style={{ background: '#0059b3' }}
             />
         </div>
     </form>

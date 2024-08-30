@@ -5,9 +5,7 @@ import { Card } from "primereact/card"
 import Footer from "../components/Footer"
 import { Col, Row } from "react-bootstrap"
 import LoginForm from "./components/LoginForm"
-import LoginTabMenu from "./components/LoginTabMenu"
 import RegisterForm from "./components/RegisterForm"
-import LoginWithTokenButton from "./components/LoginWithTokenButton"
 
 const style = {
     width: '100vw',
@@ -27,29 +25,26 @@ const Login = () => {
         <Col xs={12} sm={10} md={8} lg={6} xl={4}>
             <Row>
                 <Col xs={12}>
-                    <LoginTabMenu
-                        items={ items }
-                        activeIndex={activeIndex} 
-                        setActiveIndex={setActiveIndex}
-                    />
-                </Col>
-                <Col xs={12}>
-                    <Card title={ activeIndex === 0 ? "Login Form" : "Register Form" }>
-                        <Row>
-                            <Col xs={12} className="mb-2">
-                                <div className="d-flex justify-content-center">
-                                    { activeIndex === 0 && <LoginForm /> }
-                                    { activeIndex === 1 && <RegisterForm /> }
-                                </div>
-                            </Col>
-                            {/* <hr />
-                            <Col className="mt-2">
-                                <div className="d-flex justify-content-center">
-                                    <LoginWithTokenButton />
-                                </div>
-                            </Col> */}
-                        </Row>
-                    </Card>
+                    <Row>
+                        <Col xs={12}>
+                            <div className="d-flex align-items-center gap-2 h3 p-3 border text-white" style={{ background: '#0059b3'}}>
+                                <i className="bg-white rounded-circle text-dark p-3 fs-2 pi pi-lock"></i>
+                                <span className="fw-bold spacing-2" style={{ letterSpacing: '1px'}}>LOGIN FORM</span>
+                            </div>
+                        </Col>
+                        <Col xs={12}>
+                            <Card>
+                                <Row>
+                                    <Col xs={12} className="mb-2">
+                                        <div className="d-flex justify-content-center">
+                                            { activeIndex === 0 && <LoginForm /> }
+                                            { activeIndex === 1 && <RegisterForm /> }
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
         </Col>

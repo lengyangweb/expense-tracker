@@ -4,7 +4,7 @@ import MenuFooter from "./MenuFooter";
 
 const navStyle = {
   width: "12rem",
-  background: '#0449ab',
+  background: '#0059b3',
   height: '100vh',
 }
 
