@@ -7,7 +7,7 @@ import Histories from '@/app/tracker/history/[id]/components/Histories';
 import { getTracker } from '@/app/services/tracker';
 
 const page = async ({ params }) => {
-  let data;
+  let data = [];
   let tracker;
   let isLoading = true;
   const { id: trackerId } = params;
@@ -19,6 +19,7 @@ const page = async ({ params }) => {
     if (data) {
       isLoading = false;
       data = JSON.parse(JSON.stringify(data));
+      data = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // sort by latest date first
       tracker = JSON.parse(JSON.stringify(tracker));
     }
   } catch (error) {

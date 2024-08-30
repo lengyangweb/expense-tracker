@@ -13,7 +13,7 @@ const Header = () => {
     <Navbar className="d-flex flex-column"style={ navStyle }>
       <div className="d-flex flex-column align-items-center w-100">
         <span className="text-center w-75 pb-2 fw-bold fs-5 border border-2 border-start-0 border-end-0 border-top-0">
-          <Link href="/home" className="text-light text-decoration-none">
+          <Link href="/" className="text-light text-decoration-none">
             <i>Exp</i>Tracker
           </Link>
         </span>

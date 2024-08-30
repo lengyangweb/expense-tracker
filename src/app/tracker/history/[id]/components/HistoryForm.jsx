@@ -55,7 +55,6 @@ const HistoryForm = ({ trackerId }) => {
       // reset suggestion selected if it is being selected
       if (suggestionSelected) setSuggestionSelected(undefined);
     } catch (error) {
-      setSubmitted(false);
       console.error(`Fail trying to create a new transaction`, error);
       return;
     }
