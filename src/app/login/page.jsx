@@ -1,11 +1,9 @@
 'use client'
 
-import { useState } from "react"
 import { Card } from "primereact/card"
 import Footer from "../components/Footer"
 import { Col, Row } from "react-bootstrap"
 import LoginForm from "./components/LoginForm"
-import RegisterForm from "./components/RegisterForm"
 
 const style = {
     width: '100vw',
@@ -30,8 +28,7 @@ const Login = () => {
                                 <Row>
                                     <Col xs={12} className="mb-2">
                                         <div className="d-flex justify-content-center">
-                                            { activeIndex === 0 && <LoginForm /> }
-                                            { activeIndex === 1 && <RegisterForm /> }
+                                            <LoginForm />
                                         </div>
                                     </Col>
                                 </Row>
