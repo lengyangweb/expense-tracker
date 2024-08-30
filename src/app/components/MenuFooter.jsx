@@ -24,10 +24,9 @@ const MenuFooter = () => {
     ]
 
   return (
-    <div className='w-100 bg-secondary text-white border-0 px-2 py-2'>
+    <div className='w-100 bg-secondary text-white border-0 px-2 py-1'>
       <div className="d-flex justify-content-between align-items-center">
         <span>Settings</span>
-        {/* <i className="pi pi-sign-out"></i> */}
        <Dropdown drop='up'>
          <Dropdown.Toggle className='border-0 text-white' variant="white" id="dropdown-basic" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          </Dropdown.Toggle>

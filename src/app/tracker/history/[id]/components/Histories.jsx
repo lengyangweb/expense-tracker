@@ -7,7 +7,7 @@ import ExpenseHeader from "./ExpenseHeader";
 import ExpenseHistory from "./ExpenseHistory";
 import ExpenseSuggestion from "./ExpenseSuggestion";
 
-const Histories = ({ data, trackerId }) => {
+const Histories = ({ title, data, trackerId }) => {
   const [histories, setHistories] = useState([]);
   const [suggestionSelected, setSuggestionSelected] = useState();
 
@@ -17,25 +17,17 @@ const Histories = ({ data, trackerId }) => {
     <div className="d-flex justify-content-center py-3">
       <Col xs={11}>
         <Row>
+          <Col xs={12}>
+            <h3>{title}</h3>
+            <hr />
+          </Col>
           <Col xs={12} md={6}>
             <Row>
               <Col xs={12}>
                 <ExpenseHeader histories={histories} />
               </Col>
-              <Col xs={12}>
-                <HistoryForm
-                  trackerId={trackerId}
-                  histories={histories}
-                  setHistories={setHistories}
-                  suggestionSelected={suggestionSelected}
-                  setSuggestionSelected={setSuggestionSelected}
-                />
-              </Col>
-              <Col xs={12}>
-                <ExpenseSuggestion
-                  selected={suggestionSelected}
-                  setSelected={setSuggestionSelected}
-                />
+              <Col xs={12} className="mt-3">
+                <HistoryForm trackerId={trackerId} />
               </Col>
             </Row>
           </Col>

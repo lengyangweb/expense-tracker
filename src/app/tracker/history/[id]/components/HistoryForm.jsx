@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { createHistory, getHistory } from "../../../../services/history";
+import { Card } from 'primereact/card';
 
 const History = z.object({
   trackerId: z.string().min(10),
@@ -16,20 +17,9 @@ const History = z.object({
   createdAt: z.date()
 })
 
-const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) => {
+const HistoryForm = ({ trackerId }) => {
   const formRef = useRef();
   const { pending } = useFormStatus();
-
-  useEffect(() => {
-    if (suggestionSelected) { // if user choose a suggestion transaction
-      // const indicator = suggestionSelected.income ? "+" : "-";
-      // setTitle(suggestionSelected.title);
-      // setTotal(`${indicator}${suggestionSelected.amount}`);
-      formRef.current.title.value = suggestionSelected.title;
-      formRef.current.amount.value = suggestionSelected.amount;
-      formRef.current.type.value = suggestionSelected.type;
-    }
-  }, [suggestionSelected]);
 
   /**
    * Create a new transaction and save to hisotries
@@ -88,23 +78,24 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
   }
 
   return (
-    <div className="py-2">
-      <span>Add new transaction</span>
-      <hr />
+    <Card title="Add Transaction Form">
+      {/* <span>Add new transaction</span>
+      <hr /> */}
       <Form action={saveHistory} ref={formRef}>
         <Form.Group>
-          <Form.Label htmlFor="title">Transaction Name</Form.Label>
+          <Form.Label htmlFor="title">Transaction Name:</Form.Label>
           <InputText
-            className='w-100 py-2'
+            className='w-100 mt-1'
             id='title'
             name="title"
             placeholder='Enter an income or expense title'
             autoComplete='title'
           />
         </Form.Group>
-        <Form.Group className='my-2'>
-          <Form.Label htmlFor="type">Transaction Type (negative - expense, positive - income)</Form.Label>
+        <Form.Group className='mt-2'>
+          <Form.Label htmlFor="type">Transaction Type:</Form.Label>
           <br/>
+          <div className="d-flex flex-column">
           <Form.Check
             inline
             label="Income"
@@ -121,9 +112,10 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
             id="expense"
             value="expense"
           />
+          </div>
         </Form.Group>
         <Form.Group className="my-2">
-          <Form.Label>Amount</Form.Label><br/>
+          <Form.Label>Amount:</Form.Label><br/>
           <InputGroup>
             <InputGroup.Text id="amount">$</InputGroup.Text>
             <Form.Control
@@ -137,11 +129,11 @@ const HistoryForm = ({ suggestionSelected, setSuggestionSelected, trackerId }) =
             />
           </InputGroup>
         </Form.Group>
-        <Button type="submit" className="w-100 my-2" variant="primary" disabled={pending}>
+        <Button type="submit" className="w-100 mt-2" variant="primary" disabled={pending}>
           <span>{!pending ? `Add Transaction` : `Saving Transaction`}</span>
         </Button>
       </Form>
-    </div>
+    </Card>
   );
 };
 

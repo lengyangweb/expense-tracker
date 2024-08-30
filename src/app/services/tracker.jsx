@@ -7,6 +7,16 @@ import History from "@/app/models/History";
 import { revalidatePath } from "next/cache";
 
 /**
+ * Get a tracker record
+ * @param {string} trackerID 
+ * @returns {Promise(Object)}
+ */
+const getTracker = async (trackerID) => {
+  const tracker = await Tracker.findById(trackerID);
+  return tracker;
+}
+
+/**
  * Get all trackers
  * @returns {[]}
  */
@@ -64,4 +74,4 @@ const removeTracker = async (_id) => {
   }
 };
 
-export { getTrackers, removeTracker, createTracker };
+export { getTracker, getTrackers, removeTracker, createTracker };

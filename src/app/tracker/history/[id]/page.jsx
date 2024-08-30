@@ -4,18 +4,22 @@ import Header from '@/app/components/Header';
 import Loading from '@/app/components/Loading';
 import { getHistories } from '@/app/services/history';
 import Histories from '@/app/tracker/history/[id]/components/Histories';
+import { getTracker } from '@/app/services/tracker';
 
 const page = async ({ params }) => {
   let data;
+  let tracker;
   let isLoading = true;
   const { id: trackerId } = params;
 
   try {
     await connectDB(); // will connect to the database if haven't
     data = await getHistories(trackerId); // get all histories with associated with the trackerId
+    [ data, tracker ] = await Promise.all([getHistories(trackerId), getTracker(trackerId)])
     if (data) {
       isLoading = false;
       data = JSON.parse(JSON.stringify(data));
+      tracker = JSON.parse(JSON.stringify(tracker));
     }
   } catch (error) {
     console.error(error);
@@ -26,7 +30,7 @@ const page = async ({ params }) => {
       <Header />
       <Container>
         { isLoading && <Loading /> }
-        { !isLoading && <Histories data={data} trackerId={trackerId} />}
+        { !isLoading && <Histories title={tracker.title} data={data} trackerId={trackerId} />}
       </Container>
     </div>
   );

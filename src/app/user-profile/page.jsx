@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import { Col, Container, Row } from 'react-bootstrap'
 
-const page = () => {
+const UserProfile = () => {
   return (
     <div className='d-flex'>
         <Header />
@@ -21,4 +21,4 @@ const page = () => {
   )
 }
 
-export default page
+export default UserProfile

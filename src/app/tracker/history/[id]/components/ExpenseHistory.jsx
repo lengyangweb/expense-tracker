@@ -9,7 +9,7 @@ import HeaderBadge from "./HeaderBadge";
 import { removeHistory } from "../../../../services/history";
 
 const historyBodyStyle = {
-  maxHeight: "540px",
+  maxHeight: "580px",
   overflowY: "scroll",
   background: "#eeeeee",
 }

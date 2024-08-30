@@ -13,13 +13,6 @@ const style = {
 }
 
 const Login = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
-
-    const items = [
-        { label: 'Login', icon: 'pi pi-sign-in' },
-        { label: 'Register', icon: 'pi pi-user-plus' },
-    ];
-
   return (
     <div className="container-fluid d-flex justify-content-center align-items-center" style={style}>
         <Col xs={12} sm={10} md={8} lg={6} xl={4}>
