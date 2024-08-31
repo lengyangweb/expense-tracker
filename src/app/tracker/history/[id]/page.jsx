@@ -6,7 +6,7 @@ import { getHistories } from '@/app/services/history';
 import Histories from '@/app/tracker/history/[id]/components/Histories';
 import { getTracker } from '@/app/services/tracker';
 
-const page = async ({ params }) => {
+const History = async ({ params }) => {
   let data = [];
   let tracker;
   let isLoading = true;
@@ -37,4 +37,4 @@ const page = async ({ params }) => {
   );
 }
 
-export default page
+export default History

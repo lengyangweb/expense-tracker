@@ -27,7 +27,6 @@ const Header = () => {
       <div className="position-absolute bottom-0 w-100">
         <MenuFooter />
       </div>
-      {/* <span className="text-light text-center py-2 fixed-bottom" style={{ width: '10.5rem' }}>&copy;{new Date().getFullYear()}</span> */}
     </Navbar>
   );
 };
