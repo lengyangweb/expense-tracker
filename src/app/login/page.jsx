@@ -18,7 +18,7 @@ const Login = () => {
                 <Col xs={12}>
                     <Row>
                         <Col xs={12}>
-                            <div className="d-flex align-items-center gap-2 h3 p-3 border text-white" style={{ background: '#0059b3'}}>
+                            <div className="d-flex align-items-center gap-2 h3 p-3 border text-white rounded-top-2" style={{ background: '#0059b3'}}>
                                 <i className="bg-white rounded-circle text-dark p-3 fs-2 pi pi-lock"></i>
                                 <span className="fw-bold spacing-2" style={{ letterSpacing: '1px'}}>LOGIN FORM</span>
                             </div>

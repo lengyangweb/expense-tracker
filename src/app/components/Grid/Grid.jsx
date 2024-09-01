@@ -1,4 +1,5 @@
-import GridRow from "./GridRow";
+"use client"
+
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { ProgressBar } from "primereact/progressbar";

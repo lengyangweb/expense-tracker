@@ -5,11 +5,9 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ExpenseHeader from "./ExpenseHeader";
 import ExpenseHistory from "./ExpenseHistory";
-import ExpenseSuggestion from "./ExpenseSuggestion";
 
 const Histories = ({ title, data, trackerId }) => {
   const [histories, setHistories] = useState([]);
-  const [suggestionSelected, setSuggestionSelected] = useState();
 
   useEffect(() => setHistories(data), [data]);
 

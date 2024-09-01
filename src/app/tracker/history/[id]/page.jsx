@@ -2,9 +2,9 @@ import { connectDB } from '@/app/lib/db';
 import { Container } from 'react-bootstrap';
 import Header from '@/app/components/Header';
 import Loading from '@/app/components/Loading';
+import { getTracker } from '@/app/services/tracker';
 import { getHistories } from '@/app/services/history';
 import Histories from '@/app/tracker/history/[id]/components/Histories';
-import { getTracker } from '@/app/services/tracker';
 
 const History = async ({ params }) => {
   let data = [];

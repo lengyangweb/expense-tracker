@@ -4,6 +4,7 @@ import TrackerForm from "./components/TrackerForm";
 import { Container, Row, Col } from "react-bootstrap";
 import TrackerList from "./components/TrackerList";
 import Header from "../components/Header";
+import TrackerContainer from "./components/TrackerContainer";
 
 const TrackerPage = async () => {
   let trackers = [];
@@ -30,7 +31,7 @@ const TrackerPage = async () => {
           </Col>
           <Col xs={12} lg={7} className="py-3">
             { !trackers.length && <span>No tracker at the moments. Please Use the "Create Tracker Form" to add trackers.</span> }
-            { trackers.length > 0 && <TrackerList data={trackers} /> }
+            { trackers.length > 0 && <TrackerContainer data={trackers} />}
           </Col>
         </Row>
       </Container>
