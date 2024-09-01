@@ -42,6 +42,13 @@ const page = () => {
                                             label='Add'
                                             severity='success'
                                         />
+                                        { selected && (
+                                            <Button
+                                                className='rounded-3 w-100 mt-3'
+                                                label={`Remove ${selected?.title}`}
+                                                severity='danger'
+                                            />
+                                        )}
                                     </Form>
                                 </Card>
                             </Col>

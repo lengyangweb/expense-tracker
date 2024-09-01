@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
 import { Button } from "primereact/button";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Confirm from "../../components/Confirm";
 import { redirecToHistory } from "@/app/services/history";
 
 const TrackerAction = ({ removeTracker, selectedTracker }) => {
+  const router = useRouter();
   const [actionEnable, setActionEnable] = useState(true);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
@@ -23,7 +24,7 @@ const TrackerAction = ({ removeTracker, selectedTracker }) => {
   }
 
 function viewTracker() {
-  redirecToHistory(selectedTracker?._id);
+  router.push(`/tracker/history/${selectedTracker?._id}`);
 }
 
   return (
