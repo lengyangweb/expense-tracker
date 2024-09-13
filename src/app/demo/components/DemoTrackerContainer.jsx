@@ -1,22 +1,18 @@
 import React from 'react'
-import { Button } from 'primereact/button'
+import PropTypes from 'prop-types'
+import { toast } from 'react-toastify'
 import { Col, Row } from 'react-bootstrap'
 import DemoTrackerForm from './DemoTrackerForm'
+import DemoRemoveButton from './DemoRemoveButton'
 import TrackerList from '@/app/tracker/components/TrackerList'
-import { toast } from 'react-toastify'
 
-const DemoTrackerContainer = ({ 
-    isLoading, 
-    trackers, 
-    selected, 
-    setSelected,
-    setTrackers,
-}) => {
+const DemoTrackerContainer = ({ isLoading, trackers, selected, setSelected, setTrackers }) => {
 
     function removeTracker() {
         const updatedTracker = trackers.filter((tracker) => tracker.title !== selected?.title);
         localStorage.setItem('trackers', JSON.stringify(updatedTracker));
         toast.success(`Tracker Removed`);
+        setSelected( prev => prev = undefined);
         setTrackers((prev) => prev = updatedTracker);
     }
 
@@ -36,12 +32,10 @@ const DemoTrackerContainer = ({
                         />
                     </Col>
                     { selected && (
-                        <Col xs={12}>
-                            <Button
-                                className='rounded-3 w-100 mt-3'
-                                label={`Remove ${selected?.title}`}
-                                severity='danger'
-                                onClick={removeTracker}
+                        <Col xs={12} className='mt-3'>
+                            <DemoRemoveButton 
+                                itemTitle={selected?.title} 
+                                action={removeTracker}
                             />
                         </Col>
                     )}
@@ -49,6 +43,14 @@ const DemoTrackerContainer = ({
             </Col>
         </Row>
     )
+}
+
+DemoTrackerContainer.prototype = {
+    isLoading: PropTypes.bool, 
+    trackers: PropTypes.array, 
+    selected: PropTypes.object, 
+    setSelected: PropTypes.func, 
+    setTrackers: PropTypes.func,
 }
 
 export default DemoTrackerContainer
