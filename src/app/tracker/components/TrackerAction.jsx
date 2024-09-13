@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useState, useMemo } from "react";
-import { Button } from "primereact/button";
+// import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
 import Confirm from "../../components/Confirm";
 import { redirecToHistory } from "@/app/services/history";
+import { Button } from "react-bootstrap";
 
 const TrackerAction = ({ removeTracker, selectedTracker }) => {
   const router = useRouter();
@@ -30,7 +31,7 @@ function viewTracker() {
   return (
     <>
       <div className="d-flex gap-3">
-        <Button
+        {/* <Button
           severity="info"
           label="View"
           className="rounded"
@@ -39,8 +40,8 @@ function viewTracker() {
           disabled={actionEnable}
           raised
           onClick={viewTracker}
-        />
-        <Button
+        /> */}
+        {/* <Button
           severity="danger"
           label="Remove"
           className="rounded"
@@ -49,7 +50,19 @@ function viewTracker() {
           disabled={actionEnable}
           raised
           onClick={handleDeleteShow}
-        />
+        /> */}
+        <Button variant="info" disabled={actionEnable} onClick={viewTracker}>
+          <div className="d-flex gap-2 align-items-center">
+            <span>View</span>
+            <i className="pi pi-external-link"></i>
+          </div>
+        </Button>
+        <Button variant="danger" disabled={actionEnable} onClick={handleDeleteShow}>
+          <div className="d-flex gap-2 align-items-center">
+            <span>Remove</span>
+            <i className="pi pi-trash"></i>
+          </div>
+        </Button>
       </div>
       <Confirm
         show={deleteConfirm}

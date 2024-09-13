@@ -2,12 +2,14 @@
 
 import { useRef } from "react"
 import { toast } from "react-toastify"
-import { Button } from "primereact/button"
+import { Button } from "react-bootstrap"
+import { useFormStatus } from 'react-dom'
 import { useRouter } from "next/navigation"
 import { InputText } from "primereact/inputtext"
 import { authenticate } from "@/app/services/userService"
 
 const LoginForm = () => {
+    const { pending } = useFormStatus();
     const formRef = useRef();
     const router = useRouter();
 
@@ -50,14 +52,12 @@ const LoginForm = () => {
             />
         </div>
         <div className="form-group d-flex justify-content-center mt-4">
-            <Button
-                type="submit"
-                className="py-2 rounded"
-                label="LOGIN"
-                icon="pi pi-sign-in"
-                iconPos="right"
-                style={{ background: '#0059b3' }}
-            />
+            <Button variant="outline-primary" type="submit" disabled={pending}>
+                <div className="d-flex gap-2 align-items-center">
+                    <span>LOGIN</span>
+                    <i className="pi pi-sign-in"></i>
+                </div>
+            </Button>
         </div>
     </form>
   )

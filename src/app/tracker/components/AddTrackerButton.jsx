@@ -1,19 +1,16 @@
+import { Button } from "react-bootstrap";
 import { useFormStatus } from "react-dom";
-import { Button } from "primereact/button";
 
 const AddTrackerButton = () => {
   const { pending } = useFormStatus();
 
   return (
-    <Button
-      severity="success"
-      className="w-25 rounded"
-      type="submit"
-      disabled={pending}
-      label={pending ? "Saving..." : "Save"}
-      loading={pending}
-      raised
-    />
+    <Button variant="success" type="submit" disabled={pending}>
+      <div className="d-flex gap-2 align-items-center">
+        <span>{pending ? 'Saving...' : 'Save' }</span>
+        <i className="pi pi-plus"></i>
+      </div>
+    </Button>
   );
 };
 
