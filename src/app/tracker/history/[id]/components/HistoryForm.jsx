@@ -54,8 +54,8 @@ const HistoryForm = ({ trackerId }) => {
       toast.success(response.message);
       // reset suggestion selected if it is being selected
       if (suggestionSelected) setSuggestionSelected(undefined);
-    } catch (error) {
-      console.error(`Fail trying to create a new transaction`, error);
+    } catch (err) {
+      console.error(`Fail trying to create a new transaction`, err.message);
       return;
     }
   };

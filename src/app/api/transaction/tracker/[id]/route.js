@@ -15,8 +15,8 @@ export async function DELETE(request, { params }) {
     // get the history with the same title
     const result = await Tracker.findByIdAndDelete(id);
     return NextResponse.json(result);
-  } catch (error) {
-    console.error(`${new Date().toISOString()} - ${error}`);
+  } catch (err) {
+    console.error(`${new Date().toISOString()} - ${err.message}`);
     return NextResponse({ error: `Internal Server Error` }, { status: 500 });
   }
 }

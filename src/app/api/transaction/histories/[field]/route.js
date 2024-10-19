@@ -29,8 +29,8 @@ export async function GET(request, { params }) {
       ] 
     });
     return NextResponse.json(history);
-  } catch (error) {
-    console.error(`${new Date().toISOString()} - ${error}`);
+  } catch (err) {
+    console.error(`${new Date().toISOString()} - ${err.message}`);
     return NextResponse({ error: `Internal Server Error` }, { status: 500 });
   }
 }
@@ -49,8 +49,8 @@ export async function POST(request, { params }) {
     await connectDB();
     const histories = await History.find({ trackerId: id });
     return NextResponse.json({ histories });
-  } catch (error) {
-    console.error(`Fail trying to fetch histories with trackerId`, error);
+  } catch (err) {
+    console.error(`Fail trying to fetch histories with trackerId`, err);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -70,8 +70,8 @@ export async function DELETE(request, { params }) {
     // get the history with the same title
     const history = await History.findByIdAndDelete(id);
     return NextResponse.json(history);
-  } catch (error) {
-    console.error(`${new Date().toISOString()} - ${error}`);
+  } catch (err) {
+    console.error(`${new Date().toISOString()} - ${err.message}`);
     return NextResponse({ error: `Internal Server Error` }, { status: 500 });
   }
 }

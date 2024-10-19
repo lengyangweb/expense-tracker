@@ -27,8 +27,8 @@ const ExpenseHistory = ({ histories, setHistories }) => {
       const response = await removeHistory(transaction._id);
       if (!response.success) return toast.error(response.message);
       toast.success(response.success);
-    } catch (error) {
-      console.error(`Error trying to remove History`, error);
+    } catch (err) {
+      console.error(`Error trying to remove History`, err.message);
       toast.error(`There's an issue removing history`);
       return;
     }

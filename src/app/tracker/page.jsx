@@ -9,13 +9,13 @@ import TrackerContainer from "./components/TrackerContainer";
 const TrackerPage = async () => {
   let trackers = [];
 
-  // try {
+  try {
     await connectDB();
     trackers = await Tracker.find();
     trackers = JSON.parse(JSON.stringify(trackers));
-  // } catch (error) {
-  //   console.error(error);
-  // }
+  } catch (err) {
+    console.error(err);
+  }
 
   return (
     <div className="d-flex">

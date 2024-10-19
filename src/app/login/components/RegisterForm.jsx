@@ -19,8 +19,8 @@ const RegisterForm = () => {
             const response = await registerUser(user, formRef.current.accessCode.value);
             if (!response.success) return alert(response.message);
             alert(response.message);
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err.message);
         }
     }
 

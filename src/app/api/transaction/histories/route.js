@@ -14,7 +14,7 @@ export async function GET(request) {
     const histories = await History.find();
     // return all histories
     return NextResponse.json(histories);
-  } catch (error) {
+  } catch (err) {
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -42,8 +42,8 @@ export async function POST(request) {
     // create a new transaction history
     const history = await History.create(json);
     return NextResponse.json(history);
-  } catch (error) {
-    console.error(`${new Date().toISOString()} - ${error}`);
+  } catch (err) {
+    console.error(`${new Date().toISOString()} - ${err.message}`);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
