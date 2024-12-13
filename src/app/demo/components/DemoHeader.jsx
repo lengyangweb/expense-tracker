@@ -9,7 +9,7 @@ const DemoHeader = () => {
         <p>
             This is <strong><i>exp</i>Tracker</strong> demo page where you can have a snippet of how the site works.
         </p>
-        <DemoDialog />
+        {/* <DemoDialog /> */}
         <hr />
     </div>
   )

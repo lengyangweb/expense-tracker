@@ -16,10 +16,7 @@ const LoginForm = () => {
     async function signIn() {
         const username = formRef.current.username.value;
         const password = formRef.current.password.value;
-
-        // if username or password is not provided
-        if (!username || !password) return toast.error(`Username and password require`);
-
+        if (!username || !password) return toast.error(`Username and password require`); // if username or password is not provided
         const credential = { username, password }
 
         try {
