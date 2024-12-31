@@ -3,22 +3,22 @@
 import { toast } from "react-toastify";
 import TrackerList from "./TrackerList";
 import { Col, Row } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TrackerAction from "./TrackerAction";
 import { removeTracker } from "@/app/services/tracker";
 
 const TrackerContainer = ({ data }) => {
     const [trackers, setTrackers] = useState([]);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [selected, setSelected] = useState(undefined);
-  
-    useEffect(() => loadTrackerData, [data]);
+    
+    useMemo(() => {
+      if (data && data.length > 0) setTrackers(data);
+      setLoading(false);
+    }, [data]);
 
-    const loadTrackerData = () => {
-        if (data && data.length > 0) setTrackers(data);
-        setLoading(false);
-    }
-  
+    // const loadTrackerData = () => {}
+
     // remove tracker
     const handleRemoveTracker = async () => {
       const response = await removeTracker(selected?._id);
