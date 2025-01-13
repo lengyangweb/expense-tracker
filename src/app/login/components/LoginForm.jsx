@@ -23,8 +23,8 @@ const LoginForm = () => {
             const response = await authenticate(credential);
             if (!response.success) return toast.error(response.message);
             router.push('/');
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err.message);
             toast.error(`Something went wrong`);
         }
     }

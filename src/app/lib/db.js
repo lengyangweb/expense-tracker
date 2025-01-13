@@ -12,8 +12,8 @@ export async function connectDB() {
     const db = await connect(process.env.MONGO_URI);
     console.log(db.connection.db.databaseName);
     conn.isConnected = db.connections[0].readyState;
-  } catch (error) {
-    console.error(`Unable to connect to MongoDB`, error);
+  } catch (err) {
+    console.error(`Unable to connect to MongoDB`, err.message);
   }
 }
 

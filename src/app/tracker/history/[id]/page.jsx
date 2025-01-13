@@ -22,8 +22,8 @@ const History = async ({ params }) => {
       data = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // sort by latest date first
       tracker = JSON.parse(JSON.stringify(tracker));
     }
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err.message);
   }
 
   return (

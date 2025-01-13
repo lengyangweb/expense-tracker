@@ -7,8 +7,8 @@ export async function GET(request) {
     await connectDB();
     const trackers = await Tracker.find();
     return NextResponse.json(trackers);
-  } catch (error) {
-    console.error(`Fail fetching trackers`, error);
+  } catch (err) {
+    console.error(`Fail fetching trackers`, err.message);
     return NextResponse({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -30,8 +30,8 @@ export async function POST(request) {
       if (!result) return NextResponse.json({ message: 'unable to save new tracker' }, { status: 400 });
       // return success response
       return NextResponse.json({ tracker: result }, { status: 201 });
-    } catch (error) {
-      console.error(`Fail saving new tracker`, error);
+    } catch (err) {
+      console.error(`Fail saving new tracker`, err.message);
       NextResponse.json(
         { error: 'Internal Server Error' },
         { status: 500 }

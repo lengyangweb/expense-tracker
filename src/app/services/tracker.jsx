@@ -46,8 +46,8 @@ const createTracker = async (newTracker) => {
     tracker = await Tracker.create(newTracker); // create tracker
     revalidatePath('/tracker');
     return { success: true, message: `tracker ${tracker.title} has been added` }; // return result
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err.message);
   }
 };
 
@@ -68,8 +68,8 @@ const removeTracker = async (_id) => {
     // remove all transaction history associated with this id;
     revalidatePath("/tracker");
     return { success: true, message: `Tracker removed` };
-  } catch (error) {
-    console.error(`Fail trying to remove tracker`, error);
+  } catch (err) {
+    console.error(`Fail trying to remove tracker`, err.message);
     return { success: false, message: "Something went wrong" };
   }
 };

@@ -18,8 +18,8 @@ export const registerUser = async(newUser, accessCode) => {
         await connectDB();
         const user = await User.create({ ...newUser });
         if (user) return { success: true, message: `Use login form to sign in`}
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err.message);
         return { success: false, message: 'Internal Server Error' };
     }
 }
@@ -44,8 +44,8 @@ export const authenticate = async(credential) => {
         const token = generateToken(userInfo);
         cookies().set('access-token', token); // set access token
         return { success: true, message: `Login Success` };
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err.message);
         return { success: false, message: `Internal Server Error` };
     }
 }

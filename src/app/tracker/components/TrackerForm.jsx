@@ -36,9 +36,9 @@ const TrackerForm = () => {
       if (!result.success) return toast.error(result.message); // if success is false
       toast.success(result.message); // add success message
       formRef.current?.reset(); // reset form values after
-    } catch (error) {
+    } catch (err) {
       toast.error(`Something went wrong`);
-      console.error(error);
+      console.error(err.message);
     }
   }
 

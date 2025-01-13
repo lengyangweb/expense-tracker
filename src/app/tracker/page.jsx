@@ -13,8 +13,8 @@ const TrackerPage = async () => {
     await connectDB();
     trackers = await Tracker.find();
     trackers = JSON.parse(JSON.stringify(trackers));
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
   }
 
   return (
