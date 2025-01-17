@@ -17,10 +17,9 @@ const LoginForm = () => {
         const username = formRef.current.username.value;
         const password = formRef.current.password.value;
         if (!username || !password) return toast.error(`Username and password require`); // if username or password is not provided
-        const credential = { username, password }
 
         try {
-            const credential = { username, password }
+            const credential = { username, password };
             const response = await authenticate(credential);
             if (!response.success) return toast.error(response.message);
             router.push('/');

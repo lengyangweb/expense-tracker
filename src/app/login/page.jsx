@@ -49,7 +49,7 @@ const Login = () => {
                                     { view === 'Register' && (
                                         <Col xs={12}>
                                             <div className="d-flex">
-                                                <RegisterForm reset={view} />
+                                                <RegisterForm />
                                             </div>
                                         </Col>
                                     )}
