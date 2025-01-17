@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { toast } from "react-toastify"
-import { Button } from "react-bootstrap"
+import { Button } from 'primereact/button'
 import { useFormStatus } from 'react-dom'
 import { useRouter } from "next/navigation"
 import { InputText } from "primereact/inputtext"
@@ -16,16 +16,9 @@ const LoginForm = () => {
     async function signIn() {
         const username = formRef.current.username.value;
         const password = formRef.current.password.value;
-<<<<<<< HEAD
-
-        // if username or password is not provided
-        if (!username || !password) return toast.error(`Username and password require`);
-        
-=======
         if (!username || !password) return toast.error(`Username and password require`); // if username or password is not provided
         const credential = { username, password }
 
->>>>>>> 18f698a62cef8fc308ca335903d31a7baef51298
         try {
             const credential = { username, password }
             const response = await authenticate(credential);
@@ -48,10 +41,17 @@ const LoginForm = () => {
             <InputText className="py-2" type="password" name="password" id="password" />
         </div>
         <div className="form-group d-flex justify-content-center mt-4">
-            <Button variant="primary" type="submit" disabled={pending}>
-                <div className="d-flex gap-2 align-items-center">
+            <Button 
+                className="rounded py-2 px-3" 
+                variant="primary"
+                label='LOGIN'
+                icon='pi pi-sign-in' 
+                iconPos='right' 
+                type="submit" 
+                disabled={pending}>
+                {/* <div className="d-flex gap-2 align-items-center">
                     <strong style={{ letterSpacing: '1px' }}>LOGIN</strong>
-                </div>
+                </div> */}
             </Button>
         </div>
     </form>

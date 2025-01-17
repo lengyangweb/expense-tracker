@@ -28,29 +28,15 @@ const RegisterForm = () => {
     <Form ref={ formRef } action={ register } className='col-12 px-4 col-lg-12'>
         <div className='d-flex flex-column'>
             <Form.Label htmlFor='username'>Username:</Form.Label>
-            <InputText
-                className='py-2'
-                id='username'
-                name='username'
-            />
+            <InputText className='py-2' id='username' name='username' />
         </div>
         <div className='d-flex flex-column mt-2'>
             <Form.Label htmlFor='password'>Password:</Form.Label>
-            <InputText
-                className='py-2'
-                type='password'
-                id='password'
-                name='password'
-            />
+            <InputText className='py-2' type='password' id='password' name='password' />
         </div>
         <div className='d-flex flex-column mt-2'>
             <Form.Label htmlFor='accessCode'>Access Code:</Form.Label>
-            <InputText
-                className='py-2'
-                type="password"
-                id='accessCode'
-                name='accessCode'
-            />
+            <InputText className='py-2' type="password" id='accessCode'name='accessCode' />
         </div>
         <div className="d-flex justify-content-center mt-4">
             <Button
