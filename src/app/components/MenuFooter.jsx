@@ -1,10 +1,9 @@
 'use client'
 
 import React from 'react'
-import { logout, navigate } from '../services/userService'
-import { SplitButton } from 'primereact/splitbutton'
-import { Button, Dropdown } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 import { useRouter } from 'next/navigation'
+import { logout } from '../services/userService'
 
 
 const MenuFooter = () => {
@@ -27,24 +26,18 @@ const MenuFooter = () => {
     <div className='w-100 bg-secondary text-white border-0 px-2 py-1'>
       <div className="d-flex justify-content-between align-items-center">
         <span>Settings</span>
-        {/* <div className="d-flex align-items-center">
-          <div className="px-2 py-1 border border-2 border-dark bg-dark rounded-circle mx-2">
-            <i className="pi pi-user w-100 text-light"></i>
-          </div>
-          <span className="fw-bold">ADMIN</span>
-        </div> */}
-       <Dropdown drop='up'>
-         <Dropdown.Toggle className='border-0 text-white' variant="white" id="dropdown-basic" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         </Dropdown.Toggle>
-         <Dropdown.Menu>
+        <Dropdown drop='up'>
+          <Dropdown.Toggle className='border-0 text-white' variant="white" id="dropdown-basic" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </Dropdown.Toggle>
+        <Dropdown.Menu>
           <div className="d-flex align-items-center">
             <div className="px-2 py-1 border border-2 border-dark bg-dark rounded-circle mx-2">
               <i className="pi pi-user w-100 text-light"></i>
             </div>
             <span className="fw-bold">ADMIN</span>
           </div>
-         <Dropdown.Divider />
-           {
+          <Dropdown.Divider />
+          {
              items.map(({ label, icon, command }) => (
                <Dropdown.Item key={label} onClick={command}>
                  <div className="d-flex justify-content-between align-items-center gap-2">

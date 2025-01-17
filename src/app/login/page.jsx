@@ -13,7 +13,7 @@ const style = {
 const Login = () => {
   return (
     <div className="container-fluid d-flex justify-content-center align-items-center" style={style}>
-        <Col xs={12} sm={10} md={8} lg={6} xl={4}>
+        <Col xs={12} sm={10} md={8} lg={6} xl={3}>
             <Row>
                 <Col xs={12}>
                     <Row>

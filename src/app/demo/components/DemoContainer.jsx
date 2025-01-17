@@ -1,7 +1,7 @@
 'use client'
 
 import DemoHeader from './DemoHeader';
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import DemoTrackerContainer from './DemoTrackerContainer';
 
@@ -10,16 +10,22 @@ const DemoContainer = () => {
     const [isLoading, setLoading] = useState(true);
     const [selected, setSelected] = useState(undefined);
 
-    useEffect(() => onLoad, [trackers]);
+    useEffect(() => dataLoad, [trackers]);
 
-    function onLoad() {
+    function dataLoad() {
+        let tempData = localStorage.getItem('trackers');
+        if (!tempData) {
+            localStorage.setItem('trackers', JSON.stringify([]));
+            setLoading(prev => prev = false);
+            return;
+        }
         loadTrackerData();
     }
 
     function loadTrackerData () {
         if (!trackers.length) {
             let tempData = JSON.parse(localStorage.getItem('trackers')) || [];
-            setTrackers((prev) => prev = tempData);
+            setTrackers(prev => prev = tempData);
             setLoading(prev => prev = false);
         }
     }
