@@ -26,11 +26,17 @@ const Login = () => {
                         <Col xs={12}>
                             <Card>
                                 <Row>
-                                    <Col xs={12} className="mb-2">
+                                    <Col xs={12}>
                                         <div className="d-flex justify-content-center">
                                             <LoginForm />
                                         </div>
+                                        <hr />
+                                        <div className="d-flex gap-2" style={{ fontSize: '14px' }}>
+                                            <span>New around here?</span>
+                                            <strong className="text-primary" style={{ cursor: 'pointer' }}>Create account</strong>
+                                        </div>
                                     </Col>
+
                                 </Row>
                             </Card>
                         </Col>

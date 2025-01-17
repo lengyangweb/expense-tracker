@@ -19,10 +19,9 @@ const LoginForm = () => {
 
         // if username or password is not provided
         if (!username || !password) return toast.error(`Username and password require`);
-
-        const credential = { username, password }
-
+        
         try {
+            const credential = { username, password }
             const response = await authenticate(credential);
             if (!response.success) return toast.error(response.message);
             router.push('/');
@@ -36,26 +35,16 @@ const LoginForm = () => {
     <form ref={formRef} action={signIn} className="col-12 px-4 col-lg-12">
         <div className="form-group d-flex flex-column">
             <label htmlFor="username" className="form-label">Username:</label>
-            <InputText
-                className="py-2"
-                name="username"
-                id="username"
-            />
+            <InputText className="py-2" name="username" id="username" />
         </div>
         <div className="form-group d-flex flex-column my-2">
             <label htmlFor="password" className="form-label">Password:</label>
-            <InputText
-                className="py-2"
-                type="password"
-                name="password"
-                id="password"
-            />
+            <InputText className="py-2" type="password" name="password" id="password" />
         </div>
         <div className="form-group d-flex justify-content-center mt-4">
-            <Button variant="outline-primary" type="submit" disabled={pending}>
+            <Button variant="primary" type="submit" disabled={pending}>
                 <div className="d-flex gap-2 align-items-center">
-                    <span>LOGIN</span>
-                    <i className="pi pi-sign-in"></i>
+                    <strong style={{ letterSpacing: '1px' }}>LOGIN</strong>
                 </div>
             </Button>
         </div>

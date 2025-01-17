@@ -12,7 +12,7 @@ const AboutPage = () => {
             This is expense tracker web application, which is created to track all
             expenses.
           </span>
-          <span className="fw-bold">Version: 1.0.0</span>
+          <span className="fw-bold">Version: 1.0.1</span>
         </div>
       </Container>
     </div>
