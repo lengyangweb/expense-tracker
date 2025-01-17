@@ -42,18 +42,14 @@ const Login = () => {
                                             <hr />
                                             <div className="d-flex gap-2" style={{ fontSize: '14px' }}>
                                                 <span>New around here?</span>
-                                                <strong 
-                                                    className="text-primary" 
-                                                    style={{ cursor: 'pointer' }}
-                                                    onClick={updateView}
-                                                >Create account</strong>
+                                                <strong className="text-primary" style={{ cursor: 'pointer' }} onClick={updateView} >Create account</strong>
                                             </div>
                                         </Col>
                                     )}
                                     { view === 'Register' && (
                                         <Col xs={12}>
-                                            <div className="d-flex justify-content-center">
-                                                <RegisterForm />
+                                            <div className="d-flex">
+                                                <RegisterForm reset={view} />
                                             </div>
                                         </Col>
                                     )}
@@ -62,11 +58,7 @@ const Login = () => {
                             { view === 'Register' && (
                                 <div className="d-flex justify-content-center mt-2 gap-1" style={{ fontSize: '14px' }}>
                                     <span>Already have an account?</span>
-                                    <strong 
-                                        className="text-primary" 
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={updateView}
-                                    >Log in</strong>
+                                    <strong  className="text-primary" style={{ cursor: 'pointer' }} onClick={updateView}>Log in</strong>
                                 </div>
                             )}
                         </Col>
