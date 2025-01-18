@@ -7,6 +7,10 @@ const utilitiesSchema = new Schema({
 { timestamps: true }
 )
 
+utilitiesSchema.methods.verifyAccessCode = function(accessCode) {
+  return this.util_collection.includes(accessCode);
+}
+
 // if model is already exist then use model otherwise create a new model
 const Utilities = models.utilities || model("utilities", utilitiesSchema);
 

@@ -48,9 +48,6 @@ const LoginForm = () => {
                 iconPos='right' 
                 type="submit" 
                 disabled={pending}>
-                {/* <div className="d-flex gap-2 align-items-center">
-                    <strong style={{ letterSpacing: '1px' }}>LOGIN</strong>
-                </div> */}
             </Button>
         </div>
     </form>

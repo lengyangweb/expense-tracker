@@ -17,6 +17,8 @@ export const registerUser = async(newUser, accessCode) => {
     await connectDB();
     if (!await isValidAccessCode(accessCode)) return { success: false, message: `INVALID ACCESS CODE: Please double-check your access code and try again.` };
     try {
+        const userFound = await User.findOne({ username: newUser.username });
+        if (userFound) return { success: false, message: `User already exist.` };
         const user = await User.create(newUser);
         // TODO: delete the access key after use
         if (user) return { success: true, message: `Use login form to sign in`}
@@ -72,9 +74,9 @@ export const logout = async() => {
  */
 const isValidAccessCode = async (accessCode) => {
     try {
-        const { util_collection: accessCodes } = await Utilities.findOne({ util_name: 'access-codes' });
-        if (!accessCodes || !accessCodes.length) return false;
-        const found = accessCodes.includes(accessCode);
+        const record = await Utilities.findOne({ util_name: 'access-codes' });
+        if (!record) return false;
+        const found = record.verifyAccessCode(accessCode);
         return found;
     } catch (error) {
         console.error(`Query AccessCodes Error`, error);

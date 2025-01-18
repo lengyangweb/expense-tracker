@@ -2,11 +2,11 @@ import bcrypt from 'bcryptjs';
 import { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
-    username: { type: String, require: [true, `Username is required`] },
-    email: { type: String, required: [true, 'email is required'] },
-    password: { type: String, require: [true, `Password is required`] }
+    username: { type: String, required: [true, `Username is required`] },
+    email: { type: String, required: [true, 'Email is required'] },
+    password: { type: String, required: [true, `Password is required`] }
 },
-{ timestamps: tru }
+{ timestamps: true }
 );
 
 userSchema.pre('save', function(next) {
