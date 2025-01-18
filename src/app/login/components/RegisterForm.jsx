@@ -9,32 +9,33 @@ import { InputText } from 'primereact/inputtext'
 import { registerUser } from '@/app/services/userService'
 
 // validate register fields
-const Register = z.object({
-    username: z.string({ required_error: 'username is required' }).min(2).max(30),
-    email: z.string({ required_error: 'email is required' }).email('Invalid email address'),
-    password: z.string({ required_error: 'password is required' }).min(10).max(50)
+const validateRegister = z.object({
+    username: z.string().min(4,'username must be at least 4 characters long'),
+    email: z.string().email('Please provide a valid email address'),
+    password: z.string().min(10, 'password must be at least 10 characerts long')
 })
 
-const RegisterForm = () => { 
-    const [currentTab, setCurrentTab] = useState('register'); // TODO: reset this value when user change view to login
-    const [errors, setError] = useState();
-    const [goBack, setGoBack] = useState(false);
+const validateAccessCode = z.string().min(16, 'Must be greater than 16 characters long');
 
+const RegisterForm = () => { 
     const formRef = useRef();
+    const [errors, setError] = useState();
+    const [newUser, setNewUser] = useState({ username: '', email: '', password: '' });
+    const [currentTab, setCurrentTab] = useState('register');
 
     const register = async() => {
-        const user = {
-            username: formRef.current.username.value,
-            email: formRef.current.email.value,
-            password: formRef.current.password.value,
-        };
+        const accessCode = formRef.current.accessCode.value;
+        if (errors) setError((error) => error = undefined);
+        const validationResult = validateAccessCode.safeParse(accessCode);
+        if (!validationResult.success) return setError((currentError) => currentError = { accessCode: validationResult.error.errors[0].message });
 
         try {
-            const response = await registerUser(user, formRef.current.accessCode.value);
-            if (!response.success) return alert(response.message);
-            alert(response.message);
+            const response = await registerUser(newUser, accessCode);
+            if (!response.success) return toast.error(response.message);
+            toast.success(response.message);
         } catch (err) {
             console.error(err.message);
+            toast.error('Something went wrong');
         }
     }
 
@@ -47,16 +48,17 @@ const RegisterForm = () => {
     }
 
     function validateRegisterFields() {
-        const newUser = {
+        const user = {
             username: formRef.current.username.value,
             email: formRef.current.email.value,
-            password: formRef.current.password.value    
-        };
-
-        const validationResult = Register.safeParse(newUser);
+            password: formRef.current.password.value  
+        }
+        if (errors) setError((error) => error = undefined);
+        setNewUser((current) => current = { ...user });
+        const validationResult = validateRegister.safeParse(user);
         if (!validationResult.success) {
             buildErrorMsg(validationResult?.error?.errors)
-            return toast.error(`Make sure all require fields are fill out correctly`);
+            return toast.error(`Make sure all require fields are fill out correctly.`);
         }
         setTab();
     }
@@ -68,17 +70,17 @@ const RegisterForm = () => {
             <>
                 <div className='d-flex flex-column'>
                     <Form.Label htmlFor='username'>Username:</Form.Label>
-                    { (errors && errors?.username ) && (<small className='text-danger'>{errors?.username}</small>)}
+                    { (errors && errors?.username ) && (<small className='text-danger'><strong>{errors?.username}</strong></small>)}
                     <InputText className='py-2' id='username' name='username' />
                 </div>
                 <div className='d-flex flex-column mt-2'>
                     <Form.Label htmlFor='email'>Email:</Form.Label>
-                    { (errors && errors?.email ) && (<small className='text-danger'>{errors?.email}</small>)}
+                    { (errors && errors?.email ) && (<small className='text-danger'><strong>{errors?.email}</strong></small>)}
                     <InputText className='py-2' type='email' id='email' name='email' />
                 </div>
                 <div className='d-flex flex-column mt-2'>
                     <Form.Label htmlFor='password'>Password:</Form.Label>
-                    { (errors && errors?.password ) && (<small className='text-danger'>{errors?.password}</small>)}
+                    { (errors && errors?.password ) && (<small className='text-danger'><strong>{errors?.password}</strong></small>)}
                     <InputText className='py-2' type='password' id='password' name='password' />
                 </div>
             </>
@@ -87,12 +89,13 @@ const RegisterForm = () => {
             <div className='d-flex flex-column mt-2'>
                 <Form.Label htmlFor='accessCode'><strong>Access Code</strong> (<small><i>Obtain from admin</i></small>):</Form.Label>
                 <InputText className='py-2' type="password" id='accessCode'name='accessCode' />
+                { (errors && errors?.accessCode ) && (<small className='text-danger d-flex justify-content-center'><strong>{errors?.accessCode}</strong></small>) }
             </div>
         )}
         <div className="d-flex justify-content-center gap-1 mt-4">
-            { currentTab === 'register' && (<Button className='py-2 px-3 rounded' label='Continue' onClick={validateRegisterFields} />)}
-            { currentTab !== 'register' && (<Button className='py-2 px-3 rounded' label='Back' onClick={setTab} />)}
-            { currentTab !== 'register' && (<Button className='py-2 px-3 rounded' label='Register' icon="pi pi-user-plus" iconPos='right' />)}
+            { currentTab === 'register' && (<Button className='py-2 px-3 rounded' type='button' label='Continue' onClick={validateRegisterFields} />)}
+            {/* { currentTab !== 'register' && (<Button className='py-2 px-3 rounded' type='button' label='Back' onClick={setTab} />)} */}
+            { currentTab !== 'register' && (<Button className='py-2 px-3 rounded' type='submit' label='Register' icon="pi pi-user-plus" iconPos='right' />)}
         </div>
     </Form>
   )

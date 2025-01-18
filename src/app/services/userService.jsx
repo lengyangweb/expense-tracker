@@ -3,6 +3,7 @@
 import User from '../models/User';
 import { connectDB } from '../lib/db';
 import { cookies } from 'next/headers';
+import Utilities from '../models/Utility';
 import { redirect } from 'next/navigation';
 import { generateToken } from '../utilities/generateToken';
 
@@ -13,9 +14,9 @@ import { generateToken } from '../utilities/generateToken';
  * @returns {Promise<any>}
  */
 export const registerUser = async(newUser, accessCode) => {
-    if (!isValidAccessCode(accessCode)) return { success: false, message: `Invalid Access Code` };
+    await connectDB();
+    if (!await isValidAccessCode(accessCode)) return { success: false, message: `Invalid Access Code` };
     try {
-        await connectDB();
         const user = await User.create({ ...newUser });
         if (user) return { success: true, message: `Use login form to sign in`}
     } catch (err) {
@@ -66,8 +67,16 @@ export const logout = async() => {
 /**
  * Validate access code
  * @param {string} accessCode 
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
-const isValidAccessCode = (accessCode) => {
-    return accessCode === process.env.ACCESS_CODE;
+const isValidAccessCode = async (accessCode) => {
+    try {
+        const accessCodes = await Utilities.findOne({ util_name: 'access-codes' });
+        if (!accessCodes || !accessCodes.util_collection.length) return false;
+        const found = accessCodes.util_collection.includes(accessCode);
+        return found;
+    } catch (error) {
+        console.error(`Query AccessCodes Error`, error);
+        return false;
+    }
 }
