@@ -88,7 +88,7 @@ const RegisterForm = () => {
         { currentTab !== 'register' && (
             <div className='d-flex flex-column mt-2'>
                 <Form.Label htmlFor='accessCode'><strong>Access Code</strong> (<small><i>Obtain from admin</i></small>):</Form.Label>
-                <InputText className='py-2' type="password" id='accessCode'name='accessCode' />
+                <InputText className='py-2' type="text" id='accessCode'name='accessCode' style={{ outlineColor: 'red' }} />
                 { (errors && errors?.accessCode ) && (<small className='text-danger d-flex justify-content-center'><strong>{errors?.accessCode}</strong></small>) }
             </div>
         )}

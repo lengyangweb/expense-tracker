@@ -15,9 +15,10 @@ import { generateToken } from '../utilities/generateToken';
  */
 export const registerUser = async(newUser, accessCode) => {
     await connectDB();
-    if (!await isValidAccessCode(accessCode)) return { success: false, message: `Invalid Access Code` };
+    if (!await isValidAccessCode(accessCode)) return { success: false, message: `INVALID ACCESS CODE: Please double-check your access code and try again.` };
     try {
-        const user = await User.create({ ...newUser });
+        const user = await User.create(newUser);
+        // TODO: delete the access key after use
         if (user) return { success: true, message: `Use login form to sign in`}
     } catch (err) {
         console.error(err.message);
@@ -71,9 +72,9 @@ export const logout = async() => {
  */
 const isValidAccessCode = async (accessCode) => {
     try {
-        const accessCodes = await Utilities.findOne({ util_name: 'access-codes' });
-        if (!accessCodes || !accessCodes.util_collection.length) return false;
-        const found = accessCodes.util_collection.includes(accessCode);
+        const { util_collection: accessCodes } = await Utilities.findOne({ util_name: 'access-codes' });
+        if (!accessCodes || !accessCodes.length) return false;
+        const found = accessCodes.includes(accessCode);
         return found;
     } catch (error) {
         console.error(`Query AccessCodes Error`, error);
