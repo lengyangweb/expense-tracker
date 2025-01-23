@@ -33,6 +33,7 @@ const RegisterForm = () => {
             const response = await registerUser(newUser, accessCode);
             if (!response.success) return toast.error(response.message);
             toast.success(response.message);
+            // TODO: display login page for user to login
         } catch (err) {
             console.error(err.message);
             toast.error('Something went wrong');

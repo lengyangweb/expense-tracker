@@ -6,7 +6,6 @@ import { cookies } from 'next/headers';
 import Utilities from '../models/Utility';
 import { redirect } from 'next/navigation';
 import { generateToken } from '../utilities/generateToken';
-import mongoose from 'mongoose';
 
 /**
  * Create a new user
@@ -67,7 +66,6 @@ export const logout = async() => {
     cookies().delete('access-token');
     redirect('/login');
 }
-
 
 /**
  * Validate access code
