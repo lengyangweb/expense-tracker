@@ -1,17 +1,16 @@
-import { connectDB } from "../lib/db";
-import Tracker from "@/app/models/Tracker";
+import Header from "../components/Header";
 import TrackerForm from "./components/TrackerForm";
 import { Container, Row, Col } from "react-bootstrap";
-import TrackerList from "./components/TrackerList";
-import Header from "../components/Header";
+import { getUserTrackers } from "../services/tracker";
+import { getUserInfo } from '../utilities/generateToken';
 import TrackerContainer from "./components/TrackerContainer";
 
 const TrackerPage = async () => {
+  const { userId } =getUserInfo(); // decode token to get userInfo
+  
   let trackers = [];
-
   try {
-    await connectDB();
-    trackers = await Tracker.find();
+    trackers = await getUserTrackers(userId);
     trackers = JSON.parse(JSON.stringify(trackers));
   } catch (err) {
     console.error(err);

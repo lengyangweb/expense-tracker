@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import Utilities from '../models/Utility';
 import { redirect } from 'next/navigation';
 import { generateToken } from '../utilities/generateToken';
+import mongoose from 'mongoose';
 
 /**
  * Create a new user
@@ -42,6 +43,7 @@ export const authenticate = async(credential) => {
         if (!validPassword) return { success: false, message: `Invalid username or password` };
 
         const userInfo = {
+            userId: user._id,
             username: user.username
         }
 

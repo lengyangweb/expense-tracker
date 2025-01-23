@@ -5,11 +5,12 @@ import { connectDB } from "../lib/db";
 import Tracker from "@/app/models/Tracker";
 import History from "@/app/models/History";
 import { revalidatePath } from "next/cache";
+import { getUserInfo } from "../utilities/generateToken";
 
 /**
  * Get a tracker record
- * @param {string} trackerID 
- * @returns {Promise(Object)}
+ * @param {mongoose.Schema.Types.ObjectId} trackerID 
+ * @returns {Promise<mongoose.Document>}
  */
 const getTracker = async (trackerID) => {
   const tracker = await Tracker.findById(trackerID);
@@ -17,12 +18,20 @@ const getTracker = async (trackerID) => {
 }
 
 /**
- * Get all trackers
- * @returns {[]}
+ * Get all user trackers
+ * @param {mongoose.Schema.Types.ObjectId} userId
+ * @returns {Promise<mongoose.Document[]>}
  */
-const getTrackers = async () => {
-  const trackers = await Tracker.find();
-  return trackers;
+const getUserTrackers = (userId) => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      await connectDB(); // connect to the database
+      const trackers = await Tracker.find({ userId }); // query user trackers
+      resolve(trackers);
+    } catch (error) {
+      reject(error);
+    }
+  })
 };
 
 /**
@@ -31,8 +40,10 @@ const getTrackers = async () => {
  * @returns {{ success: boolean, message: string }}
  */
 const createTracker = async (newTracker) => {
-  if (!newTracker.title)
-    return { success: false, message: "Title is required" }; // if no title is present
+  const { userId } = getUserInfo();
+  if (!userId) return { success: false, message: 'No userId.' };
+  if (!newTracker.title) return { success: false, message: "Title is required" };
+  
   try {
     await connectDB();
     // check to see if tracker exist
@@ -74,4 +85,4 @@ const removeTracker = async (_id) => {
   }
 };
 
-export { getTracker, getTrackers, removeTracker, createTracker };
+export { getTracker, getUserTrackers, removeTracker, createTracker };

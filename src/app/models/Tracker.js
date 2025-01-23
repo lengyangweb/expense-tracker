@@ -1,6 +1,7 @@
 import { Schema, model, models } from 'mongoose';
 
 const trackerSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: 'Tracker', required: true },
   title: { type: String, required: [true, 'title is required'] }
 },
 { timestamps: true }
