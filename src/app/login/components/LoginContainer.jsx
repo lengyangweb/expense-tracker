@@ -47,7 +47,7 @@ const LoginContainer = () => {
                                     { view === 'Register' && (
                                         <Col xs={12}>
                                             <div className="d-flex">
-                                                <RegisterForm />
+                                                <RegisterForm setView={setView} />
                                             </div>
                                         </Col>
                                     )}

@@ -17,7 +17,7 @@ const validateRegister = z.object({
 
 const validateAccessCode = z.string().min(16, 'Must be greater than 16 characters long');
 
-const RegisterForm = () => { 
+const RegisterForm = ({ setView }) => { 
     const formRef = useRef();
     const [errors, setError] = useState();
     const [newUser, setNewUser] = useState({ username: '', email: '', password: '' });
@@ -34,6 +34,7 @@ const RegisterForm = () => {
             if (!response.success) return toast.error(response.message);
             toast.success(response.message);
             // TODO: display login page for user to login
+            setView((view) => view = 'Login');
         } catch (err) {
             console.error(err.message);
             toast.error('Something went wrong');
