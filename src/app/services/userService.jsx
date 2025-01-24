@@ -47,7 +47,12 @@ export const authenticate = async(credential) => {
         }
 
         const token = generateToken(userInfo);
-        cookies().set('access-token', token); // set access token
+        cookies().set('access-token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60, // expires in 1 hour
+            path: '/'
+        }); // set access token
         return { success: true, message: `Login Success` };
     } catch (err) {
         console.error(err.message);

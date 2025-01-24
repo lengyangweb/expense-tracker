@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { verifyToken } from './app/utilities/generateToken';
  
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
@@ -10,8 +11,10 @@ export function middleware(request) {
       if (!request.url.includes('login')) return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    if (token && request.url.includes('login')) return NextResponse.redirect(new URL('/', request.url));
+    // const tokenIsValid = verifyToken(token.value); // verify if token is not valid or is expire
+    // if (!tokenIsValid) return NextResponse.redirect(new URL('/login', request.url));
 
+    if (token && request.url.includes('login')) return NextResponse.redirect(new URL('/', request.url));
     return NextResponse.next();
 }
  

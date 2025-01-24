@@ -3,24 +3,20 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useRouter } from 'next/navigation'
-import { logout } from '../services/userService'
+import { logout } from '../../services/userService'
 
+const MenuFooterWrapper = ({ username }) => {
+    const router = useRouter();
 
-const MenuFooter = () => {
-  const router = useRouter();
-
-    const items = [
-        { 
-            label: 'Profile',
-            icon: 'pi pi-user',
-            command: async () => router.push('/user-profile')
-        },
-        { 
-            label: 'Logout',
-            icon: 'pi pi-sign-out',
-            command: async () => await logout()
-        }
+    let items = [
+        {  label: 'Profile', icon: 'pi pi-user', command: async () => router.push('/user-profile') },
+        { label: 'Config', icon: 'pi pi-cog', command: async () => router.push('/admin-config') },
+        {  label: 'Logout', icon: 'pi pi-sign-out', command: async () => await logout() }
     ]
+
+    if (username && username !== 'admin') {
+        items = items.filter((item) => !item.label.includes('Admin'));
+    }
 
   return (
     <div className='w-100 bg-secondary text-white border-0 px-2 py-1'>
@@ -54,4 +50,4 @@ const MenuFooter = () => {
   )
 }
 
-export default MenuFooter
+export default MenuFooterWrapper

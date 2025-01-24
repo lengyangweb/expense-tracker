@@ -6,6 +6,10 @@ export const generateToken = (userInfo) => {
     return jwt.sign(userInfo, jwtSecret, { expiresIn: '1hr' });
 }
 
+export function verifyToken(token) {
+     return jwt.verify(token, process.env.JWT_SECRET);
+}
+
 /**
  * Decode token and return user info
  * @param {string} token 

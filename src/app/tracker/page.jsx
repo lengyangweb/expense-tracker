@@ -6,7 +6,7 @@ import { getUserInfo } from '../utilities/generateToken';
 import TrackerContainer from "./components/TrackerContainer";
 
 const TrackerPage = async () => {
-  const { userId } =getUserInfo(); // decode token to get userInfo
+  const { userId } = getUserInfo(); // decode token to get userInfo
   
   let trackers = [];
   try {

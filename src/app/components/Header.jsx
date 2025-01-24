@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Nav, Navbar } from "react-bootstrap";
-import MenuFooter from "./MenuFooter";
+import MenuFooter from "./MenuFooter/MenuFooter";
 
 const navStyle = {
   width: "12rem",
