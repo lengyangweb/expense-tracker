@@ -1,8 +1,19 @@
 import Header from "../components/Header"
 import AccessCode from "./components/AccessCode"
+import { getAccessCodes } from "../services/utilities";
 import { Col, Container, Row } from "react-bootstrap"
 
-const page = () => {
+const page = async () => {
+
+  let accessCodes;
+  try {
+    accessCodes = await getAccessCodes();
+    accessCodes = accessCodes.map((code) => ({ code }));
+  } catch (error) {
+    console.error(`${new Date().toISOString()} - ${error}`);
+    return;
+  }  
+
   return (
     <div className='d-flex'>
         <Header />
@@ -15,8 +26,8 @@ const page = () => {
                     </div>
                     <hr />
                 </Col>
-                <Col xs={4}>
-                    <AccessCode />
+                <Col xs={6}>
+                    <AccessCode accessCodes={accessCodes} />
                 </Col>
             </Row>
         </Container>

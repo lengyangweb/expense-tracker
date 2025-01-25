@@ -15,7 +15,7 @@ const MenuFooterWrapper = ({ username }) => {
     ]
 
     if (username && username !== 'admin') {
-        items = items.filter((item) => !item.label.includes('Admin'));
+        items = items.filter((item) => !item.label.includes('Config'));
     }
 
   return (
@@ -30,7 +30,7 @@ const MenuFooterWrapper = ({ username }) => {
             <div className="px-2 py-1 border border-2 border-dark bg-dark rounded-circle mx-2">
               <i className="pi pi-user w-100 text-light"></i>
             </div>
-            <span className="fw-bold">ADMIN</span>
+            <span className="fw-bold">{username}</span>
           </div>
           <Dropdown.Divider />
           {

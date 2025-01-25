@@ -26,6 +26,7 @@ export const config = {
     '/about',
     '/tracker',
     '/tracker/:path*',
-    '/user-profile'
+    '/user-profile',
+    '/admin-config'
   ],
 }

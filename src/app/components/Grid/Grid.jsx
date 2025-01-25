@@ -12,7 +12,7 @@ const Grid = ({
   setRowSelected,
   isLoading,
   scrollHeight,
-  minWidth = "100%",
+  minWidth = "100%"
 }) => {
   return (
     <div className="d-flex flex-column">
@@ -26,11 +26,10 @@ const Grid = ({
         scrollable
         showGridlines
         scrollHeight={scrollHeight}
+        footer={ isLoading ? 'Loading...' : `${rows.length} Item(s)` }
         tableStyle={{ minWidth, background: "#000000", color: "#eeeeee" }}
       >
-        {columns.map(({ field, header }, index) => (
-          <Column key={index} field={field} header={header} />
-        ))}
+        {columns.map(({ field, header }, index) => (<Column key={index} field={field} header={header} />))}
       </DataTable>
       {isLoading && (
         <ProgressBar
