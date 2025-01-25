@@ -1,4 +1,5 @@
 import Header from "../components/Header"
+import AccessCode from "./components/AccessCode"
 import { Col, Container, Row } from "react-bootstrap"
 
 const page = () => {
@@ -13,6 +14,9 @@ const page = () => {
                         <span>Admin Config</span>
                     </div>
                     <hr />
+                </Col>
+                <Col xs={4}>
+                    <AccessCode />
                 </Col>
             </Row>
         </Container>
