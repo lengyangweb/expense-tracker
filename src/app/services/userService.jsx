@@ -3,8 +3,8 @@
 import User from '../models/User';
 import { connectDB } from '../lib/db';
 import { cookies } from 'next/headers';
-import Utilities from '../models/Utility';
 import { redirect } from 'next/navigation';
+import { isValidAccessCode } from './utilities';
 import { generateToken } from '../utilities/generateToken';
 
 /**
@@ -60,6 +60,16 @@ export const authenticate = async(credential) => {
     }
 }
 
+export async function getUsers() {
+    try {
+        const users = await User.find().select('-password'); // get all users from database
+        return users;
+    } catch (error) {
+        console.error(`${new Date().toISOString()} - ${error}`);
+        return { success: false, message: 'Internal Server Error' };
+    }
+}
+
 export const navigate = (path) => {
     redirect(path);
 }
@@ -70,21 +80,4 @@ export const navigate = (path) => {
 export const logout = async() => {
     cookies().delete('access-token');
     redirect('/login');
-}
-
-/**
- * Validate access code
- * @param {string} accessCode 
- * @returns {Promise<boolean>}
- */
-const isValidAccessCode = async (accessCode) => {
-    try {
-        const record = await Utilities.findOne({ util_name: 'access-codes' });
-        if (!record) return false;
-        const found = record.verifyAccessCode(accessCode);
-        return found;
-    } catch (error) {
-        console.error(`Query AccessCodes Error`, error);
-        return false;
-    }
 }

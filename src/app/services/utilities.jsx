@@ -63,3 +63,20 @@ export async function removeAccessCode(accessCodes) {
         return { success: false, message: 'Internal Server Error' };
     }
 }
+
+/**
+ * Validate access code
+ * @param {string} accessCode 
+ * @returns {Promise<boolean>}
+ */
+export const isValidAccessCode = async (accessCode) => {
+    try {
+        const record = await Utilities.findOne({ util_name: 'access-codes' });
+        if (!record) return false;
+        const found = record.verifyAccessCode(accessCode);
+        return found;
+    } catch (error) {
+        console.error(`Query AccessCodes Error`, error);
+        return false;
+    }
+}

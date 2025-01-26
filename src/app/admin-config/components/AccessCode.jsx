@@ -56,14 +56,16 @@ const AccessCode = ({ accessCodes }) => {
               </Button>
             </div>
           </Col>
-          <Grid 
-            columns={codeColumns} 
-            rows={accessCodes}
-            selectedRow={selectedCode}
-            setRowSelected={setSelectedCode}
-            scrollHeight={'250px'}
-            footer={true}
-          />
+          <Col xs={12} className='mt-2'>
+            <Grid 
+                columns={codeColumns} 
+                rows={accessCodes}
+                selectedRow={selectedCode}
+                setRowSelected={setSelectedCode}
+                scrollHeight={'250px'}
+                footer={true}
+            />
+          </Col>
         </div>
     </Row>
   )
