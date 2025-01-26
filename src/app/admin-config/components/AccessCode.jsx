@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { Button, Col, Row } from 'react-bootstrap'
 import Grid from '@/app/components/Grid/Grid'
+import { Button, Col, Row } from 'react-bootstrap'
 import { generateAccessCode, removeAccessCode } from '@/app/services/utilities'
 
 const AccessCode = ({ accessCodes }) => {
