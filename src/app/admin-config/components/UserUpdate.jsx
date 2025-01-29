@@ -1,6 +1,6 @@
 
 import z from 'zod'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button, Col, Row } from 'react-bootstrap'
 
@@ -11,8 +11,12 @@ const validateUser = z.object({
 }) 
 
 const UserUpdate = ({ selectedUser }) => {
-  const [user, setUser] = useState(selectedUser);
+  const [user, setUser] = useState({ username: undefined, email: undefined, password: undefined });
   const [updateVisible, setUpdateVisible] = useState(false);
+
+  useEffect(() => {
+    if (selectedUser) setUser((currentUser) => currentUser = { ...selectedUser });
+  }, [selectedUser])
 
   async function updateUserInfo() {
 
@@ -27,15 +31,15 @@ const UserUpdate = ({ selectedUser }) => {
             <form>
                 <div className="form-group">
                     <label htmlFor="username" className="form-label">Username:</label>
-                    <input type="text" className="form-control" value={user.username} onChange={(e) => setUser((user) => user.username = e.target.value)} />
+                    <input type="text" className="form-control" value={user?.username} onChange={(e) => setUser((user) => user.username = e.target.value)} />
                 </div>
                 <div className="form-group my-2">
                     <label htmlFor="email" className="form-label">Email:</label>
-                    <input type="text" className="form-control" value={user.email} onChange={(e) => setUser((user) => user.email = e.target.value)} />
+                    <input type="text" className="form-control" value={user?.email} onChange={(e) => setUser((user) => user.email = e.target.value)} />
                 </div>
                 <div className="form-group my-2">
                     <label htmlFor="password" className="form-label">Password:</label>
-                    <input type="password" className="form-control" />
+                    <input type="password" className="form-control" value={user?.password} onChange={(e) => setUser((user) => user.password = e.target.value)} />
                 </div>
                 <div className="form-group mt-4">
                     <div className="d-flex justify-content-center">

@@ -12,6 +12,7 @@ const page = async () => {
   try {
     [accessCodes, users] = await Promise.all([getAccessCodes(), getUsers()])
     accessCodes = accessCodes.map((code) => ({ code }));
+    users = JSON.parse(JSON.stringify(users));
     users = users.filter(({ username, email }) => ({ username, email }));
   } catch (error) {
     console.error(`${new Date().toISOString()} - ${error}`);
