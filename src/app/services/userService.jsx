@@ -70,6 +70,30 @@ export async function getUsers() {
     }
 }
 
+export async function updateUser(updatedUser) {
+    let user;
+    try {
+        // find user first
+        user = await User.findById(updatedUser._id);
+        if (!user) return { success: false, message: `User doesn't exist.` };
+    } catch (error) {
+        console.error(`${new Date().toISOString()} - ${error}`);
+        return { success: false, message: `Internal Server Error` };
+    }
+    let updatedResult;
+    try {
+        user.username = updatedUser.username;
+        user.email = updatedUser.email;
+        if ('password' in updatedUser) user.password = updatedUser.password;
+        updatedResult = await user.save();
+        if (!updatedResult) return { success: false, message: 'Unable to update user info, please try again.' };
+        return { success: true, message: `User info has been updated` };
+    } catch (error) {
+        console.error(`${new Date().toISOString()} - ${error}`);
+        return { success: false, message: `Internal Server Error` };
+    }
+}
+
 export const navigate = (path) => {
     redirect(path);
 }
