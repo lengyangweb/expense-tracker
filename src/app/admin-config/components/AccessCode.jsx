@@ -29,6 +29,7 @@ const AccessCode = ({ accessCodes }) => {
       const result = await removeAccessCode(codes);
       if (!result.success) return toast.error(result.message);
       toast.success(result.message);
+      setSelectedCode(undefined);
     } catch (error) {
       return;
     }

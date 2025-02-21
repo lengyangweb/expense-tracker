@@ -1,6 +1,7 @@
 'use server';
 
 import { v4 as uuidv4 } from 'uuid';
+import * as date from '../utilities/date';
 import Utilities from "../models/Utility";
 import { connectDB } from '../lib/db';
 import { revalidatePath } from 'next/cache';
@@ -34,6 +35,7 @@ export async function generateAccessCode() {
             { $push: { util_collection: accessCode } }
         );
         if (!result.acknowledged) return { success: false, message: `GENERATE ACCESS CODE ERROR: unable to generate an access code` };
+        console.log(`${date.YYYYMMDDHHMMSSsss()}: Access Code Generated ending in ${accessCode.substring(accessCode.length - 12)}`);
         revalidatePath('/admin-config');
         return { success: true, message: `Access Code has been created.` };
     } catch (error) {
@@ -56,8 +58,9 @@ export async function removeAccessCode(accessCodes) {
             { util_collection: accessCodes }
         );
         if (!result.acknowledged) return { success: false, message: 'Unable to remove code' };
+        console.log(`${date.YYYYMMDDHHMMSSsss()}: Access Code Remove ending in ${accessCodes[0].substring(accessCodes[0].length - 12)}`);
         revalidatePath('/admin-config');
-        return { success: true, message: 'Code has been deleted.' };
+        return { success: true, message: 'Access Code has been deleted.' };
     } catch (error) {
         console.error(`${new Date().toISOString()} - ${error}`);
         return { success: false, message: 'Internal Server Error' };
