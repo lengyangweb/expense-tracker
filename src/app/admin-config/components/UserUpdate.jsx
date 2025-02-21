@@ -45,6 +45,7 @@ const UserUpdate = ({ selectedUser }) => {
     if (user.password) { // if password is provide, then validate the password
         if (user.password.length !== user.confirmPassword.length) return errors = [...errors, { validation: 'confirmPassword', message: `Password length mismatch` }];
         if (user.confirmPassword !== user.password) return errors = [...errors, { validation: 'confirmPassword', message: `Confirm password must match password` }];
+
         const validatePasswordResult = validatePassword.safeParse({ password: user.password });
         if (!validatePasswordResult.success) errors = [...errors, ...validatePasswordResult?.error.errors]; // push errors if validation fail
     }
@@ -61,6 +62,8 @@ const UserUpdate = ({ selectedUser }) => {
         if (!result) return toast.error('Something went wrong, please try again');
         if (!result.success) return toast.error(result.message);
         toast.success(result.message);
+        setUpdateVisible(false); // close modal
+        setUser(undefined);
     } catch (error) {
         console.error(error);
         toast.error('Something went wrong, please try again.');

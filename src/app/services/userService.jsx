@@ -70,16 +70,21 @@ export async function getUsers() {
     }
 }
 
+/**
+ * Update user
+ * @param {*} updatedUser 
+ * @returns {Promise<{success: boolean; message: string}>}
+ */
 export async function updateUser(updatedUser) {
     let user;
     try {
-        // find user first
-        user = await User.findById(updatedUser._id);
+        user = await User.findById(updatedUser._id); // find user first
         if (!user) return { success: false, message: `User doesn't exist.` };
     } catch (error) {
         console.error(`${new Date().toISOString()} - ${error}`);
         return { success: false, message: `Internal Server Error` };
     }
+
     let updatedResult;
     try {
         user.username = updatedUser.username;
