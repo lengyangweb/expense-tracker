@@ -8,7 +8,9 @@ const Confirm = ({
   handleClose,
   title,
   message,
-  action
+  action,
+  cancelText,
+  confirmText
 }) => {
 
   return (
@@ -24,8 +26,8 @@ const Confirm = ({
         </Modal.Header>
         <Modal.Body>{message}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Close</Button>
-          <Button variant="primary" onClick={action}>Confirm</Button>
+          <Button variant="secondary" onClick={handleClose}>{ cancelText ?? 'Cancel' }</Button>
+          <Button variant="primary" onClick={action}>{ confirmText ?? 'Confirm' }</Button>
         </Modal.Footer>
       </Modal>
     </>

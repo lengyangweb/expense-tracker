@@ -1,18 +1,28 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useRouter } from 'next/navigation'
 import { logout } from '../../services/userService'
+import Confirm from '../Confirm'
 
 const MenuFooterWrapper = ({ username }) => {
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const router = useRouter();
 
     let items = [
         {  label: 'Profile', icon: 'pi pi-user', command: async () => router.push('/user-profile') },
         { label: 'Config', icon: 'pi pi-cog', command: async () => router.push('/admin-config') },
-        {  label: 'Logout', icon: 'pi pi-sign-out', command: async () => await logout() }
+        {  label: 'Logout', icon: 'pi pi-sign-out', command: async () => setShowLogoutModal(true) }
     ]
+
+    async function logoutUser() {
+      try {
+        await logout();
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     if (username && username !== 'admin') {
         items = items.filter((item) => !item.label.includes('Config'));
@@ -46,6 +56,17 @@ const MenuFooterWrapper = ({ username }) => {
          </Dropdown.Menu>
        </Dropdown>
       </div>
+      <Confirm 
+        show={showLogoutModal} 
+        setShow={setShowLogoutModal}
+        handleShow={() => setShowLogoutModal(true)}
+        handleClose={() => setShowLogoutModal(false)}
+        title='Logout Prompt'
+        message='Are you sure you want to logout?'
+        action={logoutUser}
+        cancelText='No'
+        confirmText='Yes'
+      />
     </div>
   )
 }
