@@ -92,7 +92,7 @@ const UserUpdate = ({ selectedUser }) => {
                     {error?.password && (<span className='text-danger'>{error.password}</span>)}
                     <input type="password" id='password' className="form-control" value={user?.password} onChange={(e) => setUser((user) => user = { ...user, password: e.target.value })} />
                 </div>
-                { (user.password && user.password.length > 0) && (
+                { (user?.password && user.password.length > 0) && (
                     <div className="form-group my-2">
                         <label htmlFor="confirmPassword" className="form-label">Confirm Password:</label><br/>
                         {error?.confirmPassword && (<span className='text-danger'>{error.confirmPassword}</span>)}
