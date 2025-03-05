@@ -8,6 +8,21 @@ import { revalidatePath } from "next/cache";
 import { getUserInfo } from "../utilities/generateToken";
 
 /**
+ * Get all of the trackers
+ * @returns {Promise<[]>}
+ */
+const getTrackers = () => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      const trackers = await Tracker.find();
+      resolve(trackers);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
+/**
  * Get a tracker record
  * @param {mongoose.Schema.Types.ObjectId} trackerID 
  * @returns {Promise<mongoose.Document>}
@@ -85,4 +100,10 @@ const removeTracker = async (_id) => {
   }
 };
 
-export { getTracker, getUserTrackers, removeTracker, createTracker };
+export { 
+  getTrackers,
+  getTracker, 
+  getUserTrackers, 
+  removeTracker, 
+  createTracker 
+};
